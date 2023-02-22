@@ -75,6 +75,7 @@ function MyPage({ id, deets }) {
   }, [selectedEpisode]);
   return (
     <div>
+      {episode && <Player episode={episode} />}
       {deets.episodes.map((episode, index) => (
         <div key={index} onClick={() => setSelectedEpisode(episode.id)}>
           {episode.title}
