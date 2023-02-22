@@ -9,7 +9,12 @@ const Player = ({ episode }) => {
   const handleQualityChange = (url) => {
     setSelectedUrl(url);
   };
-
+  const subtitleTracks = episode.subtitles.map((subtitle, index) => ({
+    kind: "subtitles",
+    src: subtitle.url,
+    srcLang: subtitle.lang,
+    default: index === 0, // set the first subtitle track as the default
+  }));
   useEffect(() => {
     setSelectedUrl(
       episode.sources.find((video) => video.quality === "auto")?.url
@@ -34,8 +39,18 @@ const Player = ({ episode }) => {
 
       {selectedUrl && episode ? (
         <div className="justify-center flex ">
-          <div className="aspect-video ">
-            <ReactPlayer url={selectedUrl} controls height={204} width={360} />
+          <div className="aspect-w-16 aspect-h-9 w-full">
+            <ReactPlayer
+              url={selectedUrl}
+              controls
+              width="100%"
+              height={`${100 / aspectRatio}vw`}
+              config={{
+                file: {
+                  tracks: subtitleTracks,
+                },
+              }}
+            />
           </div>
         </div>
       ) : (
