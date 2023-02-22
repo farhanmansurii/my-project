@@ -9,12 +9,7 @@ const Player = ({ episode }) => {
   const handleQualityChange = (url) => {
     setSelectedUrl(url);
   };
-  const subtitleTracks = episode.subtitles.map((subtitle, index) => ({
-    kind: "subtitles",
-    src: subtitle.url,
-    srcLang: subtitle.lang,
-    default: index === 0, // set the first subtitle track as the default
-  }));
+
   useEffect(() => {
     setSelectedUrl(
       episode.sources.find((video) => video.quality === "auto")?.url
@@ -45,11 +40,6 @@ const Player = ({ episode }) => {
               controls
               width="100%"
               height={`${100 / aspectRatio}vw`}
-              config={{
-                file: {
-                  tracks: subtitleTracks,
-                },
-              }}
             />
           </div>
         </div>
