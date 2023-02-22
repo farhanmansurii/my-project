@@ -34,13 +34,8 @@ const Player = ({ episode }) => {
 
       {selectedUrl && episode ? (
         <div className="justify-center flex ">
-          <div className="aspect-w-16 aspect-h-9 w-full">
-            <ReactPlayer
-              url={selectedUrl}
-              controls
-              width="100%"
-              height={`${100 / aspectRatio}vw`}
-            />
+          <div className="aspect-video ">
+            <ReactPlayer url={selectedUrl} controls height={204} width={360} />
           </div>
         </div>
       ) : (
