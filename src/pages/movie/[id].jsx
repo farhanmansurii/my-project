@@ -1,3 +1,4 @@
+import Player from "@/components/Player";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
