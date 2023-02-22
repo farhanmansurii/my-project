@@ -2,14 +2,22 @@ import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 
 const Player = ({ episode }) => {
-  console.log(episode, "sources");
+  console.log(episode.subtitles, "sources");
   const [selectedUrl, setSelectedUrl] = useState(
     episode.sources.find((video) => video.quality === "auto")?.url
   );
   const handleQualityChange = (url) => {
     setSelectedUrl(url);
   };
-
+  const subtitleTracks = episode.subtitles.map((subtitle) => ({
+    kind: "subtitles",
+    src: subtitle.url,
+    srcLang: subtitle.lang,
+    default: subtitle.default,
+    attributes: {
+      crossOrigin: "anonymous",
+    },
+  }));
   useEffect(() => {
     setSelectedUrl(
       episode.sources.find((video) => video.quality === "auto")?.url
@@ -35,7 +43,17 @@ const Player = ({ episode }) => {
       {selectedUrl && episode ? (
         <div className="justify-center flex ">
           <div className="aspect-video ">
-            <ReactPlayer url={selectedUrl} controls height={204} width={360} />
+            <ReactPlayer
+              url={selectedUrl}
+              controls
+              height={204}
+              width={360}
+              config={{
+                file: {
+                  tracks: subtitleTracks,
+                },
+              }}
+            />
           </div>
         </div>
       ) : (

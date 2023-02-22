@@ -78,7 +78,11 @@ function MyPage({ id, deets }) {
     <div>
       {episode && <Player episode={episode} />}
       {deets.episodes.map((episode, index) => (
-        <div key={index} onClick={() => setSelectedEpisode(episode.id)}>
+        <div
+          className="bg-white/50 w-full "
+          key={index}
+          onClick={() => setSelectedEpisode(episode.id)}
+        >
           {episode.title}
         </div>
       ))}

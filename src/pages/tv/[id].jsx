@@ -53,6 +53,7 @@ function MyPage({ id, deets }) {
   ];
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [episode, setEpisode] = useState();
+  const [episodeobj, setEpisodeobj] = useState();
   const handleEpisodeClick = (epid) => {
     setSelectedEpisode(epid);
   };
@@ -76,10 +77,21 @@ function MyPage({ id, deets }) {
   }, [selectedEpisode]);
   return (
     <div>
-      {episode && <Player episode={episode} />}
+      {episode && (
+        <>
+          {episodeobj && <div>{episodeobj.title}</div>}
+          <Player episode={episode} />
+        </>
+      )}
 
       {deets.episodes.map((episode, index) => (
-        <div key={index} onClick={() => setSelectedEpisode(episode.id)}>
+        <div
+          className="bg-white/50 w-fit px-5  text-black m-2 p-2 rounded-lg"
+          key={index}
+          onClick={() => {
+            setEpisodeobj(episode), setSelectedEpisode(episode.id);
+          }}
+        >
           {episode.title}
         </div>
       ))}
