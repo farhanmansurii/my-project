@@ -6,7 +6,7 @@ function Card({ image, title, type }) {
         <p class="text-[#f5f3f4]/50 text-xs lg:text-sm lowercase ">
           <span className="capitalize"> {type}</span>
         </p>
-        <p class=" text-md bottom-0 lg:text-lg font-medium line-clamp-3">
+        <p class=" text-md bottom-0 text-white lg:text-lg font-medium line-clamp-3">
           {title}
         </p>
       </div>
