@@ -9,7 +9,7 @@ const Player = ({ episode }) => {
   const handleQualityChange = (url) => {
     setSelectedUrl(url);
   };
-  const subtitleTracks = episode.subtitles.map((subtitle,index) => ({
+  const subtitleTracks = episode.subtitles.map((subtitle, index) => ({
     kind: "subtitles",
     src: subtitle.url,
     srcLang: subtitle.lang,
@@ -27,7 +27,7 @@ const Player = ({ episode }) => {
         <select
           value={selectedUrl}
           onChange={(event) => handleQualityChange(event.target.value)}
-          className=" px-4 py-1 bg-transparent focus:outline-none focus:ring focus:ring-rose-500"
+          className=" px-4 py-1 bg-white  focus:outline-none "
         >
           {episode.sources.map((video) => (
             <option key={video.url} value={video.url} bg-black>
@@ -38,24 +38,25 @@ const Player = ({ episode }) => {
       </div>
 
       {selectedUrl && episode ? (
-        <div className="justify-center flex ">
-          <div className="aspect-video ">
-            <ReactPlayer
-              url={selectedUrl}
-              controls
-              height={204}
-              width={360}
-              config={{
-                file: {
-                  tracks: subtitleTracks,
-                },
-                attributes: {
-                  crossOrigin: 'anonymous',
-                },
-              }}
-            />
+        <div className="justify-center flex  my-10">
+            <div className="lg:w-[720px] aspect-video border-2" >
+              <ReactPlayer
+                url={selectedUrl}
+                controls
+                width={'100%'}
+                height={'100%'}
+                style={{ top: 0, left: 0, width: '100%', height: '100%' }}
+                config={{
+                  file: {
+                    tracks: subtitleTracks,
+                  },
+                  attributes: {
+                    crossOrigin: 'anonymous',
+                  },
+                }}
+              />
+            </div>
           </div>
-        </div>
       ) : (
         <div>Loading</div>
       )}

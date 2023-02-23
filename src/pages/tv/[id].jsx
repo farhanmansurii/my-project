@@ -16,48 +16,18 @@ export async function getServerSideProps(context) {
   };
 }
 function MyPage({ id, deets }) {
-  const data = [
-    {
-      headers: {
-        Referer: "https://dokicloud.one/embed-4/5WZI7J4tI9iF?z=",
-      },
-      sources: [
-        {
-          url: "https://t-eu-2.magnewscontent.org/_v10/e8b38480bb296d04ae076eecd2b7a6d7ec72c95d91485008698c31964aaf1b5f8a1d13e315360407bc2e1fe931abb6ebcc12bde0efae09cc2ed6ad144e62f40374386c7f616998183e97f47368a184cb45a699e967bc290e65abed966a791e8b7c6438e176b647a685f6c4584fd84c442a5695414405781f7325e9ea0cc6463c/1080/index.m3u8",
-          quality: "1080",
-          isM3U8: true,
-        },
-        {
-          url: "https://t-eu-2.magnewscontent.org/_v10/e8b38480bb296d04ae076eecd2b7a6d7ec72c95d91485008698c31964aaf1b5f8a1d13e315360407bc2e1fe931abb6ebcc12bde0efae09cc2ed6ad144e62f40374386c7f616998183e97f47368a184cb45a699e967bc290e65abed966a791e8b7c6438e176b647a685f6c4584fd84c442a5695414405781f7325e9ea0cc6463c/720/index.m3u8",
-          quality: "720",
-          isM3U8: true,
-        },
-        {
-          url: "https://t-eu-2.magnewscontent.org/_v10/e8b38480bb296d04ae076eecd2b7a6d7ec72c95d91485008698c31964aaf1b5f8a1d13e315360407bc2e1fe931abb6ebcc12bde0efae09cc2ed6ad144e62f40374386c7f616998183e97f47368a184cb45a699e967bc290e65abed966a791e8b7c6438e176b647a685f6c4584fd84c442a5695414405781f7325e9ea0cc6463c/360/index.m3u8",
-          quality: "360",
-          isM3U8: true,
-        },
-        {
-          url: "https://t-eu-2.magnewscontent.org/_v10/e8b38480bb296d04ae076eecd2b7a6d7ec72c95d91485008698c31964aaf1b5f8a1d13e315360407bc2e1fe931abb6ebcc12bde0efae09cc2ed6ad144e62f40374386c7f616998183e97f47368a184cb45a699e967bc290e65abed966a791e8b7c6438e176b647a685f6c4584fd84c442a5695414405781f7325e9ea0cc6463c/playlist.m3u8",
-          isM3U8: true,
-          quality: "auto",
-        },
-      ],
-      subtitles: [
-        {
-          url: "https://prev.2cdns.com/_m_preview/3a/3ada81b0a47bb23e44be48c44743dba5/thumbnails/sprite.vtt",
-          lang: "Default (maybe)",
-        },
-      ],
-    },
-  ];
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [episode, setEpisode] = useState();
   const [episodeobj, setEpisodeobj] = useState();
   const handleEpisodeClick = (epid) => {
     setSelectedEpisode(epid);
   };
-
+  const episodesBySeason = deets.episodes.reduce((acc, episode) => {
+    const season = episode.season;
+    acc[season] = acc[season] || [];
+    acc[season].push(episode);
+    return acc;
+  }, {});
   useEffect(() => {
     const fetchEpisode = async () => {
       try {
@@ -84,17 +54,31 @@ function MyPage({ id, deets }) {
         </>
       )}
 
-      {deets.episodes.map((episode, index) => (
-        <div
-          className="bg-white/50 w-fit px-5  text-black m-2 p-2 rounded-lg"
-          key={index}
-          onClick={() => {
-            setEpisodeobj(episode), setSelectedEpisode(episode.id);
-          }}
-        >
-          {episode.title}
+      
+      <div className="bg-gray-100 py-8">
+      {Object.entries(episodesBySeason).map(([season, episodes]) => (
+        <div key={season} className="mb-8">
+          <h2 className="text-2xl font-bold mb-4">Season {season}</h2>
+          <ul className="divide-y divide-gray-300">
+            {episodes.map((episode) => (
+              <li key={episode.id} onClick={() => {
+                setEpisodeobj(episode), setSelectedEpisode(episode.id);
+              }} className="py-4  hover:bg-neutral-400 hover:text-white">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <span className="bg-gray-400 rounded-full py-2 px-3 text-white text-sm font-semibold">{episode.number}</span>
+                  </div>
+                  <div className="ml-4">
+                    <div className="text-lg font-semibold">{episode.title}</div>
+                
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       ))}
+    </div>
     </div>
   );
 }

@@ -16,6 +16,7 @@
     "next": "13.1.6",
     "plyr": "^3.7.3",
     "react": "18.2.0",
+    "react-bootstrap": "^2.7.2",
     "react-dom": "18.2.0",
     "react-player": "^2.11.2",
     "swr": "^2.0.3"
