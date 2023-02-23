@@ -42,15 +42,16 @@ function MyPage({ id, deets }) {
   }, [selectedEpisode]);
 
   return (
-    <div>
-      <div className="text-white text-6xl mt-10 w-10/12 mx-auto">
+    <div className="w-[97%] mx-auto">
+      <div className="text-white text-6xl mt-10  lg:w-10/12 mx-auto">
         {deets.title}
       </div>
       {episode ? (
         <>
           <Player episode={episode} />
-          <div className="text-4xl w-10/12 mx-auto">
-            Now Playing {selectedEpisode.title}
+          <div className=" text-2xl lg:text-4xl lg:w-10/12 mx-auto">
+            Now Playing Episode {selectedEpisode.episode} :{" "}
+            {selectedEpisode.title}
           </div>
         </>
       ) : (
@@ -58,23 +59,19 @@ function MyPage({ id, deets }) {
           {loader}
         </div>
       )}
-      <div className="py-4 w-10/12 mx-auto">
+      <div className="py-4 lg:w-10/12 mx-auto">
         <div className="container mx-auto px-4">
           {deets.seasons.map((season) => (
             <div key={season.season} className="my-4">
               <h2 className="text-white text-2xl my-2 font-semibold">
                 Season {season.season}
               </h2>
-              <div className="  flex flex-col overflow-x-scroll  z-10 p-2  space-x-1 ">
+              <div className="  flex flex-col   z-10   space-x-1 ">
                 {season.episodes?.map((episode) => (
                   <div
                     key={episode.id}
-                    className="flex-shrink-0 bg-white/10 p-2 m-1 flex-row items-center mx-1 w-full duration-100"
+                    className="flex-shrink-0 bg-white/10 p-4 m-1 flex-row items-center mx-1 w-full duration-100"
                     onClick={() => {
-                      console.log(
-                        `https://api.consumet.org/meta/tmdb/watch/${episode.id}?id=${deets.id}`,
-                        episode.id
-                      );
                       setLoader(<Spinner />);
                       setEpisode(""), setSelectedEpisode(episode);
                     }}

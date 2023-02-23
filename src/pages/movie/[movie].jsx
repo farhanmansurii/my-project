@@ -41,9 +41,9 @@ function MyPage({ id, deets }) {
         {deets.title}
       </div>
       {episode ? (
-        <>
+        <div className="pb-[10rem]">
           <Player episode={episode} />
-        </>
+        </div>
       ) : (
         <div className="flex w-full justify-center text-center text-2xl my-10 text-white">
           Loading
