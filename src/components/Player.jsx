@@ -9,14 +9,11 @@ const Player = ({ episode }) => {
   const handleQualityChange = (url) => {
     setSelectedUrl(url);
   };
-  const subtitleTracks = episode.subtitles.map((subtitle) => ({
+  const subtitleTracks = episode.subtitles.map((subtitle,index) => ({
     kind: "subtitles",
     src: subtitle.url,
     srcLang: subtitle.lang,
     default: subtitle.default,
-    attributes: {
-      crossOrigin: "anonymous",
-    },
   }));
   useEffect(() => {
     setSelectedUrl(
@@ -51,6 +48,9 @@ const Player = ({ episode }) => {
               config={{
                 file: {
                   tracks: subtitleTracks,
+                },
+                attributes: {
+                  crossOrigin: 'anonymous',
                 },
               }}
             />
