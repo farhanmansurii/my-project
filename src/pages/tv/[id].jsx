@@ -22,9 +22,7 @@ function MyPage({ id, deets }) {
   const [episodeobj, setEpisodeobj] = useState();
   const [expandedSeasons, setExpandedSeasons] = useState([]);
 
-  const handleEpisodeClick = (epid) => {
-    setSelectedEpisode(epid);
-  };
+  console.log(deets)
 
   const handleSeasonClick = (season) => {
     setExpandedSeasons((prevState) => {
@@ -63,44 +61,46 @@ function MyPage({ id, deets }) {
 
   return (
     <div>
-      {episode && (
+
+      <div className="text-white text-4xl mt-10 w-10/12 mx-auto">{deets.title}</div>
+      {episode ? (
         <>
           <Player episode={episode} />
-          {episodeobj && <div className="text-white w-10/12 my-5 text-3xl">{episodeobj.title}</div>}
+          {episodeobj && <div className="text-white w-10/12 my-5 mx-auto text-3xl"> Now playing {episodeobj.title}</div>}
         </>
-      )}
+      ):(<div className="flex w-full justify-center text-center text-2xl my-10 text-white">Loading</div>)}
 
-      <div className="bg-gray-100 py-8">
+      <div className="bg-black text-white py-8">
         {Object.entries(episodesBySeason).map(([season, episodes]) => (
           <div key={season} className="mb-8">
             <div
               onClick={() => handleSeasonClick(season)}
-              className="flex lg:w-10/12 mx-auto items-center gap-10 cursor-pointer"
+              className="flex  w-10/12 mx-auto items-center gap-10 cursor-pointer"
             >
-              <h2 className="text-2xl font-bold mb-4">Season {season}</h2>
-              <span className="border-black p-2 rounded-full border-2 h-full mb-3">
+              <h2 className="text-2xl font-semibold mb-4">Season {season}</h2>
+              <span className="border-white p-2 rounded-full border-2 h-full mb-3">
                 {expandedSeasons.includes(season) ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
                 </svg>
                   : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                </svg>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
                 }
               </span>
             </div>
             {expandedSeasons.includes(season) && (
-              <ul className="divide-y divide-gray-300">
+              <ul className="divide-y divide-gray-500">
                 {episodes.map((episode) => (
                   <li
                     key={episode.id}
-                    onClick={() => {
+                    onClick={() => {console.log('clicked',episode.id)
                       setEpisode(''), setEpisodeobj(episode), setSelectedEpisode(episode.id);
                     }}
-                    className="py-4 hover:bg-neutral-400 lg:w-10/12 mx-auto hover:text-white cursor-pointer"
+                    className="py-4 hover:bg-neutral-800 px-5 lg:px-10 w-10/12 mx-auto hover:text-white cursor-pointer"
                   >
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <span className="border-2 rounded-full border-black py-2 px-3 text-black text-sm font-semibold">
+                        <span className=" rounded-full  py-2 px-5  text-sm font-semibold">
                           {episode.number}
                         </span>
                       </div>

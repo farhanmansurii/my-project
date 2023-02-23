@@ -23,22 +23,10 @@ const Player = ({ episode }) => {
 
   return (
     <div key={episode.id} className="w-full ">
-      <div className="gap-1 flex py-1 flex-wrap place-content-center items-center">
-        <select
-          value={selectedUrl}
-          onChange={(event) => handleQualityChange(event.target.value)}
-          className=" px-4 py-1 bg-white  w-4/12 focus:outline-none "
-        >
-          {episode.sources.map((video) => (
-            <option key={video.url} value={video.url} bg-black>
-              {video.quality}
-            </option>
-          ))}
-        </select>
-      </div>
+    
 
       {selectedUrl && episode ? (
-        <div className="justify-center flex  mb-10">
+        <div className="justify-center flex  mt-10">
             <div className="w-full h-full  lg:w-[720px] aspect-video border-2" >
               <ReactPlayer
                 url={selectedUrl}
@@ -59,7 +47,19 @@ const Player = ({ episode }) => {
           </div>
       ) : (
         <div>Loading</div>
-      )}
+      )}  <div className="gap-1 flex py-1 flex-wrap place-content-end items-center">
+      <select
+        value={selectedUrl}
+        onChange={(event) => handleQualityChange(event.target.value)}
+        className=" px-4 py-1 bg-white  w-4/12 focus:outline-none "
+      >
+        {episode.sources.map((video) => (
+          <option key={video.url} value={video.url} bg-black>
+            {video.quality}
+          </option>
+        ))}
+      </select>
+    </div>
     </div>
   );
 };

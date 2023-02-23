@@ -32,7 +32,7 @@ function Movies() {
           ))}
         </div>
       )}
-      <div>hi</div>
+ 
     </div>
   );
 }
