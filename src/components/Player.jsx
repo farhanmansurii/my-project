@@ -39,7 +39,7 @@ const Player = ({ episode }) => {
 
       {selectedUrl && episode ? (
         <div className="justify-center flex  my-10">
-            <div className="lg:w-[720px] aspect-video border-2" >
+            <div className="w-full h-full  lg:w-[720px] aspect-video border-2" >
               <ReactPlayer
                 url={selectedUrl}
                 controls
