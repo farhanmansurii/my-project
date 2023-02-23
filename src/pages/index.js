@@ -1,17 +1,10 @@
-import Card from "@/components/Card";
 import SearchPage from "@/components/Search";
 import Head from "next/head";
-import Link from "next/link";
-import useSWR, { SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 function Movies() {
-  const { data: shows, isLoading: popularIsLoading } = useSWR(
-    "https://api.consumet.org/movies/flixhq/recent-shows",
-    fetcher
-  );
-  console.log(popularIsLoading, shows);
   return (
     <div>
       <Head>
@@ -21,18 +14,6 @@ function Movies() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SearchPage />
-      {popularIsLoading ? (
-        <div>Loading</div>
-      ) : (
-        <div className=" overflow-hidden flex flex-wrap relative z-10 p-2  space-x-1 ">
-          {shows.map((e) => (
-            <Link key={e.id} as={e.id} href={`/${e.id}`}>
-              <Card title={e.title} type={e.type} image={e.image} />
-            </Link>
-          ))}
-        </div>
-      )}
- 
     </div>
   );
 }

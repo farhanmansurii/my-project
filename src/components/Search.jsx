@@ -1,7 +1,7 @@
 import useDebounce from "@/hooks/useDebounce";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Card from "./Card";
+import Spinner from "react-spinner-material";
 const SearchPage = () => {
   const [val, setval] = useState("");
   const [searchList, setSearchList] = useState([]);
@@ -11,7 +11,7 @@ const SearchPage = () => {
     async function fetchData() {
       setisloading(true);
       const data = await fetch(
-        `https://api.consumet.org/movies/flixhq/${debouncedSearch}?page=1`
+        `https://spicyapi.vercel.app/meta/tmdb/${debouncedSearch}?page=1`
       ).then((res) => res.json());
       setSearchList(data.results);
       setisloading(false);
@@ -22,14 +22,14 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className="form-control  place-content-center">
-        <div className="flex place-self-center mt-4  w-11/12 mx-auto   ">
+      <div className="form-control  place-content-center  ">
+        <div className="flex place-self-center mt-20  w-11/12 mx-auto   ">
           <input
             type="text"
             placeholder="
             
-            Search for any Anime TV / Movie"
-            className=" placeholder:text-[#f5f3f4a5] bg-red-500/20 rounded-lg px-4 py-2 w-full backdrop-blur-sm bg-secondary/20    outline-none border-secondary active:border-0"
+            Search for any  TV show / Movie"
+            className=" placeholder:text-[#f5f3f4a5] bg-white/10 rounded-full px-4 py-4 h-fit w-full backdrop-blur-sm bg-secondary/20    outline-none border-secondary active:border-0"
             input={val}
             onChange={(e) => setval(e.target.value)}
           />
@@ -39,18 +39,41 @@ const SearchPage = () => {
             ""
           ) : !isloading ? (
             <div className="  flex flex-wrap relative z-10 p-2 overflow-hidden  space-x-1 ">
-              {searchList.map((e) => (
-                <Link key={e.id} as={e.id} href={`/${e.id}`}>
-                  <Card title={e.title} type={e.type} image={e.image} />
-                </Link>
-              ))}
+              {searchList.map((e) =>
+                e.type === "Movie" ? (
+                  <Link key={e.id} href={`/movie/${e.id}`}>
+                    <div class="relative w-32 h-52 lg:min-w-36 lg:min-h-60  overflow-hidden  rounded-lg">
+                      <img class="object-cover w-full h-full" src={e.image} />
+                      <div class="absolute inset-0 -bottom-1 bg-gradient-to-t flex flex-col-reverse from-[#0b090a] to-transparent p-3 lg:p-4">
+                        <p class="text-[#f5f3f4]/50 text-xs lg:text-sm lowercase ">
+                          <span className="capitalize"> {e.type}</span>
+                        </p>
+                        <p class=" text-md bottom-0 text-white lg:text-lg font-medium line-clamp-3">
+                          {e.title}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                ) : (
+                  <Link key={e.id} href={`/${e.id}`}>
+                    <div class="relative w-32 h-52 lg:min-w-36 lg:min-h-60  overflow-hidden  rounded-lg">
+                      <img class="object-cover w-full h-full" src={e.image} />
+                      <div class="absolute inset-0 -bottom-1 bg-gradient-to-t flex flex-col-reverse from-[#0b090a] to-transparent p-3 lg:p-4">
+                        <p class="text-[#f5f3f4]/50 text-xs lg:text-sm lowercase ">
+                          <span className="capitalize"> {e.type}</span>
+                        </p>
+                        <p class=" text-md bottom-0 text-white lg:text-lg font-medium line-clamp-3">
+                          {e.title}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                )
+              )}
             </div>
           ) : (
             <div className="w-fit h-[200px] my-auto ease-in-out duration-200 grid justify-center mx-auto place-content-center">
-              <img
-                className="w-12"
-                src="https://media.tenor.com/5nON1L6KUqcAAAAM/sharingan-naruto.gif"
-              />
+              <Spinner />
             </div>
           )}
         </div>
