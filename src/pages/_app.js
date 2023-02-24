@@ -1,9 +1,10 @@
 import "@/styles/globals.css";
 import Link from "next/link";
-
+import { Provider } from "react-redux";
+import store from "@/redux/reducers/store";
 export default function App({ Component, pageProps }) {
   return (
-    <>
+    <> <Provider store={store}>
       <div className=" fixed z-50 mb-10 bottom-0 justify-center items-center w-full">
         <div className="w-fit  mx-auto">
           <Link href="/">
@@ -23,7 +24,7 @@ export default function App({ Component, pageProps }) {
           </Link>
         </div>
       </div>
-      <Component {...pageProps} />
+      <Component {...pageProps} /></Provider>
     </>
   );
 }

@@ -9,30 +9,25 @@ const Player = ({ episode }) => {
     setSelectedUrl(url);
   };
 
-  const defaultLangs = [
-    "English - English",
-    "English",
-    "English 1",
-    "English 2",
-  ];
-  const defaultSubtitle = episode.subtitles.find((subtitle) =>
-    defaultLangs.includes(subtitle.lang)
+  const englishLangs = ["English", "English 1", "English 2", "English - English"];
+  const englishSubtitles = episode.subtitles.filter((subtitle) =>
+    englishLangs.includes(subtitle.lang)
   );
+  
+  const defaultSubtitle = englishSubtitles.find((subtitle) => subtitle.lang === "English");
+  
 
   const [selectedSubtitleUrl, setSelectedSubtitleUrl] = useState(
     defaultSubtitle?.url
   );
-  const handleSubtitleChange = (url) => {
-    setSelectedSubtitleUrl(url);
+  const handleSubtitleChange = (event) => {
+    setSelectedSubtitleUrl(event.target.value);
   };
-
-  const subtitleTracks = episode.subtitles.map((subtitle, index) => ({
+  const subtitleTracks = englishSubtitles.map((subtitle, index) => ({
     kind: "subtitles",
     src: subtitle.url,
     srcLang: subtitle.lang,
-    default:
-      subtitle.url === selectedSubtitleUrl ||
-      (subtitle === defaultSubtitle && defaultLangs.includes(subtitle.lang)),
+    default: subtitle.url === selectedSubtitleUrl || subtitle === defaultSubtitle,
   }));
 
   useEffect(() => {
@@ -51,6 +46,7 @@ const Player = ({ episode }) => {
               controls
               width={"100%"}
               height={"100%"}
+              defaultSubtitle={selectedSubtitleUrl}
               style={{ top: 0, left: 0, width: "100%", height: "100%" }}
               config={{
                 file: {
@@ -78,20 +74,7 @@ const Player = ({ episode }) => {
             </option>
           ))}
         </select>
-        {subtitleTracks.length > 0 && (
-          <select
-            value={selectedSubtitleUrl}
-            onChange={(event) => handleSubtitleChange(event.target.value)}
-            className="px-4 py-1 bg-black border-2 w-48 focus:outline-none"
-          >
-            <option value="">No subtitles</option>
-            {episode.subtitles.map((subtitle) => (
-              <option key={subtitle.url} value={subtitle.url}>
-                {subtitle.lang}
-              </option>
-            ))}
-          </select>
-        )}
+        
       </div>
     </div>
   );

@@ -2,7 +2,8 @@ import Player from "@/components/Player";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "react-spinner-material";
-
+import { useDispatch } from 'react-redux';
+ import recentlyWatchedReducer, { addRecentlyWatched } from "@/redux/reducers/recentlyWatchedReducers";
 export async function getServerSideProps(context) {
   const tvid = context.query.id;
   const detailsResponse = await fetch(
@@ -18,6 +19,8 @@ export async function getServerSideProps(context) {
 }
 
 function MyPage({ id, deets }) {
+
+  const dispatch = useDispatch();
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [loader, setLoader] = useState();
   const [expandedSeason, setExpandedSeason] = useState(null);
@@ -29,7 +32,7 @@ function MyPage({ id, deets }) {
       setExpandedSeason(season);
     }
   };
-
+ 
 
   function getNextEpisode(selectedEpisode, deets) {
     const seasonIndex = deets.seasons.findIndex(
@@ -57,7 +60,7 @@ function MyPage({ id, deets }) {
     setSelectedEpisode(episode);
     setLoader(<Spinner />);
     setEpisode("");
-
+   
   };
   useEffect(() => {
     const fetchEpisode = async () => {
