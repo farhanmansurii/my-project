@@ -100,7 +100,7 @@ function MyPage({ id, deets }) {
           {loader}
         </div>
       )}
-      <div className="py-4 lg:w-10/12 mx-auto">
+      <div className="py-4 pb-[8rem] lg:w-10/12 mx-auto">
         <div className="container mx-auto px-4">
           {deets.seasons.map((season) => (
             <div key={season.season} className="my-4">
