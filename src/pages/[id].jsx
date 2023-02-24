@@ -29,6 +29,30 @@ function MyPage({ id, deets }) {
       setExpandedSeason(season);
     }
   };
+
+
+  function getNextEpisode(selectedEpisode, deets) {
+    const seasonIndex = deets.seasons.findIndex(
+      (season) => season.season === selectedEpisode.season
+    );
+    const episodeIndex = deets.seasons[seasonIndex].episodes.findIndex(
+      (episode) => episode.id === selectedEpisode.id
+    );
+  
+    if (episodeIndex === deets.seasons[seasonIndex].episodes.length - 1) {
+      // Last episode of the season
+      if (seasonIndex === deets.seasons.length - 1) {
+        // Last episode of the last season
+        return null;
+      } else {
+        // First episode of the next season
+      handleEpisodeClick(deets.seasons[seasonIndex + 1].episodes[0]);
+      }
+    } else {
+      // Next episode in the same season
+      handleEpisodeClick(deets.seasons[seasonIndex].episodes[episodeIndex + 1]);
+    }
+  }
   const handleEpisodeClick = (episode) => {
     setSelectedEpisode(episode);
 
@@ -62,8 +86,9 @@ function MyPage({ id, deets }) {
           <Player episode={episode} />
           <div className=" text-2xl lg:text-4xl lg:w-10/12 mx-auto">
             Now Playing S{selectedEpisode.season} E{selectedEpisode.episode} :{" "}
-            {selectedEpisode.title}
+            {selectedEpisode.title} 
           </div>
+          <button onClick={()=>getNextEpisode(selectedEpisode,deets)}>Next</button>
         </>
       ) : (
         <div className="flex w-full justify-center text-center text-2xl my-10 text-white">
