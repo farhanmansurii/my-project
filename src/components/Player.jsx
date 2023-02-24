@@ -45,7 +45,7 @@ const Player = ({ episode }) => {
     <div key={episode.id} className="w-full my-5">
       {selectedUrl && episode ? (
         <div className="justify-center flex  ">
-          <div className="w-full h-full  lg:w-[720px] aspect-video border-2 border-white/30">
+          <div className="w-full h-full   lg:w-[720px] aspect-video  border-white/30">
             <ReactPlayer
               url={selectedUrl}
               controls
