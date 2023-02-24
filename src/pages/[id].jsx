@@ -55,6 +55,8 @@ function MyPage({ id, deets }) {
   }
   const handleEpisodeClick = (episode) => {
     setSelectedEpisode(episode);
+    setLoader(<Spinner />);
+    setEpisode("");
 
   };
   useEffect(() => {
@@ -87,8 +89,8 @@ function MyPage({ id, deets }) {
           <div className=" text-2xl lg:text-4xl lg:w-10/12 mx-auto">
             Now Playing S{selectedEpisode.season} E{selectedEpisode.episode} :{" "}
             {selectedEpisode.title} 
+          <button className=" text-xl bg-white text-black  p-3 rounded-xl w-full lg:w-10/12 my-4 mx-auto" onClick={()=>getNextEpisode(selectedEpisode,deets)}>Play Next Episode</button>
           </div>
-          <button onClick={()=>getNextEpisode(selectedEpisode,deets)}>Next</button>
         </>
       ) : (
         <div className="flex w-full justify-center text-center text-2xl my-10 text-white">
