@@ -15,6 +15,7 @@ const SearchPage = () => {
         `https://spicyapi.vercel.app/meta/tmdb/${debouncedSearch}?page=1`
       ).then((res) => res.json());
       setSearchList(data.results);
+      console.log(data.results);
       setisloading(false);
     }
 
@@ -39,35 +40,47 @@ const SearchPage = () => {
           {val === "" ? (
             ""
           ) : !isloading ? (
-            <div className="  flex flex-wrap relative z-10 p-2 overflow-hidden  space-x-1 ">
+            <div className="flex overflow-x-scroll p-2 space-x-4 scrollbar-hide w-11/12 mx-auto ">
               {searchList
-                .sort((a, b) => b.rating - a.rating)
+                .filter((e) => e.rating > 3)
                 .map((e) =>
                   e.type === "Movie" ? (
                     <Link key={e.id} href={`/movie/${e.id}`}>
-                      <div class="relative w-32 h-52 lg:min-w-36 lg:min-h-60  overflow-hidden  rounded-lg">
-                        <img class="object-cover w-full h-full" src={e.image} />
-                        <div class="absolute inset-0 -bottom-1 bg-gradient-to-t flex flex-col-reverse from-[#0b090a] to-transparent p-3 lg:p-4">
-                          <p class="text-[#f5f3f4]/50 text-xs lg:text-sm lowercase ">
-                            <span className="capitalize"> {e.type}</span>
-                          </p>
-                          <p class=" text-md bottom-0 text-white lg:text-lg font-medium line-clamp-3">
-                            {e.title}
-                          </p>
+                      <div className="flex-none w-32 lg:w-40">
+                        <div className="relative">
+                          <img
+                            className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                            src={e.image}
+                            alt={e.title}
+                          />
+                          <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
+                            <p className="text-xs text-white/40">
+                              {e.type} • {e.rating}⭐
+                            </p>
+                            <h3 className="text-white  text-sm lg:text-lg  ">
+                              {e.title}
+                            </h3>
+                          </div>
                         </div>
                       </div>
                     </Link>
                   ) : (
                     <Link key={e.id} href={`/${e.id}`}>
-                      <div class="relative w-32 h-52 lg:min-w-36 lg:min-h-60  overflow-hidden  rounded-lg">
-                        <img class="object-cover w-full h-full" src={e.image} />
-                        <div class="absolute inset-0 -bottom-1 bg-gradient-to-t flex flex-col-reverse from-[#0b090a] to-transparent p-3 lg:p-4">
-                          <p class="text-[#f5f3f4]/50 text-xs lg:text-sm lowercase ">
-                            <span className="capitalize"> {e.type}</span>
-                          </p>
-                          <p class=" text-md bottom-0 text-white lg:text-lg font-medium line-clamp-3">
-                            {e.title}
-                          </p>
+                      <div className="flex-none w-32 lg:w-40">
+                        <div className="relative">
+                          <img
+                            className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                            src={e.image}
+                            alt={e.title}
+                          />
+                          <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
+                            <p className="text-xs text-white/40">
+                              {e.type} • {e.rating}⭐
+                            </p>
+                            <h3 className="text-white  text-sm lg:text-lg  ">
+                              {e.title}
+                            </h3>
+                          </div>
                         </div>
                       </div>
                     </Link>

@@ -32,35 +32,29 @@ function Movies() {
       </Head>
       <SearchPage />
 
-      {recentlyWatched && (
+      {recentlyWatched && recentlyWatched.length > 0 && (
         <div className="overflow-x-auto mx-auto w-11/12 ">
           <div className="text-3xl text-white mt-4  mb-3">
             Recently Watched TV Shows
           </div>
-          <div className="text-white flex gap-3 mx-auto">
+          <div className=" flex overflow-x-scroll m-1 p-1  scrollbar-hide">
             {recentlyWatched.map((e) => (
               <Link key={e.tvid} href={`/${e.tvid}`}>
-                <div
-                  key={e.tvid}
-                  className={`relative group overflow-hidden aspect-video w-fit cursor-pointer  duration-200 rounded-lg`}
-                >
-                  <div className="absolute inset-0 z-10 transition-all duration-300  group-hover:opacity-100">
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b090a] to-transparent" />
-                    <div className="absolute bottom-0 left-0 w-full  h-full px-4 py-2 flex flex-col justify-end">
-                      <div className="text-lg font-semibold  ">
-                        {e.episode.tvshowtitle}
-                      </div>
-                      <p className="text-sm   duration-150">
-                        S{e.episode.season} E{e.episode.episode}{" "}
-                        {e.episode.title}
-                      </p>
-                    </div>
-                  </div>
+                <div className="relative w-64 h-36 mb-3 mx-2">
+                  <div className="absolute inset-0 bg-black opacity-50 rounded-lg" />
                   <img
-                    className="object-cover object-center aspect-w-16 aspect-h-9 transition-all duration-100 transform w-64"
+                    className="object-cover w-full h-full rounded-lg"
                     src={e.episode.img.hd}
                     alt={`Episode ${e.episode.number}`}
                   />
+                  <div className="absolute bottom-0 w-full h-1/3 px-4 ">
+                    <h3 className="text-base font-semibold text-white">
+                      {e.episode.title}
+                    </h3>
+                    <p className="text-sm text-gray-400">
+                      S{e.episode.season} E{e.episode.episode}
+                    </p>
+                  </div>
                 </div>
               </Link>
             ))}
