@@ -1,6 +1,7 @@
 import Player from "@/components/Player";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Spinner from "react-spinner-material";
 
 export async function getServerSideProps(context) {
   const tvid = context.query.movie;
@@ -46,8 +47,8 @@ function MyPage({ id, deets }) {
         </div>
       ) : (
         <div className="flex w-full justify-center text-center text-2xl my-10 text-white">
-          Loading
-        </div>
+     <Spinner />
+      </div>
       )}
     </div>
   );
