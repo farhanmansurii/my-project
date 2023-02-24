@@ -32,7 +32,7 @@ function Movies() {
       </Head>
       <SearchPage />
 
-      {
+      {recentlyWatched && (
         <div className="overflow-x-auto mx-auto w-11/12 ">
           <div className="text-3xl text-white mt-4  mb-3">
             Recently Watched TV Shows
@@ -66,7 +66,7 @@ function Movies() {
             ))}
           </div>
         </div>
-      }
+      )}
     </div>
   );
 }
