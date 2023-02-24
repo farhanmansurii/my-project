@@ -1,9 +1,9 @@
 import Player from "@/components/Player";
+import { addEpisode } from "@/redux/reducers/recentlyWatchedReducers";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Spinner from "react-spinner-material";
-import { useDispatch } from 'react-redux';
- import recentlyWatchedReducer, { addRecentlyWatched } from "@/redux/reducers/recentlyWatchedReducers";
 export async function getServerSideProps(context) {
   const tvid = context.query.id;
   const detailsResponse = await fetch(
@@ -19,7 +19,6 @@ export async function getServerSideProps(context) {
 }
 
 function MyPage({ id, deets }) {
-
   const dispatch = useDispatch();
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [loader, setLoader] = useState();
@@ -32,7 +31,6 @@ function MyPage({ id, deets }) {
       setExpandedSeason(season);
     }
   };
- 
 
   function getNextEpisode(selectedEpisode, deets) {
     const seasonIndex = deets.seasons.findIndex(
@@ -41,26 +39,24 @@ function MyPage({ id, deets }) {
     const episodeIndex = deets.seasons[seasonIndex].episodes.findIndex(
       (episode) => episode.id === selectedEpisode.id
     );
-  
+    const tvshowtitle = deets.title;
     if (episodeIndex === deets.seasons[seasonIndex].episodes.length - 1) {
-      // Last episode of the season
       if (seasonIndex === deets.seasons.length - 1) {
-        // Last episode of the last season
         return null;
       } else {
-        // First episode of the next season
-      handleEpisodeClick(deets.seasons[seasonIndex + 1].episodes[0]);
+        handleEpisodeClick(deets.seasons[seasonIndex + 1].episodes[0]);
       }
     } else {
-      // Next episode in the same season
       handleEpisodeClick(deets.seasons[seasonIndex].episodes[episodeIndex + 1]);
     }
   }
+  const recentlyWatched = useSelector((state) => state.recentlyWatched.items);
+
   const handleEpisodeClick = (episode) => {
     setSelectedEpisode(episode);
     setLoader(<Spinner />);
     setEpisode("");
-   
+    dispatch(addEpisode({ ...episode, tvshowtitle: deets.title, tvid: id }));
   };
   useEffect(() => {
     const fetchEpisode = async () => {
@@ -86,21 +82,43 @@ function MyPage({ id, deets }) {
       <div className="text-white text-6xl mt-10  lg:w-10/12 mx-auto">
         {deets.title}
       </div>
-      {episode ? (
-        <>
-          <Player episode={episode} />
-          <div className=" text-2xl lg:text-4xl lg:w-10/12 mx-auto">
-            Now Playing S{selectedEpisode.season} E{selectedEpisode.episode} :{" "}
-            {selectedEpisode.title} 
-          <button className=" text-xl bg-white text-black  p-3 rounded-xl w-full lg:w-10/12 my-4 mx-auto" onClick={()=>getNextEpisode(selectedEpisode,deets)}>Play Next Episode</button>
-          </div>
-        </>
-      ) : (
-        <div className="flex w-full justify-center text-center text-2xl my-10 text-white">
-          {loader}
-        </div>
+      {recentlyWatched.map(
+        (e) =>
+          e.tvid === id && (
+            <div
+              onClick={() => handleEpisodeClick(e.episode)}
+              key={e.tvid}
+              className=" text-sm lg:text-lg mx-auto cursor-pointer lg:w-10/12"
+            >
+              <div className="w-fit  text-black my-4 bg-white text-left  px-5 py-2 rounded-lg ">
+                Continue watching ? S{e.episode.season} E{e.episode.episode}{" "}
+                {e.episode.title}
+              </div>
+            </div>
+          )
       )}
-      <div className="py-4 pb-[8rem] lg:w-10/12 mx-auto">
+      {episode ? (
+        <div className="flex  flex-col w-full mx-auto lg:w-10/12">
+          <Player episode={episode} />
+          <div className=" text-2xl lg:text-4xl text-start  ">
+            Now Playing S{selectedEpisode.season} E{selectedEpisode.episode} :{" "}
+            {selectedEpisode.title}
+          </div>
+          <button
+            className="text-sm lg:text-lg bg-white text-black  py-2 px-5 rounded-lg my-4 w-fit"
+            onClick={() => getNextEpisode(selectedEpisode, deets)}
+          >
+            Play Next Episode
+          </button>
+        </div>
+      ) : (
+        loader && (
+          <div className="flex w-full justify-center text-center text-2xl my-10 text-white">
+            {loader}
+          </div>
+        )
+      )}
+      <div className=" pb-[8rem] lg:w-10/12 mx-auto">
         <div className="container mx-auto px-4">
           {deets.seasons.map((season) => (
             <div key={season.season} className="my-4">
@@ -108,9 +126,22 @@ function MyPage({ id, deets }) {
                 className="text-white text-2xl my-2 font-semibold cursor-pointer flex"
                 onClick={() => toggleSeason(season)}
               >
-                Season {season.season}   <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 mt-1 mx-5 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                </svg>
+                Season {season.season}{" "}
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 mt-1 mx-5 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                    />
+                  </svg>
                 </span>
               </h2>
               {expandedSeason === season && (
@@ -121,24 +152,26 @@ function MyPage({ id, deets }) {
                       className="flex-shrink-0 bg-white/10 p-4 m-1 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
                       onClick={() => handleEpisodeClick(episode)}
                     >
-
                       <h3 className="text-white flex gap-5 text-sm font-semibold">
                         Episode {episode.episode}: {episode.title}
                         {episode.id ? (
-                          <span> <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="green"
-                            className="w-6 h-6 "
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                          </svg></span>
+                          <span>
+                            {" "}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="green"
+                              className="w-6 h-6 "
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                          </span>
                         ) : (
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

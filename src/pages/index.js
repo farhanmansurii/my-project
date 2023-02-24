@@ -1,10 +1,24 @@
 import SearchPage from "@/components/Search";
+import { updateRecentlyWatched } from "@/redux/reducers/recentlyWatchedReducers";
+
 import Head from "next/head";
+import Link from "next/link";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { SWRConfig } from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 function Movies() {
+  const dispatch = useDispatch();
+  const recentlyWatched = useSelector((state) => state.recentlyWatched.items);
+  useEffect(() => {
+    const storedState = localStorage.getItem("tvShowsState");
+    if (storedState) {
+      dispatch(updateRecentlyWatched(JSON.parse(storedState)));
+    }
+  }, []);
+  console.log(recentlyWatched);
   return (
     <div>
       <Head>
@@ -17,6 +31,42 @@ function Movies() {
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
       </Head>
       <SearchPage />
+
+      {
+        <div className="overflow-x-auto mx-auto w-11/12 ">
+          <div className="text-3xl text-white mt-4  mb-3">
+            Recently Watched TV Shows
+          </div>
+          <div className="text-white flex gap-3 mx-auto">
+            {recentlyWatched.map((e) => (
+              <Link key={e.tvid} href={`/${e.tvid}`}>
+                <div
+                  key={e.tvid}
+                  className={`relative group overflow-hidden aspect-video w-fit cursor-pointer  duration-200 rounded-lg`}
+                >
+                  <div className="absolute inset-0 z-10 transition-all duration-300  group-hover:opacity-100">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b090a] to-transparent" />
+                    <div className="absolute bottom-0 left-0 w-full  h-full px-4 py-2 flex flex-col justify-end">
+                      <div className="text-lg font-semibold  ">
+                        {e.episode.tvshowtitle}
+                      </div>
+                      <p className="text-sm   duration-150">
+                        S{e.episode.season} E{e.episode.episode}{" "}
+                        {e.episode.title}
+                      </p>
+                    </div>
+                  </div>
+                  <img
+                    className="object-cover object-center aspect-w-16 aspect-h-9 transition-all duration-100 transform w-64"
+                    src={e.episode.img.hd}
+                    alt={`Episode ${e.episode.number}`}
+                  />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      }
     </div>
   );
 }
