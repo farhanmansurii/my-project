@@ -8,7 +8,11 @@ const Player = ({ episode }) => {
   const handleQualityChange = (url) => {
     setSelectedUrl(url);
   };
+  const searchQuery = "english";
 
+  const results = episode.subtitles.filter(language => {
+    return language.lang.toLowerCase().includes(searchQuery.toLowerCase());
+  });
   const englishLangs = ["English", "English 1", "English 2", "English - English"];
   const englishSubtitles = episode.subtitles.filter((subtitle) =>
     englishLangs.includes(subtitle.lang)
@@ -20,14 +24,12 @@ const Player = ({ episode }) => {
   const [selectedSubtitleUrl, setSelectedSubtitleUrl] = useState(
     defaultSubtitle?.url
   );
-  const handleSubtitleChange = (event) => {
-    setSelectedSubtitleUrl(event.target.value);
-  };
-  const subtitleTracks = englishSubtitles.map((subtitle, index) => ({
+ 
+  const subtitleTracks = results.map((subtitle, index) => ({
     kind: "subtitles",
     src: subtitle.url,
     srcLang: subtitle.lang,
-    default: subtitle.url === selectedSubtitleUrl || subtitle === defaultSubtitle,
+   
   }));
 
   useEffect(() => {
