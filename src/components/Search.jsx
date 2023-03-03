@@ -59,7 +59,11 @@ const SearchPage = () => {
                                   {e.releaseDate}
                                 </p>
                                 <p className="text-xs text-white/40">
-                                  {e.type} • {e.rating}⭐
+                                  <span className="text-red-500">
+                                    {" "}
+                                    {e.type}
+                                  </span>{" "}
+                                  • {e.rating.toFixed(1)}⭐
                                 </p>
                                 <h3 className="text-white  text-sm lg:text-lg  ">
                                   {e.title}
@@ -83,7 +87,11 @@ const SearchPage = () => {
                                   {e.releaseDate}
                                 </p>
                                 <p className="text-xs text-white/40">
-                                  {e.type} • {e.rating.toFixed(1)}⭐
+                                  <span className="text-blue-500">
+                                    {" "}
+                                    {e.type}
+                                  </span>{" "}
+                                  • {e.rating.toFixed(1)}⭐
                                 </p>
                                 <h3 className="text-white  text-sm lg:text-lg  ">
                                   {e.title}
