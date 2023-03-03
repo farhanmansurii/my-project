@@ -36,18 +36,14 @@ function TvShowDetails({ show }) {
             <div className="text-sm opacity-60">{releaseDate}</div>
           )}
         </div>
-        {genres && (
-          <div className="flex items-center mb-4">
-            <div className="px-2 py-1 text-sm  rounded-md mr-2">
-              {genres[0]}
+        <div className="flex items-center mb-4">
+          <div className="px-2 py-1 text-sm  rounded-md mr-2">{genres[0]}</div>
+          {genres.slice(1, 3).map((genre, index) => (
+            <div key={index} className="px-2 py-1 text-sm  rounded-md mr-2">
+              {genre}
             </div>
-            {genres.slice(1, 3).map((genre, index) => (
-              <div key={index} className="px-2 py-1 text-sm  rounded-md mr-2">
-                {genre}
-              </div>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
         {description && <div className="mb-4 text-sm">{description}</div>}
         <div className="flex flex-wrap gap-2 my-4">
           {duration && (

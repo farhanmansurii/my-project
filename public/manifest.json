@@ -1,11 +1,11 @@
 {
-    "theme_color": "#060606",
-    "background_color": "#060606",
+    "theme_color": "#111111",
+    "background_color": "#111111",
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Spicy-TV",
-    "short_name": "Spicy-TV",
+    "name": "SpicyTV",
+    "short_name": "SpicyTV",
     "icons": [
         {
             "src": "/icon-192x192.png",
@@ -26,12 +26,6 @@
             "src": "/icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
-        },
-        {
-            "src": "maskable.png",
-            "sizes": "48x48",
-            "type": "image/x-icon",
-            "purpose": "maskable"
         }
     ]
 }

@@ -47,7 +47,9 @@ function MovieDetails({ movie }) {
             ))}
           </div>
         )}
-        {description && <div className="mb-4 text-sm">{description}</div>}
+        {description && (
+          <div className="mb-4 text-sm line-clamp-4">{description}</div>
+        )}
         <div className="flex flex-wrap gap-2 my-4">
           {duration && (
             <div className=" text-white px-2 py-1 text-sm rounded-md mr-2">

@@ -91,8 +91,8 @@ function MyPage({ id, deets }) {
               className=" text-sm lg:text-lg mx-auto cursor-pointer lg:w-10/12"
             >
               <div className="w-fit  text-black my-4 bg-white text-left mx-auto px-6 py-2 rounded-lg ">
-                Continue watching ? S{e.episode.season} E{e.episode.episode}{" "}
-                {e.episode.title}
+                Play S{e.episode.season} E{e.episode.episode} {e.episode.title}{" "}
+                ?
               </div>
             </div>
           )
