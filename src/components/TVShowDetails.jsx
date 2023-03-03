@@ -21,7 +21,7 @@ function TvShowDetails({ show }) {
           className="h-[300px] mt-4 lg:my-auto mx-auto lg:mx-6 rounded-md shadow-xl"
         />
       )}
-      <div className="px-4 lg:py-12 py-6 md:py-16">
+      <div className="px-4 lg:py-6 ">
         <h1 className="text-3xl flex md:text-4xl lg:text-5xl font-semibold  text-white mb-4">
           {title}
         </h1>
