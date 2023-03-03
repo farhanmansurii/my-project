@@ -19,6 +19,7 @@ const Player = ({ episode }) => {
           smoothQualityChange: true,
           enableWebVTT: true,
           autoStartLoad: true,
+          startPosition: -1,
           capLevelOnFPSDrop: false,
           capLevelToPlayerSize: false,
           initialLiveManifestSize: 1,
@@ -31,11 +32,16 @@ const Player = ({ episode }) => {
           nudgeOffset: 0.1,
           nudgeMaxRetry: 3,
           maxFragLookUpTolerance: 0.25,
-
+          liveSyncDurationCount: 3,
+          liveMaxLatencyDurationCount: Infinity,
+          liveDurationInfinity: false,
+          enableWorker: true,
+          enableSoftwareAES: true,
           manifestLoadingTimeOut: 10000,
           manifestLoadingMaxRetry: 1,
           manifestLoadingRetryDelay: 1000,
           manifestLoadingMaxRetryTimeout: 64000,
+          startLevel: undefined,
           levelLoadingTimeOut: 10000,
           levelLoadingMaxRetry: 4,
           levelLoadingRetryDelay: 1000,
@@ -46,7 +52,7 @@ const Player = ({ episode }) => {
           fragLoadingMaxRetryTimeout: 64000,
           startFragPrefetch: false,
           testBandwidth: true,
-          progressive: true,
+          progressive: false,
           lowLatencyMode: true,
           fpsDroppedMonitoringPeriod: 5000,
           fpsDroppedMonitoringThreshold: 0.2,
@@ -58,6 +64,7 @@ const Player = ({ episode }) => {
           enableWebVTT: true,
           enableIMSC1: true,
           enableCEA708Captions: true,
+          stretchShortVideoTrack: false,
           maxAudioFramesDrift: 1,
           forceKeyFrameOnDiscontinuity: true,
           abrEwmaFastLive: 3.0,
@@ -71,6 +78,11 @@ const Player = ({ episode }) => {
           maxStarvationDelay: 4,
           maxLoadingDelay: 4,
           minAutoBitrate: 0,
+          emeEnabled: false,
+          licenseXhrSetup: undefined,
+          drmSystems: {},
+          drmSystemOptions: {},
+          cmcd: undefined,
         });
         Hls.DefaultConfig;
         hls.loadSource(selectedUrl);
@@ -111,22 +123,14 @@ const Player = ({ episode }) => {
               controls
               className="video-js w-full h-full vjs-big-play-centered"
             >
-              {episode.subtitles.map((subtitle) => (
+              {episodes.subtitles.map((subtitle) => (
                 <track
                   key={subtitle.url}
-                  ref={(track) => {
-                    if (track) {
-                      track.mode = "hidden";
-                      track.addEventListener("load", () => {
-                        console.log(`Loaded subtitle: ${subtitle.url}`);
-                      });
-                    }
-                  }}
                   src={subtitle.url}
-                  kind={subtitle.kind || "subtitles"}
-                  srcLang={subtitle.srclang || "en"}
-                  label={subtitle.label || "English"}
-                  default={subtitle.default}
+                  kind="subtitles"
+                  srcLang={subtitle.lang}
+                  label={subtitle.lang}
+                  default={subtitle.lang === "English"}
                 />
               ))}
             </video>
