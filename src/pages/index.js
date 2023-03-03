@@ -38,13 +38,13 @@ function Movies() {
             Recently Watched TV Shows
           </div>
           <div className=" flex overflow-x-scroll m-1 p-1  scrollbar-hide">
-            {recentlyWatched.map((e) => (
+            {recentlyWatched?.map((e) => (
               <Link key={e.tvid} href={`/${e.tvid}`}>
                 <div className="relative w-64 h-36 mb-3 mx-2">
                   <div className="absolute inset-0 bg-black opacity-50 rounded-lg" />
                   <img
                     className="object-cover w-full h-full rounded-lg"
-                    src={e.episode.img.hd}
+                    src={e.episode.img?.hd}
                     alt={`Episode ${e.episode.number}`}
                   />
                   <div className="absolute bottom-0 w-full h-1/3 px-4 ">
