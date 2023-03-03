@@ -123,7 +123,7 @@ const Player = ({ episode }) => {
               controls
               className="video-js w-full h-full vjs-big-play-centered"
             >
-              {episodes.subtitles.map((subtitle) => (
+              {episode.subtitles.map((subtitle) => (
                 <track
                   key={subtitle.url}
                   src={subtitle.url}
