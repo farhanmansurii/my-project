@@ -9,13 +9,14 @@ const Player = ({ episode }) => {
     setSelectedUrl(url);
   };
 
-  const subtitleTracks = episode.subtitles.map((subtitle, index) => ({
-    kind: "subtitles",
-    src: subtitle.url,
-    srcLang: subtitle.lang,
-    label: subtitle.lang,
-  }));
-
+  const subtitleTracks = episode.subtitles
+    .filter((subtitle) => subtitle.lang.toLowerCase().includes("english"))
+    .map((subtitle, index) => ({
+      kind: "subtitles",
+      src: subtitle.url,
+      srcLang: subtitle.lang,
+      label: subtitle.lang,
+    }));
   useEffect(() => {
     setSelectedUrl(
       episode.sources.find((video) => video.quality === "auto")?.url

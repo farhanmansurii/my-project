@@ -44,47 +44,55 @@ const SearchPage = () => {
               {searchList
                 .filter((e) => e.rating > 3)
                 .map((e) =>
-                  e.type === "Movie" ? (
-                    <Link key={e.id} href={`/movie/${e.id}`}>
-                      <div className="flex-none w-32 lg:w-40">
-                        <div className="relative">
-                          <img
-                            className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
-                            src={e.image}
-                            alt={e.title}
-                          />
-                          <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
-                            <p className="text-xs text-white/40">
-                              {e.type} • {e.rating}⭐
-                            </p>
-                            <h3 className="text-white  text-sm lg:text-lg  ">
-                              {e.title}
-                            </h3>
+                  e.type === "Movie"
+                    ? e.releaseDate > 1970 && (
+                        <Link key={e.id} href={`/movie/${e.id}`}>
+                          <div className="flex-none w-32 lg:w-40">
+                            <div className="relative">
+                              <img
+                                className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                                src={e.image}
+                                alt={e.title}
+                              />
+                              <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
+                                <p className="text-xs text-white/40">
+                                  {e.releaseDate}
+                                </p>
+                                <p className="text-xs text-white/40">
+                                  {e.type} • {e.rating}⭐
+                                </p>
+                                <h3 className="text-white  text-sm lg:text-lg  ">
+                                  {e.title}
+                                </h3>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ) : (
-                    <Link key={e.id} href={`/${e.id}`}>
-                      <div className="flex-none w-32 lg:w-40">
-                        <div className="relative">
-                          <img
-                            className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
-                            src={e.image}
-                            alt={e.title}
-                          />
-                          <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
-                            <p className="text-xs text-white/40">
-                              {e.type} • {e.rating}⭐
-                            </p>
-                            <h3 className="text-white  text-sm lg:text-lg  ">
-                              {e.title}
-                            </h3>
+                        </Link>
+                      )
+                    : e.releaseDate > 1970 && (
+                        <Link key={e.id} href={`/${e.id}`}>
+                          <div className="flex-none w-32 lg:w-40">
+                            <div className="relative">
+                              <img
+                                className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                                src={e.image}
+                                alt={e.title}
+                              />
+                              <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
+                                <p className="text-xs text-white/40">
+                                  {e.releaseDate}
+                                </p>
+                                <p className="text-xs text-white/40">
+                                  {e.type} • {e.rating}⭐
+                                </p>
+                                <h3 className="text-white  text-sm lg:text-lg  ">
+                                  {e.title}
+                                </h3>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </Link>
-                  )
+                        </Link>
+                      )
                 )}
             </div>
           ) : (

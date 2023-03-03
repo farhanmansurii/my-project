@@ -1,3 +1,4 @@
+import MovieDetails from "@/components/MovieDetails";
 import Player from "@/components/Player";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -38,17 +39,15 @@ function MyPage({ id, deets }) {
   }, [deets]);
   return (
     <div className="min-h-screen ">
-      <div className="text-white  text-6xl mt-10 w-10/12 mx-auto">
-        {deets.title}
-      </div>
+      <MovieDetails movie={deets} />
       {episode ? (
         <div className="pb-[10rem]">
           <Player episode={episode} />
         </div>
       ) : (
         <div className="flex w-full justify-center text-center text-2xl my-10 text-white">
-     <Spinner />
-      </div>
+          <Spinner />
+        </div>
       )}
     </div>
   );

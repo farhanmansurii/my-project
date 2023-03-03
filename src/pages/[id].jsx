@@ -1,4 +1,5 @@
 import Player from "@/components/Player";
+import TvShowDetails from "@/components/TVShowDetails";
 import { addEpisode } from "@/redux/reducers/recentlyWatchedReducers";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ export async function getServerSideProps(context) {
 
 function MyPage({ id, deets }) {
   const dispatch = useDispatch();
+  console.log(deets);
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [loader, setLoader] = useState();
   const [expandedSeason, setExpandedSeason] = useState(null);
@@ -79,9 +81,7 @@ function MyPage({ id, deets }) {
 
   return (
     <div className="w-[97%] mx-auto">
-      <div className="text-white text-6xl mt-10  lg:w-10/12 mx-auto">
-        {deets.title}
-      </div>
+      <TvShowDetails show={deets} />
       {recentlyWatched.map(
         (e) =>
           e.tvid === id && (
