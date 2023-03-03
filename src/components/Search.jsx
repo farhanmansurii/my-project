@@ -83,7 +83,7 @@ const SearchPage = () => {
                                   {e.releaseDate}
                                 </p>
                                 <p className="text-xs text-white/40">
-                                  {e.type} • {e.rating}⭐
+                                  {e.type} • {e.rating.toFixed(1)}⭐
                                 </p>
                                 <h3 className="text-white  text-sm lg:text-lg  ">
                                   {e.title}
