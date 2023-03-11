@@ -21,10 +21,12 @@ const recentlyWatchedSlice = createSlice({
       } else {
         // TV show already exists, update its episode if it's different
         if (state.items[showIndex].episode.id !== episode.id) {
-          state.items[showIndex].episode = episode;
+          // Move the existing TV show to the beginning of the array
+          const existingShow = state.items.splice(showIndex, 1)[0];
+          state.items.unshift(existingShow);
+          state.items[0].episode = episode;
         }
       }
-
       // Remove the oldest TV show if there are more than 10 TV shows in the state
       if (state.items.length > 10) {
         state.items.pop();

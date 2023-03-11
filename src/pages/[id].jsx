@@ -58,7 +58,7 @@ function MyPage({ id, deets }) {
     setSelectedEpisode(episode);
     setLoader(<Spinner />);
     setEpisode("");
-    dispatch(addEpisode({ ...episode, tvshowtitle: deets.title, tvid: id, playedPercentage: 0 }));
+    dispatch(addEpisode({ ...episode, tvshowtitle: deets.title, tvid: id}));
   };
   useEffect(() => {
     const fetchEpisode = async () => {
