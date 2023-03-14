@@ -26,7 +26,6 @@ export default function ArtPlayer({ option, getInstance, source, subtitles, ...r
         {
           width: 200,
           html: 'Subtitles',
-          default :subtitles[0]?.url,
           tooltip: 'Default',
           selector: subtitles,
           onSelect: function (item) {
