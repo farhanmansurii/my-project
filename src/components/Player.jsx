@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
-import Hls from "hls.js";
+import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
+import dynamic from "next/dynamic";
+import ArtPlayer from "./Artplayer";
+import { html } from "artplayer";
 
 const Player = ({ episode }) => {
   const [selectedUrl, setSelectedUrl] = useState(
@@ -10,22 +12,8 @@ const Player = ({ episode }) => {
     setSelectedUrl(url);
   };
 
-  const subtitleTracks = episode.subtitles
-    .filter((subtitle) => subtitle.lang.toLowerCase().includes("english"))
-    .map((subtitle, index) => ({
-      kind: "subtitles",
-      src: subtitle.url,
-      srcLang: subtitle.lang,
-      label: subtitle.lang,
-    }));
 
-  const onHlsJsPlayer = (player) => {
-    if (player) {
-      const hls = new Hls();
-      hls.loadSource(selectedUrl);
-      hls.attachMedia(player);
-    }
-  };
+
 
   useEffect(() => {
     setSelectedUrl(
@@ -33,45 +21,78 @@ const Player = ({ episode }) => {
     );
   }, [episode]);
 
-  const hlsConfig = {
-    startPosition: -1,
-    liveSyncDurationCount: 3,
-    liveMaxLatencyDurationCount: 10,
-    maxBufferLength: 30,
-    maxBufferSize: 60 * 1000 * 1000, // 60 MB
-    lowLatencyMode: true,
-    enableWorker: true,
-    enableSoftwareAES: true,
-    manifestLoadingTimeOut: 10000,
-    manifestLoadingMaxRetry: 5,
-    levelLoadingTimeOut: 10000,
-    levelLoadingMaxRetry: 5,
-    fragLoadingTimeOut: 10000,
-    fragLoadingMaxRetry: 5,
-  };
 
+  const subtitleTracks = episode.subtitles.map((subtitle) => ({
+    default: subtitle.default,
+    src: subtitle.url,
+    kind: 'subtitles',
+    srclang: 'en',
+    type: 'vtt',
+    html: subtitle.lang
+  }));
+  const subtitles = subtitleTracks.map(track => ({
+    url: track.src,
+    type: 'vtt',
+    html:track.html
+  }));
+  console.log(subtitles)
   return (
     <div key={episode.id} className="w-full my-5">
       {selectedUrl && episode ? (
         <div className="justify-center flex">
           <div className="w-full h-full lg:w-[720px] aspect-video border-white/30">
-            <ReactPlayer
-              url={selectedUrl}
-              controls
-             playing
-              width={"100%"}
-              height={"100%"}
-              style={{ top: 0, left: 0, width: "100%", height: "100%" }}
-              config={{
-                file: {
-                  hlsOptions: hlsConfig,
-                  tracks: subtitleTracks,
-                },
-                attributes: {
-                  crossOrigin: "anonymous",
-                },
-              }}
-              onReady={onHlsJsPlayer}
+            <ArtPlayer
+              source={selectedUrl}
+              subtitles={subtitles}
+              option={{
+
+                backdrop: true,
+                
+                playsInline: true,
+                autoPlayback: true,
+                theme: "#e63946",
+                miniProgressBar: true,
+                volume: 0.5,
+                isLive: false,
+                muted: false,
+                autoplay: false,
+                autoSize: true,
+                screenshot: true,
+                setting: true,
+                playbackRate: true,
+                aspectRatio: true,
+                fullscreen: true,
+                miniProgressBar: true,
+                mutex: true,
+                backdrop: true,
+                playsInline: true,
+                autoPlayback: true,
+                lock: true,
+                autoOrientation: true,
+
+                plugins: [
+                  artplayerPluginHlsQuality({
+                    // Show quality in control
+                    control: true,
+
+                    // Show quality in setting
+                    setting: true,
+
+                    // Get the resolution text from level
+                    getResolution: (level) => level.height + "P",
+
+                    // I18n
+                    title: "Quality",
+                    auto: "auto",
+                  }),
+                ],
+                setting: true,
+                screenshot: true,
+                fullscreen: true,
+                fastForward: true,
+
+                autoSize: true,
+              }} className="aspect-video"
             />
           </div>
         </div>

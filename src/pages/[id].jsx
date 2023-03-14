@@ -1,3 +1,4 @@
+import ArtPlayer from "@/components/Artplayer";
 import Player from "@/components/Player";
 import TvShowDetails from "@/components/TVShowDetails";
 import { addEpisode } from "@/redux/reducers/recentlyWatchedReducers";
@@ -97,6 +98,7 @@ function MyPage({ id, deets }) {
             </div>
           )
       )}
+    
       {episode ? (
         <div className="flex  flex-col w-full mx-auto lg:w-10/12">
           <Player episode={episode} />
