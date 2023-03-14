@@ -91,8 +91,7 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
                     name: 'your-button',
                     index: 10,
                     position: 'right',
-                    html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5"><path d="M3.288 4.819A1.5 1.5 0 001 6.095v7.81a1.5 1.5 0 002.288 1.277l6.323-3.905c.155-.096.285-.213.389-.344v2.973a1.5 1.5 0 002.288 1.276l6.323-3.905a1.5 1.5 0 000-2.553L12.288 4.82A1.5 1.5 0 0010 6.095v2.973a1.506 1.506 0 00-.389-.344L3.288 4.82z" /></svg>'
-                    ,
+                    html:'<img src="https://imgur.com/m60thCC.png" class="w-6 h-6 rounded-full"/>',
                     tooltip: ' Next Episode',
                     click: () => {
                       deets.type !== "Movie" &&
@@ -105,14 +104,19 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
                   }],
                 autoSize: true,
                 icons: {
-                  play: '<svg xmlns="http://www.w3.org/2000/svg" style={{color :"red"}} viewBox="0 0 20 20" fill="red" className="w-5 stroke-red-500 h-5"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>',
+                   play: '<img src="https://i.imgur.com/KtrhqpN.png" class="w-6 h-6 rounded-full"/>',
+                   pause: '<img src="https://i.imgur.com/h2nF0hf.png" class="w-6 h-6 rounded-full"/>',
+                   volume: '<img src="https://i.imgur.com/PJLiZtu.png" class="w-6 h-6 rounded-full"/>',
+                   volumeClose: '<img src="https://i.imgur.com/MMrjLqr.png" class="w-6 h-6 rounded-full"/>',
+                   fullscreenOn: '<img src="https://i.imgur.com/xMBIN8w.png" class="w-6 h-6 rounded-full"/>',
+                   setting: '<img src="https://i.imgur.com/hDKEZhq.png" class="w-6 h-6 rounded-full"/>',
                   loading: '<img  class="animate-spin  w-12 h-12" src="https://png.pngtree.com/png-vector/20220818/ourmid/pngtree-mangekyou-sharingan-shisui-uchiha-png-image_6115662.png" class="h-12 w-12" />',
                   state: '<img src="https://icons-for-free.com/iconfiles/png/512/go+pikachu+play+pokemon+icon-1320186973527720987.png" class="h-12 w-12" />',
 
                 },
               }} className="aspect-video"
             />
-          </div>
+          </div>         
         </div>
       ) : (
         <div>Loading</div>
