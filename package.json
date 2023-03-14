@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.9.3",
     "@tailwindcss/line-clamp": "^0.4.2",
     "artplayer": "^4.6.2",
+    "artplayer-plugin-control": "^1.0.0",
     "artplayer-plugin-hls-quality": "^1.0.1",
     "axios": "^1.3.4",
     "eslint": "8.34.0",

@@ -22,7 +22,6 @@ export async function getServerSideProps(context) {
 
 function MyPage({ id, deets }) {
   const dispatch = useDispatch();
-  console.log(deets);
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [loader, setLoader] = useState();
   const [expandedSeason, setExpandedSeason] = useState(null);
