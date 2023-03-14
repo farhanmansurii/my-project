@@ -1,12 +1,12 @@
 import Artplayer from "artplayer";
 import Hls from "hls.js";
 import { useEffect, useRef } from "react";
-
-export default function ArtPlayer({ option, getInstance, source, subtitles,...rest }) {
+import artplayerPluginControl from 'artplayer-plugin-control'
+export default function ArtPlayer({ option, getInstance, source, subtitles, ...rest }) {
   const artRef = useRef();
   useEffect(() => {
     const art = new Artplayer({
-      url:source,
+      url: source,
       customType: {
         m3u8: function playM3u8(video, url, art) {
           if (Hls.isSupported()) {
@@ -22,20 +22,20 @@ export default function ArtPlayer({ option, getInstance, source, subtitles,...re
             art.notice.show = "Unsupported playback format: m3u8";
           }
         },
-      },settings: [
+      }, settings: [
         {
           width: 200,
           html: 'Subtitles',
           tooltip: 'select subtitle',
           selector: subtitles,
           onSelect: function (item) {
-            console.log(item)
+            
             art.subtitle.switch(item.url, {
               name: item.html,
             });
-            return item.html;
           },
         }],
+           
       ...option,
 
       container: artRef.current,

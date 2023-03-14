@@ -33,7 +33,8 @@ const Player = ({ episode }) => {
   const subtitles = subtitleTracks.map(track => ({
     url: track.src,
     type: 'vtt',
-    html:track.html
+    html: track.html,
+
   }));
   console.log(subtitles)
   return (
@@ -47,7 +48,7 @@ const Player = ({ episode }) => {
               option={{
 
                 backdrop: true,
-                
+
                 playsInline: true,
                 autoPlayback: true,
                 theme: "#e63946",
@@ -85,6 +86,8 @@ const Player = ({ episode }) => {
                     title: "Quality",
                     auto: "auto",
                   }),
+                  artplayerPluginControl(),
+
                 ],
                 setting: true,
                 screenshot: true,
