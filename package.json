@@ -11,6 +11,9 @@
   "dependencies": {
     "@flaticon/flaticon-uicons": "^2.0.1",
     "@next/font": "13.1.6",
+    "@oplayer/core": "^1.2.11",
+    "@oplayer/hls": "^1.2.8",
+    "@oplayer/ui": "^1.2.17",
     "@reduxjs/toolkit": "^1.9.3",
     "@tailwindcss/line-clamp": "^0.4.2",
     "artplayer": "^4.6.2",

@@ -1,56 +1,51 @@
-import Artplayer from "artplayer";
-import Hls from "hls.js";
+import Player from "@oplayer/core";
+import hls from "@oplayer/hls";
+import ui from "@oplayer/ui";
 import { useEffect, useRef } from "react";
-import artplayerPluginControl from 'artplayer-plugin-control'
-export default function ArtPlayer({ option, getInstance, source, subtitles, ...rest }) {
-  const artRef = useRef();
+
+export default function EnimePlayer(props) {
+  const { source, subtitles } = props;
+
+  console.log(subtitles);
+  const playerContainerRef = useRef();
+  const playerRef = useRef();
+
   useEffect(() => {
-    const art = new Artplayer({
-      url: source,
-      customType: {
-        m3u8: function playM3u8(video, url, art) {
-          if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(url);
-            hls.attachMedia(video);
-            art.hls = hls;
-            art.once("url", () => hls.destroy());
-            art.once("destroy", () => hls.destroy());
-          } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-            video.src = url;
-          } else {
-            art.notice.show = "Unsupported playback format: m3u8";
-          }
-        },
-      }, settings: [
-        {
-          width: 200,
-          html: 'Subtitles',
-          tooltip: 'Default',
-          selector: subtitles,
-          onSelect: function (item) {
-            art.subtitle.switch(item.url, {
-              name: item.html,
-            });
-            return item.html;
+    if (playerRef.current) return;
+    playerRef.current = Player.make(playerContainerRef.current)
+      .use([
+        ui({
+          theme: { primaryColor: "#e1e1e1e1" },
+          pictureInPicture: true,
+          slideToSeek: "always",
+          controlBar: true,
+          settings: ["subt"],
+          subtitle: {
+            color: "hotpink",
+            bottom: true,
+            fontSize: 20,
           },
-        }],
+          forceLandscapeOnFullscreen: true,
+        }),
+        hls(),
+      ])
+      .create();
+  }, []);
 
-      ...option,
-
-      container: artRef.current,
-    });
-
-    if (getInstance && typeof getInstance === "function") {
-      getInstance(art);
+  useEffect(() => {
+    if (source) {
+      playerRef.current.changeSource({
+        src: source,
+      });
     }
-
-    return () => {
-      if (art && art.destroy) {
-        art.destroy(false);
-      }
-    };
+    if (subtitles) {
+      playerRef.current.plugins.ui.subtitle.updateSource(subtitles);
+    }
   }, [source]);
 
-  return <div ref={artRef} {...rest}></div>;
+  return (
+    <div>
+      <div className="w-full h-full p-0 m-0" ref={playerContainerRef} />
+    </div>
+  );
 }
