@@ -18,10 +18,7 @@ export default function EnimePlayer(props) {
           theme: { primaryColor: "#e1e1e1e1" },
           pictureInPicture: true,
           slideToSeek: "always",
-          controlBar: true,
-          settings: ["subt"],
           subtitle: {
-            color: "hotpink",
             bottom: true,
             fontSize: 20,
           },
