@@ -17,7 +17,8 @@ export default function EnimePlayer(props) {
         ui({
           theme: { primaryColor: "#e1e1e1e1" },
           pictureInPicture: true,
-          slideToSeek: "always",
+          slideToSeek: "always",controlBar: { back: "always" }, // | { back:  'always' | 'fullscreen' } // appbar
+          topSetting: true,
           forceLandscapeOnFullscreen: true,
         }),
         hls(),
