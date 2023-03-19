@@ -16,7 +16,7 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
   }, [episode]);
 
   const subtitles = episode.subtitles
-    .filter((subtitle) => subtitle.lang.toLowerCase().includes("english"))
+    .filter((subtitle) => subtitle.lang.toLowerCase().includes("eng"))
     .map((subtitle, index) => ({
       src: subtitle.url,
       default: index === 0 ? true : false,
