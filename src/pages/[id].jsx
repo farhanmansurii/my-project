@@ -123,72 +123,55 @@ function MyPage({ id, deets }) {
       <div className=" pb-[8rem] lg:w-10/12 mx-auto">
         <div className="container mx-auto px-4">
           {deets.seasons.map((season) => (
-            <div key={season.season} className="my-4">
+            <div key={season.season} className="">
               <h2
-                className="text-white text-2xl my-2 font-semibold cursor-pointer flex"
+                className="text-white p-3 text-2xl cursor-pointer flex items-center border-b  justify-between hover:bg-neutral-700 duration-200 "
                 onClick={() => toggleSeason(season)}
               >
-                Season {season.season}{" "}
-                <span>
+                <span>Season {season.season}</span>
+
+
+
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 mt-1 mx-5 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                    />
-                  </svg>
-                </span>
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                  height="1em"
+                  width="1em"
+                  className={`h-6 w-6 transition-transform duration-300 transform ${expandedSeason === season ? "rotate-180" : "rotate-0"}`}
+
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M1.553 6.776a.5.5 0 01.67-.223L8 9.44l5.776-2.888a.5.5 0 11.448.894l-6 3a.5.5 0 01-.448 0l-6-3a.5.5 0 01-.223-.67z"
+                  />
+                </svg>
               </h2>
               {expandedSeason === season && (
                 <div className="flex flex-col z-10 space-x-1">
                   {season.episodes?.map((episode) => (
                     <div
                       key={episode.id}
-                      className="flex-shrink-0 bg-white/10 p-4 m-1 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
+                      className="flex-shrink-0 border-b p-4  flex-row items-center mx-1 w-full duration-100 cursor-pointer"
                       onClick={() => handleEpisodeClick(episode)}
                     >
                       <h3 className="text-white flex gap-5 text-sm font-semibold">
-                        Episode {episode.episode}: {episode.title}
+                        E{episode.episode}: {episode.title}
                         {episode.id ? (
-                          <span>
-                            {" "}
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="green"
-                              className="w-6 h-6 "
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
-                            </svg>
-                          </span>
-                        ) : (
                           <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="red"
+                            fill="green"
+                            viewBox="0 0 16 16"
                             className="w-6 h-6"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
+                            <path d="M10.97 4.97a.75.75 0 011.07 1.05l-3.99 4.99a.75.75 0 01-1.08.02L4.324 8.384a.75.75 0 111.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 01.02-.022z" />
                           </svg>
+                        ) : (
+                            <svg
+                              fill="red"
+                              viewBox="0 0 16 16"
+                              className="w-6 h-6"
+                            >
+                              <path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.553.553 0 01-1.1 0L7.1 4.995z" />
+                            </svg>
                         )}
                       </h3>
                     </div>
