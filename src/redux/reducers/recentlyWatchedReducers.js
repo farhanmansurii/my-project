@@ -49,14 +49,7 @@ const recentlyWatchedSlice = createSlice({
     deleteEpisode: (state, action) => {
       const tvid = action.payload;
 
-      // Find the index of the TV show by its tvid
-      const showIndex = state.items.findIndex((item) => item.tvid === tvid);
-
-      if (showIndex !== -1)
-      {
-        // Remove the TV show from the array
-        state.items.splice(showIndex, 1);
-      }
+      state.items = state.items.filter((item) => item.tvid !== tvid);
 
       // Save the state to the local storage
       localStorage.setItem("recentlyWatched", JSON.stringify(state));

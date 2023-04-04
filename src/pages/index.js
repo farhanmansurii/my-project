@@ -57,7 +57,7 @@ function Movies() {
 
                   <div className="absolute top-0 right-0  p-2  ">
 
-                    <button className=" bg-red-500 rounded-full p-2" onClick={() => dispatch(deleteEpisode(e.tvid))}>
+                    <button className=" bg-red-500 rounded-full p-2 cursor-auto" onClick={() => dispatch(deleteEpisode(e.tvid))}>
 
                       <svg
                         viewBox="0 0 512 512"
