@@ -95,7 +95,7 @@ function Movies() {
                   <Link key={e.tvid} href={`/${e.tvid}`}>
                     <div className="absolute bottom-0 w-full h-1/3 px-4 ">
 
-                      <h3 className="text-base font-semibold text-white">
+                      <h3 className="text-base font-semibold line-clamp-1 text-white">
                         {e.episode.title}
                       </h3>
                       <p className="text-sm text-gray-400">
