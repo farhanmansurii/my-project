@@ -31,7 +31,7 @@ const SearchPage = () => {
             placeholder="
             
             Search for any  TV show / Movie"
-            className=" placeholder:text-black rounded-full px-4 py-4 h-fit w-full backdrop-blur-sm bg-white  text-black  outline-none border-secondary active:border-0"
+            className=" placeholder:text-black rounded-full px-4 py-4 h-fit w-full backdrop-blur-sm bg-white  text-black  outline-none border-secondary active:border-4 border-4 border-neutral-500"
             input={val}
             onChange={(e) => setval(e.target.value)}
           />
