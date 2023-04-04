@@ -21,6 +21,7 @@ export async function getServerSideProps(context) {
 }
 
 function MyPage({ id, deets }) {
+  console.log(deets)
   const dispatch = useDispatch();
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [loader, setLoader] = useState();
@@ -64,7 +65,7 @@ function MyPage({ id, deets }) {
     const fetchEpisode = async () => {
       try {
         const response = await axios.get(
-          `https://spicyapi.vercel.app/meta/tmdb/watch/${selectedEpisode.id}?id=${deets.id}`
+          `https://api.consumet.org/movies/Dramacool/watch?episodeId=${selectedEpisode.id}?mediaId=${deets.id}`
         );
         setEpisode(response.data);
         console.log(response.data);

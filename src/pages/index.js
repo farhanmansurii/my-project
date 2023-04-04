@@ -1,5 +1,5 @@
 import SearchPage from "@/components/Search";
-import { updateRecentlyWatched } from "@/redux/reducers/recentlyWatchedReducers";
+import { deleteEpisode, updateFavMovie, updateFavoriteMovies, updateRecentlyWatched } from "@/redux/reducers/recentlyWatchedReducers";
 
 import Head from "next/head";
 import Link from "next/link";
@@ -12,13 +12,20 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 function Movies() {
   const dispatch = useDispatch();
   const recentlyWatched = useSelector((state) => state.recentlyWatched.items);
+  const movies = useSelector((state) => state.recentlyWatched.movies);
+
   useEffect(() => {
-    const storedState = localStorage.getItem("tvShowsState");
-    if (storedState) {
-      dispatch(updateRecentlyWatched(JSON.parse(storedState)));
+    const storedState = localStorage.getItem("recentlyWatched");
+
+    if (storedState)
+    {
+      const parsedState = JSON.parse(storedState);
+      dispatch(updateRecentlyWatched(parsedState.items));
+      dispatch(updateFavoriteMovies(parsedState.movies));
     }
   }, []);
-  console.log(recentlyWatched);
+
+  console.log(movies, recentlyWatched);
   return (
     <div>
       <Head>
@@ -37,9 +44,9 @@ function Movies() {
           <div className="text-3xl text-white mt-4  mb-3">
             Recently Watched TV Shows
           </div>
-          <div className=" flex overflow-x-scroll m-1 p-1  scrollbar-hide">
-            {recentlyWatched?.map((e) => (
-              <Link key={e.tvid} href={`/${e.tvid}`}>
+          <div className=" flex overflow-x-scroll m-1 p-1 text-white  scrollbar-hide">
+            {recentlyWatched.map((e) => (
+              <>
                 <div className="relative w-64 h-36 mb-3 mx-2">
                   <div className="absolute inset-0 bg-black opacity-50 rounded-lg" />
                   <img
@@ -47,20 +54,96 @@ function Movies() {
                     src={e.episode.img?.hd}
                     alt={`Episode ${e.episode.number}`}
                   />
-                  <div className="absolute bottom-0 w-full h-1/3 px-4 ">
-                    <h3 className="text-base font-semibold text-white">
-                      {e.episode.title}
-                    </h3>
-                    <p className="text-sm text-gray-400">
-                      S{e.episode.season} E{e.episode.episode}
-                    </p>
+
+                  <div className="absolute top-0 right-0  p-2  ">
+
+                    <button className=" bg-red-500 rounded-full p-2" onClick={() => dispatch(deleteEpisode(e.tvid))}>
+
+                      <svg
+                        viewBox="0 0 512 512"
+                        fill="currentColor"
+                        height="1em"
+                        width="1em"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={32}
+                          d="M400 256H112"
+                        />
+                      </svg>
+                    </button>
                   </div>
+                  <div className="absolute top-0 right-0 w-full  p-2  ">
+                    <Link key={e.tvid} href={`/${e.tvid}`}>
+
+
+                      <button className=" bg-purple-500 rounded-full p-2" >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 16 16"
+                          height="1em"
+                          width="1em"
+                        >
+                          <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z" />
+                        </svg>
+                      </button>
+                    </Link>
+                  </div>
+                  <Link key={e.tvid} href={`/${e.tvid}`}>
+                    <div className="absolute bottom-0 w-full h-1/3 px-4 ">
+
+                      <h3 className="text-base font-semibold text-white">
+                        {e.episode.title}
+                      </h3>
+                      <p className="text-sm text-gray-400">
+                        S{e.episode.season} E{e.episode.episode}
+                      </p>
+                    </div>
+                  </Link>
                 </div>
-              </Link>
+
+              </>
             ))}
           </div>
         </div>
       )}
+      {
+        movies && movies.length > 0 &&
+        <div className="overflow-x-auto mx-auto w-11/12 ">
+          <div className="text-3xl text-white mt-4  mb-3">
+            Movies WatchList
+          </div>
+          <div className="flex overflow-x-scroll p-2 space-x-4 scrollbar-hide mx-auto ">
+            {movies.map((e) => <Link key={e.movieid} href={`/movie/${e.movieid}`}>
+              <div className="flex-none w-32 lg:w-40">
+                <div className="relative">
+                  <img
+                    className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                    src={e.deets.image}
+                    alt={e.deets.title}
+                  />
+                  <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
+                    <p className="text-xs text-white/40">
+                      {e.deets.releaseDate}
+                    </p>
+                    <p className="text-xs text-white/40">
+                      <span className="text-red-500">
+                        {" "}
+                        {e.deets.type}
+                      </span>{" "}
+                      • {e.deets.rating.toFixed(1)}⭐
+                    </p>
+                    <h3 className="text-white  text-sm lg:text-lg  ">
+                      {e.deets.title}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </Link>)
+            }</div></div>}
     </div>
   );
 }

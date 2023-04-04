@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   items: [],
+  movies: []
 };
 
 const recentlyWatchedSlice = createSlice({
@@ -15,26 +16,35 @@ const recentlyWatchedSlice = createSlice({
       // Find the index of the TV show by its tvid
       const showIndex = state.items.findIndex((item) => item.tvid === tvid);
 
-      if (showIndex === -1) {
+      if (showIndex === -1)
+      {
         // TV show not found, add it to the beginning of the array
-        state.items.unshift({ tvid, episode });
-      } else {
+        state.items = [{ tvid, episode }, ...state.items];
+      } else
+      {
         // TV show already exists, update its episode if it's different
-        if (state.items[showIndex].episode.id !== episode.id) {
-          // Move the existing TV show to the beginning of the array
-          const existingShow = state.items.splice(showIndex, 1)[0];
-          state.items.unshift(existingShow);
+        if (state.items[showIndex].episode.id !== episode.id)
+        {
+          // Create a new array with the existing TV show moved to the beginning
+          state.items = [
+            state.items[showIndex],
+            ...state.items.slice(0, showIndex),
+            ...state.items.slice(showIndex + 1),
+          ];
           state.items[0].episode = episode;
         }
       }
+
       // Remove the oldest TV show if there are more than 10 TV shows in the state
-      if (state.items.length > 10) {
-        state.items.pop();
+      if (state.items.length > 10)
+      {
+        state.items = state.items.slice(0, 10);
       }
 
       // Save the state to the local storage
-      localStorage.setItem("tvShowsState", JSON.stringify(state));
+      localStorage.setItem("recentlyWatched", JSON.stringify(state));
     },
+
 
     deleteEpisode: (state, action) => {
       const tvid = action.payload;
@@ -42,21 +52,89 @@ const recentlyWatchedSlice = createSlice({
       // Find the index of the TV show by its tvid
       const showIndex = state.items.findIndex((item) => item.tvid === tvid);
 
-      if (showIndex !== -1) {
+      if (showIndex !== -1)
+      {
         // Remove the TV show from the array
         state.items.splice(showIndex, 1);
-
-        // Save the state to the local storage
-        localStorage.setItem("tvShowsState", JSON.stringify(state));
       }
+
+      // Save the state to the local storage
+      localStorage.setItem("recentlyWatched", JSON.stringify(state));
+    },
+
+    addFavoriteMovie: (state, action) => {
+      const isDuplicate = state.movies?.some(movie => movie.movieid === action.payload.movieid);
+
+      if (isDuplicate)
+      {
+        return state;
+      }
+
+      const newState = {
+        ...state,
+        movies: [action.payload, ...state.movies]
+      };
+
+      // Save the state to the local storage
+      localStorage.setItem("recentlyWatched", JSON.stringify(newState));
+
+      return newState;
+    },
+
+    deleteFavoriteMovie: (state, action) => {
+      const id = action.payload;
+      const index = state.movies.findIndex(movie => movie.movieid === id);
+
+      if (index !== -1)
+      {
+        state.movies.splice(index, 1);
+      }
+
+      // Save the state to the local storage
+      localStorage.setItem("recentlyWatched", JSON.stringify(state));
     },
 
     updateRecentlyWatched: (state, action) => {
-      return action.payload;
+      const { items, movies } = action.payload;
+
+      // Check if items or movies are defined before updating state
+      if (items !== undefined && movies !== undefined)
+      {
+        return { items, movies };
+      } else if (items !== undefined)
+      {
+        return { ...state, items };
+      } else if (movies !== undefined)
+      {
+        return { ...state, movies };
+      } else
+      {
+        return state;
+      }
     },
-  },
+
+    updateFavoriteMovies: (state, action) => {
+      const movies = action.payload;
+
+      // Check if movies are defined before updating state
+      if (movies !== undefined)
+      {
+        return { ...state, movies };
+      } else
+      {
+        return state;
+      }
+    }
+  }
 });
 
-export const { addEpisode, deleteEpisode, updateRecentlyWatched } =
-  recentlyWatchedSlice.actions;
+export const {
+  addEpisode,
+  deleteEpisode,
+  addFavoriteMovie,
+  deleteFavoriteMovie,
+  updateRecentlyWatched,
+  updateFavoriteMovies
+} = recentlyWatchedSlice.actions;
+
 export default recentlyWatchedSlice.reducer;
