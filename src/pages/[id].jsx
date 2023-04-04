@@ -148,34 +148,23 @@ function MyPage({ id, deets }) {
               </h2>
               {expandedSeason === season && (
                 <div className="flex flex-col z-10 space-x-1">
-                  {season.episodes?.map((episode) => (
-                    <div
-                      key={episode.id}
-                      className="flex-shrink-0 border-b p-4  flex-row items-center mx-1 w-full duration-100 cursor-pointer"
-                      onClick={() => handleEpisodeClick(episode)}
-                    >
-                      <h3 className="text-white flex gap-5 text-sm font-semibold">
-                        E{episode.episode}: {episode.title}
-                        {episode.id ? (
-                          <svg
-                            fill="green"
-                            viewBox="0 0 16 16"
-                            className="w-6 h-6"
-                          >
-                            <path d="M10.97 4.97a.75.75 0 011.07 1.05l-3.99 4.99a.75.75 0 01-1.08.02L4.324 8.384a.75.75 0 111.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 01.02-.022z" />
-                          </svg>
-                        ) : (
-                            <svg
-                              fill="red"
-                              viewBox="0 0 16 16"
-                              className="w-6 h-6"
-                            >
-                              <path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.553.553 0 01-1.1 0L7.1 4.995z" />
-                            </svg>
-                        )}
-                      </h3>
-                    </div>
-                  ))}
+                  {season.episodes && season.episodes.filter(episode => episode.id).length > 0 ? (
+                    season.episodes.map((episode) => (
+                      episode.id && (
+                        <div
+                          key={episode.id}
+                          className="flex-shrink-0 border-b p-4 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
+                          onClick={() => handleEpisodeClick(episode)}
+                        >
+                          <h3 className="text-white flex gap-5 text-sm font-semibold">
+                            E{episode.episode}: {episode.title}
+                          </h3>
+                        </div>
+                      )
+                    ))
+                  ) : (
+                    <p className="text-white p-4">No episodes available</p>
+                  )}
                 </div>
               )}
             </div>
