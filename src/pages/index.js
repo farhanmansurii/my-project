@@ -52,7 +52,7 @@ function Movies() {
                   <img class="episode-img object-cover w-full h-full rounded-lg" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
 
                   <div class="delete-btn absolute top-0 right-0 p-2">
-                    <button class="bg-red-500 rounded-full p-2 hover:scale-110 duration-150" onClick={() => dispatch(deleteEpisode(e.tvid))}>
+                    <button class="bg-black rounded-full border-white border p-2 hover:scale-110 duration-150" onClick={() => dispatch(deleteEpisode(e.tvid))}>
                       <svg viewBox="0 0 512 512" fill="currentColor" height="1em" width="1em">
                         <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M400 256H112"></path>
                       </svg>
@@ -61,8 +61,8 @@ function Movies() {
 
                   <div class="play-btn absolute top-0 p-2">
                     <Link key={e.tvid} href={`/${e.tvid}`}>
-                      <button class="bg-purple-500 rounded-full hover:scale-110 duration-150 p-2">
-                        <svg fill="currentColor" viewBox="0 0 16 16" height="1em" width="1em">
+                      <button class="bg-white text-black border-black border-2 rounded-full hover:scale-110 duration-150 p-2">
+                        <svg fill="currentColor" viewBox="0 0 16 16" height="1em" width="1em" className="">
                           <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"></path>
                         </svg>
                       </button>
