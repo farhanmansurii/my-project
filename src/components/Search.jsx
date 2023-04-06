@@ -62,7 +62,7 @@ const SearchPage = () => {
           )}
         </div>
 
-        <div className="flex flex-wrap mt-3 w-11/12 mx-auto">
+        {searchHistory.length > 0 && <div className="flex flex-wrap mt-3 w-11/12 mx-auto">
           <div className="rounded-full bg-black px-4 py-2 m-2 flex items-center">
             <span className="cursor-pointer" onClick={() => setval(term)}>
               Recently Searched
@@ -88,7 +88,7 @@ const SearchPage = () => {
               </button>
             </div>
           ))}
-        </div>
+        </div>}
         <div className=" flex l p-2 scrollbar-hide space-x-2 ">
           {val === "" ? (
             ""
