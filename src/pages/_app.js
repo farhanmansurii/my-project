@@ -26,6 +26,8 @@ export default function App({ Component, pageProps }) {
           <div className="mx-auto">
             <Link href="/">
               <BiHomeAlt2 className=" p-3 h-14 w-14 bg-white rounded-full border-4  text-black border-gray-900/40" />
+              <div className="hover:flex hidden duration-150">
+                Home</div>
             </Link>
           </div>
         </div>

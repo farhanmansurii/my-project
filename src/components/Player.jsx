@@ -8,7 +8,7 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
   const handleQualityChange = (url) => {
     setSelectedUrl(url);
   };
-
+  console.log(episode)
   useEffect(() => {
     setSelectedUrl(
       episode.sources.find((video) => video.quality === "auto")?.url
@@ -28,7 +28,7 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
       {selectedUrl && episode ? (
         <div className="justify-center flex">
           <div className="w-full h-full lg:w-[720px] aspect-video border-white/30">
-            <EnimePlayer source={selectedUrl} subtitles={subtitles} />
+            <EnimePlayer source={selectedUrl} subtitles={subtitles} getNextEpisode={getNextEpisode} deets={deets} selectedEpisode={selectedEpisode} />
           </div>
         </div>
       ) : (

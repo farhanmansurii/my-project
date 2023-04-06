@@ -43,7 +43,9 @@ function MyPage({ id, deets }) {
       (episode) => episode.id === selectedEpisode.id
     );
     const tvshowtitle = deets.title;
-    if (episodeIndex === deets.seasons[seasonIndex].episodes.length - 1) {
+
+    if (episodeIndex === deets.seasons[seasonIndex].episodes.length - 1)
+    {
       if (seasonIndex === deets.seasons.length - 1) {
         return null;
       } else {
@@ -65,7 +67,8 @@ function MyPage({ id, deets }) {
     const fetchEpisode = async () => {
       try {
         const response = await axios.get(
-          `https://api.consumet.org/movies/Dramacool/watch?episodeId=${selectedEpisode.id}?mediaId=${deets.id}`
+
+          `https://spicyapi.vercel.app/meta/tmdb/watch/${selectedEpisode.id}?id=${deets.id}`
         );
         setEpisode(response.data);
         console.log(response.data);
