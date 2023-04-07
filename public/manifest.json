@@ -1,11 +1,11 @@
 {
-    "theme_color": "#111111",
-    "background_color": "#111111",
-    "display": "standalone",
+    "theme_color": "black",
+    "background_color": "black",
+    "display": "fullscreen",
     "scope": "/",
     "start_url": "/",
-    "name": "SpicyTV",
-    "short_name": "SpicyTV",
+    "name": "spicy-tv",
+    "short_name": "spicy-tv",
     "icons": [
         {
             "src": "/icon-192x192.png",
