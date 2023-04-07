@@ -85,7 +85,7 @@ function Movies() {
       )}
       {
         movies && movies.length > 0 &&
-        <div className="overflow-x-auto mx-auto w-11/12 ">
+        <div className="overflow-x-auto mx-auto mb-10 w-11/12 ">
           <div className="text-3xl text-white mt-4  mb-3">
             Movies WatchList
           </div>

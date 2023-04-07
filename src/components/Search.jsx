@@ -1,7 +1,9 @@
 import useDebounce from "@/hooks/useDebounce";
-import { addSearchHistory, deleteSearchHistory } from "@/redux/reducers/searchHistory";
+import { addSearchHistory, deleteSearchHistory, updateSearchHistory } from "@/redux/reducers/searchHistory";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BiSearchAlt, BiSearchAlt2 } from "react-icons/bi";
+import { MdClear } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "react-spinner-material";
 const SearchPage = () => {
@@ -9,12 +11,15 @@ const SearchPage = () => {
   const searchHistory = useSelector((state) => state.searchHistory.searchHistory);
   const [val, setval] = useState("");
   const [searchList, setSearchList] = useState([]);
-  const [filteredSearch, setfilteredSearch] = useState([]);
   const [isloading, setisloading] = useState(true);
   const debouncedSearch = useDebounce(val, 1000);
   useEffect(() => {
     async function fetchData() {
-      dispatch(addSearchHistory(debouncedSearch));
+      if (debouncedSearch.split('').length > 3)
+      {
+
+        dispatch(addSearchHistory(debouncedSearch));
+      }
       setisloading(true);
       const data = await fetch(
         `https://spicyapi.vercel.app/meta/tmdb/${debouncedSearch}?page=1`
@@ -29,41 +34,38 @@ const SearchPage = () => {
   const handleRemoveChip = (term) => {
     dispatch(deleteSearchHistory(term));
   };
+
+
+  useEffect(() => {
+    dispatch(updateSearchHistory());
+  }, [dispatch]);
   return (
     <>
       <div className="form-control  place-content-center  ">
         <div className="flex place-self-center mt-3 items-center  w-11/12 mx-auto">
-          <input
-            type="text"
-            placeholder="Search for any TV show / Movie"
-            className="placeholder:text-black rounded-full px-4 py-4 h-fit w-full backdrop-blur-sm bg-white text-black outline-none border-secondary active:border-4 border-4 border-neutral-500"
-            value={val}
-            onChange={(e) => setval(e.target.value)}
-          />{val && (
-            <button
-              type="button"
-              className="ml-2 rounded-full bg-white text-black h-12 w-12 flex items-center"
-              onClick={() => setval('')}
-            >
-              <svg
-                viewBox="0 0 64 64"
-                fill="currentColor"
-                className="w-10 h-10 mx-auto"
+          <div className="relative w-full">
+            <input
+              type="text"
+              placeholder="Search for any TV show / Movie"
+              value={val}
+              onChange={(e) => setval(e.target.value)}
+              className="placeholder:text-black rounded-full px-4 py-4 h-fit w-full backdrop-blur-sm bg-white text-black outline-none border-secondary active:border-4 border-4 border-neutral-500"
+            />
+            {val.length > 0 && (
+              <button
+                onClick={() => setval('')}
+                className="absolute inset-y-0 gap-3 mr-4 right-0 flex items-center pr-3"
               >
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  strokeMiterlimit={10}
-                  strokeWidth={2}
-                  d="M18.947 17.153l26.098 25.903M19.045 43.153l25.902-26.097"
-                />
-              </svg>
-            </button>
-          )}
+                <MdClear className="w-9 h-9 text-white p-2 bg-neutral-500 rounded-full" />
+
+              </button>
+            )}
+
+          </div>
         </div>
 
-        {searchHistory.length > 0 && <div className="flex flex-wrap mt-3 w-11/12 mx-auto">
-          <div className="rounded-full bg-black px-4 py-2 m-2 flex items-center">
+        {searchHistory.length > 0 && <div className="flex  flex-wrap mt-2 w-11/12 mx-auto">
+          <div className="rounded-full bg-black px-2 py-2 m-2 flex items-center">
             <span className="cursor-pointer" onClick={() => setval(term)}>
               Recently Searched
             </span></div>
