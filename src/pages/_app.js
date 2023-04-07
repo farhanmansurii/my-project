@@ -22,14 +22,7 @@ export default function App({ Component, pageProps }) {
             showSpinner: false,
           }}
         />
-        <div className="fixed z-50 bottom-10 left-0 right-0 flex justify-center">
-          <div className="mx-auto">
-            <Link className=" p-3 gap-4 flex items-center bg-white rounded-full border-4  text-black border-gray-900/40" href="/">
-              <BiHomeAlt2 className="w-6 h-6" />
 
-            </Link>
-          </div>
-        </div>
         <Component {...pageProps} />
       </Provider>
     </>

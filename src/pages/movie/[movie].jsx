@@ -1,4 +1,5 @@
 import MovieDetails from "@/components/MovieDetails";
+import Navbar from "@/components/Navbar";
 import Player from "@/components/Player";
 import { addFavoriteMovie, deleteFavoriteMovie, updateFavoriteMovies } from "@/redux/reducers/recentlyWatchedReducers";
 import axios from "axios";
@@ -67,6 +68,7 @@ function MyPage({ id, deets }) {
   }, [deets]);
   return (
     <div className="min-h-screen ">
+      <Navbar />
       <MovieDetails movie={deets} />
       {
         !ifExists ?

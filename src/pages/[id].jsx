@@ -1,9 +1,12 @@
 import ArtPlayer from "@/components/Artplayer";
+import Navbar from "@/components/Navbar";
 import Player from "@/components/Player";
 import TvShowDetails from "@/components/TVShowDetails";
 import { addEpisode } from "@/redux/reducers/recentlyWatchedReducers";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Nav } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "react-spinner-material";
 export async function getServerSideProps(context) {
@@ -21,6 +24,7 @@ export async function getServerSideProps(context) {
 }
 
 function MyPage({ id, deets }) {
+
   console.log(deets)
   const dispatch = useDispatch();
   const [selectedEpisode, setSelectedEpisode] = useState(null);
@@ -59,6 +63,7 @@ function MyPage({ id, deets }) {
 
   const handleEpisodeClick = (episode) => {
     setSelectedEpisode(episode);
+
     setLoader(<Spinner />);
     setEpisode("");
     dispatch(addEpisode({ ...episode, tvshowtitle: deets.title, tvid: id}));
@@ -85,6 +90,7 @@ function MyPage({ id, deets }) {
 
   return (
     <div className="w-[97%] mx-auto">
+      <Navbar />
       <TvShowDetails show={deets} />
       {recentlyWatched.map(
         (e) =>
