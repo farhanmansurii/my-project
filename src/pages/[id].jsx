@@ -114,7 +114,7 @@ function MyPage({ id, deets }) {
       {episode ? (
         <div className="flex  flex-col w-full mx-auto lg:w-10/12">
           <Player episode={episode} getNextEpisode={getNextEpisode} deets={deets} selectedEpisode={selectedEpisode} />
-          <div className=" text-2xl lg:text-4xl text-start  ">
+          {/* <div className=" text-2xl lg:text-4xl text-start  ">
             Now Playing S{selectedEpisode.season} E{selectedEpisode.episode} :{" "}
             {selectedEpisode.title}
           </div>
@@ -123,7 +123,7 @@ function MyPage({ id, deets }) {
             onClick={() => getNextEpisode(selectedEpisode, deets)}
           >
             Play Next Episode
-          </button>
+          </button> */}
         </div>
       ) : (
         loader && (
@@ -163,6 +163,18 @@ function MyPage({ id, deets }) {
                   {season.episodes && season.episodes.filter(episode => episode.id).length > 0 ? (
                     season.episodes.map((episode) => (
                       episode.id && (
+                        selectedEpisode?.id === episode.id ?
+                          <div
+                            key={episode.id}
+                            className="flex-shrink-0 bg-white/70 text-black rounded-md  p-4 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
+                            onClick={() => handleEpisodeClick(episode)}
+                          >
+                            <h3 className="text-black flex gap-5 text-sm font-bold">
+                              E{episode.episode}: {episode.title}
+                            </h3>
+                            <div className="italic"><span className="font-bold ">Synopsis </span> : {episode.description}</div>
+                          </div>
+                          :
                         <div
                           key={episode.id}
                           className="flex-shrink-0 border-b p-4 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
