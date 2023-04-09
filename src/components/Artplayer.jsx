@@ -1,5 +1,6 @@
 import Player from "@oplayer/core";
 import hls from "@oplayer/hls";
+import { chromecast } from "@oplayer/plugins";
 import ui from "@oplayer/ui";
 import { useEffect, useRef } from "react";
 

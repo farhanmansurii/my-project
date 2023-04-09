@@ -1,23 +1,34 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React from 'react'
-import { BiArrowBack, BiHomeAlt2 } from 'react-icons/bi'
-import { MdBackspace } from 'react-icons/md'
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { BiArrowBack, BiHomeAlt2 } from "react-icons/bi";
 
-export default function Navbar() {
-  const router = useRouter()
+const Navbar = () => {
+  const router = useRouter();
+
   return (
-    <div className='w-11/12 gap-3 mx-auto flex p-2 m-2'>
-      <button type="button" onClick={() => router.back()} >
-
-        <BiArrowBack className='w-14 h-14 rounded-full  hover:scale-110 duration-150 border-2 p-2' />
+    <nav className="flex justify-between items-center py-4">
+      <button
+        type="button"
+        onClick={() => router.back()}
+        className="p-3 rounded-full  mx-5  my-3 bg-white text-black hover:bg-gray-200 transition duration-150"
+      >
+        <BiArrowBack className="w-7 h-7 " />
       </button>
 
-      <Link href='/'>
-        <BiHomeAlt2 className='w-14 h-14 rounded-full  hover:scale-110 duration-150 border-2 p-3' />
+      <Link href="/" className="text-2xl font-semibold text-gray-700 hover:text-gray-900 transition duration-150">
+
       </Link>
 
+      <Link href="/">
+        <button
+          type="button"
+          className="p-3 rounded-full mx-5  my-3  bg-white text-black hover:bg-gray-200 transition duration-150"
+        >
+          <BiHomeAlt2 className="w-7 h-7" />
+        </button>
+      </Link>
+    </nav>
+  );
+};
 
-    </div>
-  )
-}
+export default Navbar;
