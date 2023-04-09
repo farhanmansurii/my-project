@@ -70,11 +70,13 @@ function MyPage({ id, deets }) {
     <div className="min-h-screen ">
       <Navbar />
       <MovieDetails movie={deets} />
+      <div className="w-11/12 mx-auto">
+
       <button
         className={
           !ifExists
-            ? "flex items-center gap-2 px-4 py-2 text-sm font-medium mx-auto text-gray-200  bg-black border-2 rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-indigo-500"
-            : "flex items-center gap-2 px-4 py-2 text-sm font-medium mx-auto text-black bg-gray-200   border-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-gray-500"
+              ? "flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-200  bg-black border rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-indigo-500"
+              : "flex items-center gap-2 px-4 py-2 text-sm font-medium  text-black bg-gray-200   border rounded-md hover:bg-gray-300 focus:outline-none focus:ring-gray-500"
         }
         onClick={
           !ifExists
@@ -106,6 +108,7 @@ function MyPage({ id, deets }) {
           )}
         </svg>
       </button>
+      </div>
 
       {episode ? (
         <div className="pb-[3rem]">

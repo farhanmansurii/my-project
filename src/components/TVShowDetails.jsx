@@ -18,7 +18,7 @@ function TvShowDetails({ show }) {
         <img
           src={image}
           alt={title}
-          className="h-[300px] mt-4 lg:my-auto mx-auto lg:mx-6 rounded-md shadow-xl"
+          className="h-[300px] lg:my-auto mx-auto lg:mx-6 rounded-md shadow-xl"
         />
       )}
       <div className="px-4 lg:py-6 ">
@@ -48,7 +48,7 @@ function TvShowDetails({ show }) {
           )}
         </div>
         {description && <div className="mb-4 text-sm">{description}</div>}
-        <div className="flex flex-wrap gap-2 my-4">
+        <div className="flex flex-wrap gap-2 mt-4">
           {duration && (
             <div className=" text-white px-2 py-1 text-sm rounded-md mr-2">
               {duration} min

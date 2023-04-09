@@ -17,10 +17,10 @@ function MovieDetails({ movie }) {
         <img
           src={image}
           alt={title}
-          className="h-[300px] mt-4 lg:my-auto mx-auto lg:mx-6 rounded-md shadow-xl"
+          className="h-[300px] lg:my-auto mx-auto lg:mx-6 rounded-md shadow-xl"
         />
       )}
-      <div className="px-4 lg:py-12 py-6 md:py-16">
+      <div className="px-4 lg:py-12 pt-3 md:py-16">
         <h1 className="text-3xl flex md:text-4xl lg:text-5xl font-semibold  text-white mb-4">
           {title}
         </h1>
@@ -47,7 +47,7 @@ function MovieDetails({ movie }) {
         {description && (
           <div className="mb-4 text-sm line-clamp-4">{description}</div>
         )}
-        <div className="flex flex-wrap gap-2 my-4">
+        <div className="flex flex-wrap gap-2 mb-3 mt-4">
           {duration && (
             <div className=" text-white px-2 py-1 text-sm rounded-md mr-2">
               {duration} min

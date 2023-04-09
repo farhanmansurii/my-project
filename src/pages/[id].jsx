@@ -137,7 +137,7 @@ function MyPage({ id, deets }) {
           {deets.seasons.map((season) => (
             <div key={season.season} className="">
               <h2
-                className="text-white p-3 text-2xl cursor-pointer flex items-center border-b  justify-between hover:bg-neutral-700 duration-200 "
+                className="text-white p-3 text-xl cursor-pointer flex items-center border m-2 rounded-md  justify-between hover:bg-neutral-700 duration-200 "
                 onClick={() => toggleSeason(season)}
               >
                 <span>Season {season.season}</span>
