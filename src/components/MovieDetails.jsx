@@ -36,12 +36,9 @@ function MovieDetails({ movie }) {
           )}
         </div>
         {genres && (
-          <div className="flex items-center mb-4">
-            <div className="px-2 py-1 text-sm  rounded-md mr-2">
-              {genres[0]}
-            </div>
-            {genres.slice(1, 3).map((genre, index) => (
-              <div key={index} className="px-2 py-1 text-sm  rounded-md mr-2">
+          <div className="flex items-center my-2">
+            {genres.slice(0, 3).map((genre, index) => (
+              <div key={index} className="px-2 py-1 rounded-md bg-white text-gray-900 mr-2">
                 {genre}
               </div>
             ))}

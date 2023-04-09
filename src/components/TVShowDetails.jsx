@@ -25,7 +25,7 @@ function TvShowDetails({ show }) {
         <h1 className="text-3xl flex md:text-4xl lg:text-5xl font-semibold  text-white mb-4">
           {title}
         </h1>
-        <div className="flex items-center mb-4">
+        <div className="flex items-center">
           {rating && (
             <div className="flex items-center mr-4">
               <span className="text-lg  mr-1">{rating.toFixed(1)}</span>
@@ -36,13 +36,16 @@ function TvShowDetails({ show }) {
             <div className="text-sm opacity-60">{releaseDate}</div>
           )}
         </div>
-        <div className="flex items-center mb-4">
-          <div className="px-2 py-1 text-sm  rounded-md mr-2">{genres[0]}</div>
-          {genres.slice(1, 3).map((genre, index) => (
-            <div key={index} className="px-2 py-1 text-sm  rounded-md mr-2">
-              {genre}
+        <div className="flex items-center ">
+          {genres && (
+            <div className="flex items-center my-2">
+              {genres.map((genre, index) => (
+                <div key={index} className="px-2 py-1 rounded-md bg-white text-gray-900 mr-2">
+                  {genre}
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
         {description && <div className="mb-4 text-sm">{description}</div>}
         <div className="flex flex-wrap gap-2 my-4">

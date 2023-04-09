@@ -70,27 +70,43 @@ function MyPage({ id, deets }) {
     <div className="min-h-screen ">
       <Navbar />
       <MovieDetails movie={deets} />
-      {
-        !ifExists ?
-          <button className="flex gap-3 w-fit mx-auto p-3 px-5 bg-white rounded-xl text-black  items-center" onClick={() => dispatch(addFavoriteMovie({ movieid: id, deets }))}>
-            Add to Library
-            <svg fill="none" viewBox="0 0 24 24" height="1.3em" width="1.3em" >
-              <path
-                fill="currentColor"
-                d="M2 5h12v2H2V5zM2 9h12v2H2V9zM10 13H2v2h8v-2z"
+      <button
+        className={
+          !ifExists
+            ? "flex items-center gap-2 px-4 py-2 text-sm font-medium mx-auto text-gray-200  bg-black border-2 rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-indigo-500"
+            : "flex items-center gap-2 px-4 py-2 text-sm font-medium mx-auto text-black bg-gray-200   border-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-gray-500"
+        }
+        onClick={
+          !ifExists
+            ? () => dispatch(addFavoriteMovie({ movieid: id, deets }))
+            : () => dispatch(deleteFavoriteMovie(id))
+        }
+      >
+        {ifExists ? "Remove from Library" : "Add to Library"}
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          {!ifExists ? (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          ) : (
+            <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
               />
-              <path fill="currentColor" d="M16 9h2v4h4v2h-4v4h-2v-4h-4v-2h4V9z" />
-            </svg>
-          </button> : <button className="flex gap-3 w-fit mx-auto p-3 px-5 bg-black border-white border-2 rounded-xl text-white  items-center" onClick={() => dispatch(deleteFavoriteMovie(id))}>
-            Remove from Library
-            <svg fill="none" viewBox="0 0 24 24" height="1.3em" width="1.3em" >
-              <path
-                fill="currentColor"
-                d="M15.964 4.634h-12v2h12v-2zM15.964 8.634h-12v2h12v-2zM3.964 12.634h8v2h-8v-2zM12.964 13.71l1.415-1.415 2.121 2.121 2.121-2.12 1.415 1.413-2.122 2.122 2.122 2.12-1.415 1.415-2.121-2.121-2.121 2.121-1.415-1.414 2.122-2.122-2.122-2.12z"
-              />
-            </svg>
-          </button>
-      }
+          )}
+        </svg>
+      </button>
+
       {episode ? (
         <div className="pb-[3rem]">
         <Player episode={episode}  deets={deets} />

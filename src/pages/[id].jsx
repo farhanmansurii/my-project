@@ -95,14 +95,17 @@ function MyPage({ id, deets }) {
       {recentlyWatched?.map(
         (e) =>
           e.tvid === id && (
-            <div
-              onClick={() => handleEpisodeClick(e.episode)}
-              key={e.tvid}
-              className=" text-sm lg:text-lg mx-auto cursor-pointer lg:w-10/12"
-            >
-              <div className="w-fit  text-black my-4 bg-white text-left mx-auto px-6 py-2 rounded-lg ">
-                Play S{e.episode.season} E{e.episode.episode} {e.episode.title}{" "}
-                ?
+            <div onClick={() => handleEpisodeClick(e.episode)} key={e.tvid} className="cursor-pointer mx-auto w-11/12 lg:w-10/12">
+              <div className="flex border max-w-full w-fit  flex-row items-center bg-black bg-opacity-75 rounded-lg py-4 px-6 my-4">
+                <div className="text-white text-center  line-clamp-1 whitespace-nowrap lg:text-left mr-6">
+                  <span className="text-sm lg:text-lg font-semibold mr-2"> Play S{e.episode.season} E{e.episode.episode}</span>
+                  <span className="text-xs lg:text-sm ">{e.episode.title}</span>
+                </div>
+                <div className="flex justify-center items-center bg-white text-black rounded-full w-7 h-7 shadow-lg">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4">
+                    <path d="M7 19V5L19 12L7 19Z" fill="currentColor" />
+                  </svg>
+                </div>
               </div>
             </div>
           )
