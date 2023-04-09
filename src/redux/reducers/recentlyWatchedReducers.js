@@ -19,19 +19,19 @@ const recentlyWatchedSlice = createSlice({
       if (showIndex === -1)
       {
         // TV show not found, add it to the beginning of the array
-        state.items = [{ tvid, episode }, ...state.items];
+        const updatedItems = [{ tvid, episode }, ...state.items];
+        state.items = updatedItems;
       } else
       {
         // TV show already exists, update its episode if it's different
         if (state.items[showIndex].episode.id !== episode.id)
         {
-          // Create a new array with the existing TV show moved to the beginning
-          state.items = [
-            state.items[showIndex],
+          const updatedItems = [
+            { tvid, episode },
             ...state.items.slice(0, showIndex),
             ...state.items.slice(showIndex + 1),
           ];
-          state.items[0].episode = episode;
+          state.items = updatedItems;
         }
       }
 
@@ -44,8 +44,6 @@ const recentlyWatchedSlice = createSlice({
       // Save the state to the local storage
       localStorage.setItem("recentlyWatched", JSON.stringify(state));
     },
-
-
     deleteEpisode: (state, action) => {
       const tvid = action.payload;
 

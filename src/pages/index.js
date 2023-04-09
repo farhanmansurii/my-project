@@ -11,7 +11,9 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 function Movies() {
   const dispatch = useDispatch();
-  const recentlyWatched = useSelector((state) => state.recentlyWatched.items);
+  const recentlyWatched = useSelector(
+    (state) => state.recentlyWatched.items
+  );
   const movies = useSelector((state) => state.recentlyWatched.movies);
 
   useEffect(() => {
@@ -23,9 +25,7 @@ function Movies() {
       dispatch(updateRecentlyWatched(parsedState.items));
       dispatch(updateFavoriteMovies(parsedState.movies));
     }
-  }, []);
-
-  console.log(movies, recentlyWatched);
+  }, [dispatch]);
   return (
     <div>
       <Head>
