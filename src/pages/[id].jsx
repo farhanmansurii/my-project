@@ -59,8 +59,8 @@ function MyPage({ id, deets }) {
       handleEpisodeClick(deets.seasons[seasonIndex].episodes[episodeIndex + 1]);
     }
   }
-  const recentlyWatched = useSelector((state) => state.recentlyWatched.items);
-
+  const recentlyWatched = useSelector((state) => state.recentlyWatched.recentlyWatched);
+  console.log(recentlyWatched)
   const handleEpisodeClick = (episode) => {
     setSelectedEpisode(episode);
 
@@ -92,7 +92,7 @@ function MyPage({ id, deets }) {
     <div className="w-[97%] mx-auto">
       <Navbar />
       <TvShowDetails show={deets} />
-      {recentlyWatched.map(
+      {recentlyWatched?.map(
         (e) =>
           e.tvid === id && (
             <div

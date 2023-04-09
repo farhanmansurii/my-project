@@ -1,5 +1,5 @@
 import SearchPage from "@/components/Search";
-import { deleteEpisode, updateFavoriteMovies, updateRecentlyWatched } from "@/redux/reducers/recentlyWatchedReducers";
+import { addEpisode, deleteEpisode, updateFavoriteMovies, updateRecentlyWatched } from "@/redux/reducers/recentlyWatchedReducers";
 
 import Head from "next/head";
 import Link from "next/link";
@@ -11,22 +11,24 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 function Movies() {
   const dispatch = useDispatch();
-  const recentlyWatched = useSelector(state => state.recentlyWatched.items);
-  const movies = useSelector(state => state.recentlyWatched.movies);
+  const recentlyWatched = useSelector(
+    (state) => state.recentlyWatched.recentlyWatched
+  );
+  const movies = useSelector((state) => state.recentlyWatched.favoriteMovies);
 
   useEffect(() => {
-    const storedState = localStorage.getItem("recentlyWatchedTvShows");
-    const storedMovies = localStorage.getItem("recentlyWatchedMovies");
+    const storedTVState = localStorage.getItem("recentlyWatchedTvShow");
+    const storedMovieState = localStorage.getItem("favoriteMovies");
 
-    if (storedState || storedMovies)
-    {
-      const parsedState = JSON.parse(storedState || "{}");
-      const parsedMovies = JSON.parse(storedMovies || "[]");
+    const parsedTVState = JSON.parse(storedTVState)
+    const parsedMovieState = JSON.parse(storedMovieState)
 
-      dispatch(updateRecentlyWatched(parsedState.items));
-      dispatch(updateFavoriteMovies(parsedMovies));
-    }
+    dispatch(updateRecentlyWatched(parsedTVState))
+    dispatch(updateFavoriteMovies(parsedMovieState))
+    console.log(recentlyWatched, movies)
+
   }, [dispatch]);
+
   return (
     <div>
       <Head>
@@ -48,7 +50,7 @@ function Movies() {
           <div className=" flex overflow-x-scroll m-1 p-1 text-white  scrollbar-hide">
             {recentlyWatched.map((e) => (
               <>
-                <div class="episode-card relative w-64 h-36 mb-3 mx-2 rounded-lg">
+                <div class="episode-card aspect-video relative w-64 h-36 mb-3 mx-2 rounded-lg">
                   <div class="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
                   <img class="episode-img object-cover w-full h-full rounded-lg" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
 

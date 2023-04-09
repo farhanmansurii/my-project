@@ -26,10 +26,10 @@ function MyPage({ id, deets }) {
   const [episode, setEpisode] = useState();
   console.log(deets);
   const dispatch = useDispatch()
-  const movies = useSelector((state) => state.recentlyWatched.movies);
+  const movies = useSelector((state) => state.recentlyWatched.favoriteMovies);
 
   useEffect(() => {
-    const storedState = localStorage.getItem("recentlyWatched");
+    const storedState = localStorage.getItem("favoriteMovies");
 
     if (storedState)
     {
@@ -39,7 +39,7 @@ function MyPage({ id, deets }) {
     }
   }, []);
   function checkIfExists(movies, id) {
-    for (let i = 0; i < movies.length; i++)
+    for (let i = 0; i < movies?.length; i++)
     {
       if (movies[i].movieid === id)
       {
