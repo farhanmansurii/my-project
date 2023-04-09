@@ -11,19 +11,20 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 function Movies() {
   const dispatch = useDispatch();
-  const recentlyWatched = useSelector(
-    (state) => state.recentlyWatched.items
-  );
-  const movies = useSelector((state) => state.recentlyWatched.movies);
+  const recentlyWatched = useSelector(state => state.recentlyWatched.items);
+  const movies = useSelector(state => state.recentlyWatched.movies);
 
   useEffect(() => {
-    const storedState = localStorage.getItem("recentlyWatched");
+    const storedState = localStorage.getItem("recentlyWatchedTvShows");
+    const storedMovies = localStorage.getItem("recentlyWatchedMovies");
 
-    if (storedState)
+    if (storedState || storedMovies)
     {
-      const parsedState = JSON.parse(storedState);
+      const parsedState = JSON.parse(storedState || "{}");
+      const parsedMovies = JSON.parse(storedMovies || "[]");
+
       dispatch(updateRecentlyWatched(parsedState.items));
-      dispatch(updateFavoriteMovies(parsedState.movies));
+      dispatch(updateFavoriteMovies(parsedMovies));
     }
   }, [dispatch]);
   return (

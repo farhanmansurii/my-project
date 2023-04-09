@@ -46,7 +46,7 @@ const SearchPage = () => {
           <div className="relative w-full">
             <input
               type="text"
-              placeholder="Search for any TV show / Movie"
+              placeholder="Tell us about the movie/tv-show."
               value={val}
               onChange={(e) => setval(e.target.value)}
               className="placeholder:text-black rounded-full px-4 py-4 h-fit w-full backdrop-blur-sm bg-white text-black outline-none border-secondary active:border-4 border-4 border-neutral-500"
