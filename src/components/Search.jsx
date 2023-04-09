@@ -43,34 +43,32 @@ const SearchPage = () => {
     <>
       <div className="form-control  place-content-center  ">
         <div className="flex place-self-center mt-3 items-center  w-11/12 mx-auto">
-          <div className="relative w-full">
+          <div className="relative flex items-center w-full gap-1 px-4 mt-4 border rounded-md group focus-within:border-neutral-400 bg-neutral-800 focus-within:outline-4 focus-within:outline-neutral-200 border-neutral-600">
+
             <input
               type="text"
-              placeholder="Tell us about the movie/tv-show."
+              placeholder="Search for a movie or TV show"
               value={val}
               onChange={(e) => setval(e.target.value)}
-              className="placeholder:text-black rounded-full px-4 py-4 h-fit w-full backdrop-blur-sm bg-white text-black outline-none border-secondary active:border-4 border-4 border-neutral-500"
-            />
+
+              className="w-full px-4 py-3 bg-transparent rounded-md text-neutral-50 group focus:outline-none" />
             {val.length > 0 && (
               <button
                 onClick={() => setval('')}
-                className="absolute inset-y-0 gap-3 mr-4 right-0 flex items-center pr-3"
-              >
-                <MdClear className="w-9 h-9 text-white p-2 bg-neutral-500 rounded-full" />
-
+                className="inline-block px-2 py-1 text-xs rounded-md bg-neutral-700 text-neutral-50"   >
+                CLEAR
               </button>
             )}
 
           </div>
         </div>
 
-        {searchHistory.length > 0 && <div className="flex  flex-wrap mt-2 w-11/12 mx-auto">
-          <div className="rounded-full bg-black px-2 py-2 m-2 flex items-center">
-            <span className="cursor-pointer" onClick={() => setval(term)}>
-              Recently Searched
-            </span></div>
+        {searchHistory.length > 0 && <div className="flex gap-4  flex-wrap mt-2 w-11/12 mx-auto">
+          <div className="px-3 py-1 text-neutral-50 bg-neutral-900 rounded-md"> <span className="cursor-pointer" onClick={() => setval(term)}>
+            Recently Searched
+          </span></div>
           {searchHistory.map((term, index) => (
-            <div key={index} className="rounded-full bg-black border-white border-2 px-4 py-2 m-2 flex items-center">
+            <div key={index} className="px-3 py-1 text-neutral-50 border-neutral-400 border bg-neutral-800 rounded-md">
               <span className="cursor-pointer" onClick={() => setval(term)}>
                 {term}
               </span>
