@@ -172,7 +172,7 @@ function MyPage({ id, deets }) {
                             <h3 className="text-black flex gap-5 text-sm font-bold">
                               E{episode.episode}: {episode.title}
                             </h3>
-                            <div className="italic"><span className="font-bold ">Synopsis </span> : {episode.description || '-'}</div>
+                            <div className="italic text-sm"><span className="font-bold ">Synopsis </span> : {episode.description || '-'}</div>
                           </div>
                           :
                         <div
