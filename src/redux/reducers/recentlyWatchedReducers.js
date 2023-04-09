@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   recentlyWatched: [],
-  favoriteMovies: []
+  favoriteMovies: [],
 };
 
 const recentlyWatchedSlice = createSlice({
@@ -49,22 +49,22 @@ const recentlyWatchedSlice = createSlice({
       localStorage.setItem("favoriteMovies", JSON.stringify(state.favoriteMovies));
     },
     updateRecentlyWatched: (state, action) => {
-      const { recentlyWatched } = action.payload ?? {};
-      if (recentlyWatched !== undefined)
+      const recentlyWatched = action.payload;
+      if (recentlyWatched)
       {
-        return { ...state, recentlyWatched };
+        return { ...state, recentlyWatched: recentlyWatched };
       }
       return state;
     },
     updateFavoriteMovies: (state, action) => {
-      const { favoriteMovies } = action.payload ?? {};
-      if (favoriteMovies !== undefined)
+      const favoriteMovies = action.payload;
+      if (favoriteMovies)
       {
-        return { ...state, favoriteMovies };
+        return { ...state, favoriteMovies: favoriteMovies };
       }
       return state;
     }
-  }
+  },
 });
 
 export const {
@@ -73,7 +73,7 @@ export const {
   addFavoriteMovie,
   deleteFavoriteMovie,
   updateRecentlyWatched,
-  updateFavoriteMovies
+  updateFavoriteMovies,
 } = recentlyWatchedSlice.actions;
 
 export default recentlyWatchedSlice.reducer;

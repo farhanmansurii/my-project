@@ -25,7 +25,7 @@ const SearchPage = () => {
         `https://spicyapi.vercel.app/meta/tmdb/${debouncedSearch}?page=1`
       ).then((res) => res.json());
       setSearchList(data.results);
-      console.log(data.results);
+
       setisloading(false);
     }
 
@@ -43,7 +43,7 @@ const SearchPage = () => {
     <>
       <div className="form-control  place-content-center  ">
         <div className="flex place-self-center mt-3 items-center  w-11/12 mx-auto">
-          <div className="relative flex items-center w-full gap-1  mt-4 border rounded-md group focus-within:border-neutral-400 bg-neutral-800 focus-within:outline-4 focus-within:outline-neutral-200 border-neutral-600">
+          <div className="relative flex items-center w-full gap-1 pr-5 mt-4 border rounded-md group focus-within:border-neutral-400 bg-neutral-800 focus-within:outline-4 focus-within:outline-neutral-200 border-neutral-600">
 
             <input
               type="text"

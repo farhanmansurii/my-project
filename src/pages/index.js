@@ -44,13 +44,13 @@ function Movies() {
 
       {recentlyWatched && recentlyWatched.length > 0 && (
         <div className="overflow-x-auto mx-auto w-11/12 ">
-          <div className="text-3xl text-white mt-4  mb-3">
+          <div className="text-xl text-white mt-6  mb-2">
             Recently Watched TV Shows
           </div>
-          <div className=" flex overflow-x-scroll m-1 p-1 text-white  scrollbar-hide">
+          <div className=" flex overflow-x-scroll   text-white  scrollbar-hide">
             {recentlyWatched.map((e) => (
               <>
-                <div class="episode-card aspect-video relative w-64 h-36 mb-3 mx-2 rounded-lg">
+                <div class="episode-card aspect-video relative w-64 h-66 mb-2 mx-2 rounded-lg">
                   <div class="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
                   <img class="episode-img object-cover w-full h-full rounded-lg" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
 
@@ -89,7 +89,7 @@ function Movies() {
       {
         movies && movies.length > 0 &&
         <div className="overflow-x-auto mx-auto mb-10 w-11/12 ">
-          <div className="text-3xl text-white mt-4  mb-3">
+            <div className="text-xl text-white mt-6  mb-2">
             Movies WatchList
           </div>
           <div className="flex overflow-x-scroll p-2 space-x-4 scrollbar-hide mx-auto ">
