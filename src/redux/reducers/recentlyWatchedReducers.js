@@ -19,19 +19,19 @@ const recentlyWatchedSlice = createSlice({
       if (showIndex === -1)
       {
         // TV show not found, add it to the beginning of the array
-        const updatedItems = [{ tvid, episode }, ...state.items];
-        state.items = updatedItems;
+        state.items = [{ tvid, episode }, ...state.items];
       } else
       {
         // TV show already exists, update its episode if it's different
         if (state.items[showIndex].episode.id !== episode.id)
         {
-          const updatedItems = [
-            { tvid, episode },
+          // Create a new array with the existing TV show moved to the beginning
+          state.items = [
+            state.items[showIndex],
             ...state.items.slice(0, showIndex),
             ...state.items.slice(showIndex + 1),
           ];
-          state.items = updatedItems;
+          state.items[0].episode = episode;
         }
       }
 
@@ -42,15 +42,17 @@ const recentlyWatchedSlice = createSlice({
       }
 
       // Save the state to the local storage
-      localStorage.setItem("recentlyWatched", JSON.stringify(state));
+      localStorage.setItem("recentlyWatchedTvShows", JSON.stringify(state.tvShows));
     },
+
+
     deleteEpisode: (state, action) => {
       const tvid = action.payload;
 
       state.items = state.items.filter((item) => item.tvid !== tvid);
 
       // Save the state to the local storage
-      localStorage.setItem("recentlyWatched", JSON.stringify(state));
+      localStorage.setItem("recentlyWatchedTvShows", JSON.stringify(state.tvShows));
     },
 
     addFavoriteMovie: (state, action) => {
@@ -67,7 +69,7 @@ const recentlyWatchedSlice = createSlice({
       };
 
       // Save the state to the local storage
-      localStorage.setItem("recentlyWatched", JSON.stringify(newState));
+      localStorage.setItem("recentlyWatchedMovies", JSON.stringify(state.movies));
 
       return newState;
     },
@@ -82,7 +84,7 @@ const recentlyWatchedSlice = createSlice({
       }
 
       // Save the state to the local storage
-      localStorage.setItem("recentlyWatched", JSON.stringify(state));
+      localStorage.setItem("recentlyWatchedMovies", JSON.stringify(state.movies));
     },
 
     updateRecentlyWatched: (state, action) => {
