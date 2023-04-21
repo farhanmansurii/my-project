@@ -95,10 +95,10 @@ function MyPage({ id, deets }) {
       {recentlyWatched?.map(
         (e) =>
           e.tvid === id && (
-            <div onClick={() => handleEpisodeClick(e.episode)} key={e.tvid} className="cursor-pointer mx-auto w-11/12 lg:w-10/12">
-              <div className="flex border max-w-full w-fit  flex-row items-center bg-black bg-opacity-75 rounded-lg py-4 px-6 my-4">
+            <div onClick={() => handleEpisodeClick(e.episode)} key={e.tvid} className="cursor-pointer mx-auto w-11/12 lg:w-9/12">
+              <div className="flex border max-w-full w-fit  flex-row items-center bg-opacity-75 rounded-lg py-4 px-6 my-4">
                 <div className="text-white text-center  line-clamp-1 whitespace-nowrap lg:text-left mr-6">
-                  <span className="text-sm lg:text-lg font-semibold mr-2"> Play S{e.episode.season} E{e.episode.episode}</span>
+                  <span className="text-sm lg:text-lg  mr-2"> Play S{e.episode.season} E{e.episode.episode}</span>
                   <span className="text-xs lg:text-sm ">{e.episode.title}</span>
                 </div>
                 <div className="flex justify-center items-center bg-white text-black rounded-full w-7 h-7 shadow-lg">
@@ -137,7 +137,7 @@ function MyPage({ id, deets }) {
           {deets.seasons.map((season) => (
             <div key={season.season} className="">
               <h2
-                className="text-white p-3 text-xl cursor-pointer flex items-center border m-2 rounded-md  justify-between hover:bg-neutral-700 duration-200 "
+                className="text-white p-3 text-xl cursor-pointer flex items-center border-b  m-2   justify-between hover:bg-neutral-700 duration-200 "
                 onClick={() => toggleSeason(season)}
               >
                 <span>Season {season.season}</span>
@@ -166,7 +166,7 @@ function MyPage({ id, deets }) {
                         selectedEpisode?.id === episode.id ?
                           <div
                             key={episode.id}
-                            className="flex-shrink-0 bg-white/70 text-black rounded-md  p-4 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
+                            className="flex-shrink-0 bg-white/70 text-black  p-4 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
                             onClick={() => handleEpisodeClick(episode)}
                           >
                             <h3 className="text-black flex gap-5 text-sm font-bold">
@@ -177,7 +177,7 @@ function MyPage({ id, deets }) {
                           :
                         <div
                           key={episode.id}
-                          className="flex-shrink-0 border-b p-4 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
+                            className="flex-shrink-0 border-b border-neutral-500 p-4 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
                           onClick={() => handleEpisodeClick(episode)}
                         >
                           <h3 className="text-white flex gap-5 text-sm font-semibold">
