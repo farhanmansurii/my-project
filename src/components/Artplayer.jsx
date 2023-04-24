@@ -76,7 +76,7 @@ export default function EnimePlayer(props) {
 
   return (
     <div>
-      <div className="w-full  aspect-video p-0 m-0" ref={playerContainerRef} />
+      <div className="w-11/12 mx-auto  aspect-video p-0 m-0" ref={playerContainerRef} />
     </div>
   );
 }
