@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EnimePlayer from "./Artplayer";
+import hls from "@oplayer/hls";
+import ui from "@oplayer/ui";
+import ReactPlayer from "@oplayer/react";
 
 const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
   const [selectedUrl, setSelectedUrl] = useState(
@@ -8,6 +11,7 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
   const handleQualityChange = (url) => {
     setSelectedUrl(url);
   };
+
   console.log(episode)
   useEffect(() => {
     setSelectedUrl(
@@ -28,7 +32,14 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
       {selectedUrl && episode ? (
         <div className="justify-center flex">
           <div className="w-full h-full lg:w-[720px] aspect-video border-white/30">
-            <EnimePlayer source={selectedUrl} subtitles={subtitles} getNextEpisode={getNextEpisode} deets={deets} selectedEpisode={selectedEpisode} />
+
+
+            <EnimePlayer
+              source={selectedUrl}
+              subtitles={subtitles}
+              getNextEpisode={getNextEpisode}
+              deets={deets}
+              selectedEpisode={selectedEpisode} />
           </div>
         </div>
       ) : (
