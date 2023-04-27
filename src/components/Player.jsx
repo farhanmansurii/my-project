@@ -33,7 +33,7 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
         <div className="justify-center flex">
           <div className="w-full h-full lg:w-[720px] aspect-video border-white/30">
 
-
+<div>{selectedUrl}</div>
             <EnimePlayer
               source={selectedUrl}
               subtitles={subtitles}
