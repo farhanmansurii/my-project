@@ -4,7 +4,7 @@ import ui from "@oplayer/ui";
 import { useEffect, useRef } from "react";
 import { chromecast, vttThumbnails } from '@oplayer/plugins'
 export default function EnimePlayer(props) {
-  const { source, subtitles, getNextEpisode, deets, selectedEpisode } = props;
+  const { source, subtitles, getNextEpisode, deets, selectedEpisode, sources } = props;
 
   const playerContainerRef = useRef();
   const playerRef = useRef();
@@ -36,7 +36,17 @@ export default function EnimePlayer(props) {
                   deets?.type === "TV Series" ?
                     getNextEpisode(selectedEpisode, deets) : console.log('not a movie')
                 },
-              },
+              }, {
+                name: 'Source',
+                children: sources.map((source) => {
+                  return {
+                    name: source.quality,
+                    default: source.quality.includes('auto'),
+                    value: source.url
+                  }
+                }),
+
+              }
 
             ],
           }),

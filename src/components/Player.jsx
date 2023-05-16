@@ -1,22 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import EnimePlayer from "./Artplayer";
 import hls from "@oplayer/hls";
 import ui from "@oplayer/ui";
 import ReactPlayer from "@oplayer/react";
 
 const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
-  const [selectedUrl, setSelectedUrl] = useState(
+  const selectedUrlRef = useRef(
     episode.sources.find((video) => video.quality === "auto")?.url
   );
-  const handleQualityChange = (url) => {
-    setSelectedUrl(url);
-  };
+
+
 
   console.log(episode)
   useEffect(() => {
-    setSelectedUrl(
-      episode.sources.find((video) => video.quality === "auto")?.url
-    );
+    selectedUrlRef.current = episode.sources.find((video) => video.quality === "auto")?.url;
   }, [episode]);
 
   const subtitles = episode.subtitles
@@ -29,13 +26,14 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
   console.log(subtitles);
   return (
     <div key={episode.id} className="w-full my-5">
-      {selectedUrl && episode ? (
+      {selectedUrlRef.current && episode ? (
         <div className="justify-center flex">
           <div className="w-full h-full lg:w-[720px] aspect-video border-white/30">
 
 
             <EnimePlayer
-              source={selectedUrl}
+              source={selectedUrlRef.current}
+              sources={episode.sources}
               subtitles={subtitles}
               getNextEpisode={getNextEpisode}
               deets={deets}
@@ -45,9 +43,9 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
       ) : (
         <div>Loading</div>
       )}
-      <div className="gap-1 flex py-1 flex-row flex-wrap place-content-end lg:place-content-center items-center">
+      {/* <div className="gap-1 flex py-1 flex-row flex-wrap place-content-end lg:place-content-center items-center">
         <select
-          value={selectedUrl}
+          value={selectedUrlRef.current}
           onChange={(event) => handleQualityChange(event.target.value)}
           className="px-4 py-1 bg-black border-2 w-fit focus:outline-none"
         >
@@ -57,7 +55,7 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
     </div>
   );
 };
