@@ -47,12 +47,11 @@ function Movies() {
           <div className="text-xl text-white mt-6  mb-2">
             Recently Watched TV Shows
           </div>
-          <div className=" flex overflow-x-scroll   text-white  scrollbar-hide">
+          <div className="flex overflow-x-scroll text-white scrollbar-hide">
             {recentlyWatched.map((e) => (
-              <>
-                <div class="episode-card aspect-video relative w-64 h-66 mb-2 mx-2 rounded-lg">
-                  <div class="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
-                  <img class="episode-img object-cover w-full h-full rounded-lg" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
+              <div key={e.tvid} className="episode-card aspect-video relative w-64 h-36 mb-2 mx-2 rounded-lg max-w-xs">
+                <div class="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
+                <img class="episode-img aspect-video rounded-lg" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
 
                   <div class="delete-btn absolute top-0 right-0 p-2">
                     <button class="bg-black rounded-full border-white border p-2 hover:scale-110 duration-150" onClick={() => dispatch(deleteEpisode(e.tvid))}>
@@ -81,7 +80,6 @@ function Movies() {
                 </div>
 
 
-              </>
             ))}
           </div>
         </div>
