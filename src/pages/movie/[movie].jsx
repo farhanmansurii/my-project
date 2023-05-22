@@ -68,7 +68,8 @@ function MyPage({ id, deets }) {
   }, [deets]);
   return (
     <div className="min-h-screen ">
-      <Navbar />
+
+      <Navbar/>
       <MovieDetails movie={deets} />
       <div className="w-full flex justify-center">
 
@@ -77,8 +78,8 @@ function MyPage({ id, deets }) {
       <button
         className={
           !ifExists
-              ? "flex  max-w-full w-fit  flex-row items-center bg-white/5 gap-3 rounded-full py-3 border-4 border-white/20 px-6 my-4"
-              : "flex  max-w-full w-fit  flex-row items-center bg-white gap-3 text-black rounded-full py-3 border-4 border-black/50 px-6 my-4"
+              ? "flex text-sm  max-w-full w-fit  flex-row items-center bg-white/5 gap-3 rounded-full py-2 border-4 border-white/20 px-6 my-4"
+              : "flex text-sm  max-w-full w-fit  flex-row items-center bg-white gap-3 text-black rounded-full py-2 border-4 border-black/50 px-6 my-4"
         }
         onClick={
           !ifExists

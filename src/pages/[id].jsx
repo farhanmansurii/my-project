@@ -90,7 +90,7 @@ function MyPage({ id, deets }) {
   }, [selectedEpisode]);
 
   return (
-    <div className="w-[97%] mx-auto">
+    <div className="">
       <Navbar />
       <TvShowDetails show={deets} />
       <div className="w-full flex justify-center">

@@ -12,15 +12,12 @@ function MovieDetails({ movie }) {
   } = movie;
 
   return (
-    <div className="md:flex text-white rounded-md overflow-hidden lg:w-10/12 mx-auto">
-      {image && (
-        <img
-          src={image}
-          alt={title}
-          className="h-[300px] lg:my-auto mx-auto lg:mx-6 rounded-md shadow-xl"
-        />
-      )}
-      <div className="px-4 lg:py-12 pt-3 md:py-16">
+      <div
+      style={{ backgroundImage: `url(${image})` }}
+      className="bg-cover bg-center  backdrop-blur-sm   bg-hidden lg:block lg:mx-auto"
+    >  <div className="bg-gradient-to-t from-black  flex flex-col  to-[#0b090a]/20 lg:to-[#0b090a]/20  lg: w-100">
+      
+      <div className="px-4  mt-[10rem]  lg:py-12 pt-3 md:py-16">
       <h1 className="text-2xl flex md:text-3xl lg:text-4xl  text-white mb-4">
           {title}
         </h1>
@@ -65,6 +62,7 @@ function MovieDetails({ movie }) {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }
