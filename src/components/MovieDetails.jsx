@@ -21,14 +21,14 @@ function MovieDetails({ movie }) {
         />
       )}
       <div className="px-4 lg:py-12 pt-3 md:py-16">
-        <h1 className="text-3xl flex md:text-4xl lg:text-5xl font-semibold  text-white mb-4">
+      <h1 className="text-2xl flex md:text-3xl lg:text-4xl  text-white mb-4">
           {title}
         </h1>
         <div className="flex items-center mb-4">
           {rating && (
             <div className="flex items-center mr-4">
-              <span className="text-lg  mr-1">{rating.toFixed(1)}</span>
-              <span className="text-sm">⭐</span>
+              <span className="text-sm  mr-1">{rating.toFixed(1)}</span>
+              <span className="text-xs">⭐</span>
             </div>
           )}
           {releaseDate && (
@@ -37,11 +37,11 @@ function MovieDetails({ movie }) {
         </div>
         {genres && (
           <div className="flex items-center my-2">
-            {genres.slice(0, 3).map((genre, index) => (
-              <div key={index} className="px-2 py-1 rounded-md bg-white text-gray-900 mr-2">
-                {genre}
-              </div>
-            ))}
+           {genres.map((genre) => (
+            <span key={genre} className="bg-gray-600/20 rounded-full px-3 py-1 text-sm mr-2 mb-2">
+              {genre}
+            </span>
+          ))}
           </div>
         )}
         {description && (
@@ -49,17 +49,17 @@ function MovieDetails({ movie }) {
         )}
         <div className="flex flex-wrap gap-2 mb-3 mt-4">
           {duration && (
-            <div className=" text-white px-2 py-1 text-sm rounded-md mr-2">
+            <div className="bg-gray-600/20 rounded-full px-3 py-1 text-sm mr-2 mb-2">
               {duration} min
             </div>
           )}
           {directors && (
-            <div className=" text-white px-2 py-1 text-sm rounded-md mr-2">
+            <div className="bg-gray-600/20 rounded-full px-3 py-1 text-sm mr-2 mb-2">
               Directed by: {directors.join(", ")}
             </div>
           )}
           {writers && (
-            <div className=" text-white px-2 py-1 text-sm rounded-md mr-2">
+            <div className="bg-gray-600/20 rounded-full px-3 py-1 text-sm mr-2 mb-2">
               Written by: {writers.join(", ")}
             </div>
           )}

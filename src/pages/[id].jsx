@@ -1,5 +1,6 @@
 import ArtPlayer from "@/components/Artplayer";
 import Navbar from "@/components/Navbar";
+import EnimePlayer from "@/components/Player";
 import Player from "@/components/Player";
 import TvShowDetails from "@/components/TVShowDetails";
 import { addEpisode } from "@/redux/reducers/recentlyWatchedReducers";
@@ -113,7 +114,7 @@ function MyPage({ id, deets }) {
     
       {episode ? (
         <div className="flex  flex-col w-full mx-auto lg:w-10/12">
-          <Player episode={episode} getNextEpisode={getNextEpisode} deets={deets} selectedEpisode={selectedEpisode} />
+          <EnimePlayer episode={episode} getNextEpisode={getNextEpisode} deets={deets} selectedEpisode={selectedEpisode} />
           {/* <div className=" text-2xl lg:text-4xl text-start  ">
             Now Playing S{selectedEpisode.season} E{selectedEpisode.episode} :{" "}
             {selectedEpisode.title}
