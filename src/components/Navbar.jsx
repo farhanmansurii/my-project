@@ -10,7 +10,7 @@ const Navbar = () => {
       <button
         type="button"
         onClick={() => router.back()}
-        className="p-3 rounded-full  mx-5  my-3 hover:text-black bg-white/20 text-white hover:bg-gray-200 transition duration-150"
+        className="p-3 rounded-full  mx-5  my-3 hover:text-black  mix-blend-difference bg-slate-50/20 hover:bg-gray-200 transition duration-150"
       >
         <BiArrowBack className="w-6 h-6 " /> 
       </button>
