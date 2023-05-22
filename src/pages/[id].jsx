@@ -114,7 +114,7 @@ function MyPage({ id, deets }) {
     
       {episode ? (
         <div className="flex  flex-col w-full mx-auto lg:w-10/12">
-          <EnimePlayer episode={episode} getNextEpisode={getNextEpisode} deets={deets} selectedEpisode={selectedEpisode} />
+          <Player episode={episode} getNextEpisode={getNextEpisode} deets={deets} selectedEpisode={selectedEpisode} />
           {/* <div className=" text-2xl lg:text-4xl text-start  ">
             Now Playing S{selectedEpisode.season} E{selectedEpisode.episode} :{" "}
             {selectedEpisode.title}

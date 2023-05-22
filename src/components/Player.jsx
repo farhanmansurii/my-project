@@ -6,7 +6,7 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
       {episode ? (
         <div className="justify-center flex">
           <div className="w-full h-full lg:w-[720px] aspect-video border-white/30">
-            <EnimePlayer
+            <EnimePlayer key={episode.id}
               episode={episode}
               getNextEpisode={getNextEpisode}
               deets={deets}
