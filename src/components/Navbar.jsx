@@ -6,7 +6,7 @@ const Navbar = () => {
   const router = useRouter();
 
   return (
-    <nav className="flex fixed z-30 lg:w-10/12 mx-auto my-5 items-center pt-4">
+    <nav className="flex fixed z-30 lg:w-10/12 mx-auto  items-center pt-2">
       <button
         type="button"
         onClick={() => router.back()}
