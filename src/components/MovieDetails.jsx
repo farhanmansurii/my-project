@@ -49,9 +49,9 @@ function MovieDetails({ movie }) {
         )}
         <div className="flex flex-wrap gap-2 mb-3 mt-4">
           {duration && (
-            <div className="bg-gray-600/20 rounded-full px-3 py-1 text-sm mr-2 mb-2">
-              {duration} min
-            </div>
+           <div className="bg-gray-600/20 rounded-full px-3 py-1 text-sm mr-2 mb-2">
+           {Math.floor(duration / 60)} hr {duration % 60} min
+         </div>
           )}
           {directors && (
             <div className="bg-gray-600/20 rounded-full px-3 py-1 text-sm mr-2 mb-2">
