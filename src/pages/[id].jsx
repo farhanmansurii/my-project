@@ -93,24 +93,37 @@ function MyPage({ id, deets }) {
     <div className="w-[97%] mx-auto">
       <Navbar />
       <TvShowDetails show={deets} />
+      <div className="w-full flex justify-center">
+
+     
       {recentlyWatched?.map(
         (e) =>
           e.tvid === id && (
-            <div onClick={() => handleEpisodeClick(e.episode)} key={e.tvid} className="cursor-pointer mx-auto w-11/12 lg:w-9/12">
-              <div className="flex border max-w-full w-fit  flex-row items-center bg-opacity-75 rounded-lg py-4 px-6 my-4">
-                <div className="text-white text-center  line-clamp-1 whitespace-nowrap lg:text-left mr-6">
-                  <span className="text-sm lg:text-lg  mr-2"> Play S{e.episode.season} E{e.episode.episode}</span>
-                  <span className="text-xs lg:text-sm ">{e.episode.title}</span>
+            <div onClick={() => handleEpisodeClick(e.episode)} key={e.tvid} className="cursor-pointer mx-auto ">
+              <div className="flex  max-w-full w-fit  flex-row items-center bg-white/5 rounded-full py-4 px-6 my-4">
+                <div className="text-white text-center  line-clamp-1 whitespace-nowrap lg:text-left mr-2">
+                  <span className="text-sm lg:text-lg  mr-2"> Play S{e.episode.season} E{e.episode.episode}</span> 
+                  <span className="text-xs  ">{e.episode.title}</span>
                 </div>
-                <div className="flex justify-center items-center bg-white text-black rounded-full w-7 h-7 shadow-lg">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4">
-                    <path d="M7 19V5L19 12L7 19Z" fill="currentColor" />
-                  </svg>
+                <div className="flex justify-center items-center text-white w-5 h-5 shadow-lg">
+                <svg
+      viewBox="0 0 512 512"
+      fill="currentColor"
+     
+    >
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeMiterlimit={10}
+        strokeWidth={32}
+        d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z"
+      />
+    </svg>
                 </div>
               </div>
             </div>
           )
-      )}
+      )} </div>
     
       {episode ? (
         <div className="flex  flex-col w-full mx-auto lg:w-10/12">

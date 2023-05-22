@@ -70,13 +70,15 @@ function MyPage({ id, deets }) {
     <div className="min-h-screen ">
       <Navbar />
       <MovieDetails movie={deets} />
-      <div className="w-11/12 mx-auto">
+      <div className="w-full flex justify-center">
+
+     
 
       <button
         className={
           !ifExists
-              ? "flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-200  bg-black border rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-indigo-500"
-              : "flex items-center gap-2 px-4 py-2 text-sm font-medium  text-black bg-gray-200   border rounded-md hover:bg-gray-300 focus:outline-none focus:ring-gray-500"
+              ? "flex  max-w-full w-fit  flex-row items-center bg-white/5 gap-3 rounded-full py-3 border-4 border-white/20 px-6 my-4"
+              : "flex  max-w-full w-fit  flex-row items-center bg-white gap-3 text-black rounded-full py-3 border-4 border-black/50 px-6 my-4"
         }
         onClick={
           !ifExists
