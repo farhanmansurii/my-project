@@ -55,7 +55,6 @@ console.log(deets.type==='Movie')
         slideToSeek: "always",
         controlBar: { back: "always" },
         topSetting: true,
-        subtitle: { fontSize: 30 },
         menu: [
           {
             name: "Next",
