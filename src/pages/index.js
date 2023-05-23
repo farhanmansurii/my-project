@@ -43,47 +43,49 @@ function Movies() {
       <SearchPage />
 
       {recentlyWatched && recentlyWatched.length > 0 && (
-        <div className="overflow-x-auto mx-auto w-11/12 ">
-          <div className="text-xl text-white mt-6  mb-2">
-            Recently Watched TV Shows
+  <div className="overflow-x-auto mx-auto w-11/12">
+    <div className="text-2xl text-white mt-6 mb-2 ">
+      Recently Watched TV Shows
+    </div>
+    <div className="flex overflow-x-scroll text-white scrollbar-hide">
+      {recentlyWatched.map((e) => (
+        <div key={e.tvid} className="episode-card relative w-64 h-36 mb-2 mx-2 rounded-lg max-w-xs">
+          <div className="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
+          <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
+            <img className="w-full h-full object-cover" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
           </div>
-          <div className="flex overflow-x-scroll text-white scrollbar-hide">
-            {recentlyWatched.map((e) => (
-              <div key={e.tvid} className="episode-card aspect-video relative w-64 h-36 mb-2 mx-2 rounded-lg max-w-xs">
-                <div class="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
-                <img class="episode-img aspect-video rounded-lg" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
 
-                  <div class="delete-btn absolute top-0 right-0 p-2">
-                    <button class="bg-black rounded-full border-white border p-2 hover:scale-110 duration-150" onClick={() => dispatch(deleteEpisode(e.tvid))}>
-                      <svg viewBox="0 0 512 512" fill="currentColor" height="1em" width="1em">
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M400 256H112"></path>
-                      </svg>
-                    </button>
-                  </div>
-
-                  <div class="play-btn absolute top-0 p-2">
-                    <Link key={e.tvid} href={`/${e.tvid}`}>
-                      <button class="bg-white text-black border-black border-2 rounded-full hover:scale-110 duration-150 p-2">
-                        <svg fill="currentColor" viewBox="0 0 16 16" height="1em" width="1em" className="">
-                          <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"></path>
-                        </svg>
-                      </button>
-                    </Link>
-                  </div>
-
-                  <Link key={e.tvid} href={`/${e.tvid}`}>
-                    <div class="episode-info absolute bottom-0 w-full h-1/3 px-4 text-white">
-                      <h3 class="text-base font-semibold line-clamp-1">{e.episode.title}</h3>
-                      <p class="text-sm text-gray-400">S{e.episode.season} E{e.episode.episode}</p>
-                    </div>
-                  </Link>
-                </div>
-
-
-            ))}
+          <div className="delete-btn absolute top-2 right-2">
+            <button className="bg-black rounded-full border-white border p-2 hover:scale-110 duration-150" onClick={() => dispatch(deleteEpisode(e.tvid))}>
+              <svg viewBox="0 0 512 512" fill="currentColor" height="1em" width="1em">
+                <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" d="M400 256H112"></path>
+              </svg>
+            </button>
           </div>
+
+          <div className="play-btn absolute top-2 left-2">
+            <Link key={e.tvid} href={`/${e.tvid}`}>
+              <button className="bg-white text-black border-black border-2 rounded-full hover:scale-110 duration-150 p-2">
+                <svg fill="currentColor" viewBox="0 0 16 16" height="1em" width="1em">
+                  <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"></path>
+                </svg>
+              </button>
+            </Link>
+          </div>
+
+          <Link key={e.tvid} href={`/${e.tvid}`}>
+            <div className="episode-info absolute bottom-2 w-full px-4 text-white">
+              <h3 className="text-lg font-semibold line-clamp-1">{e.episode.title}</h3>
+              <p className="text-sm text-gray-400">S{e.episode.season} E{e.episode.episode}</p>
+            </div>
+          </Link>
         </div>
-      )}
+      ))}
+    </div>
+  </div>
+)}
+
+
       {
         movies && movies.length > 0 &&
         <div className="overflow-x-auto mx-auto mb-10 w-11/12 ">
