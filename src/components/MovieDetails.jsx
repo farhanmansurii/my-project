@@ -12,13 +12,17 @@ function MovieDetails({ movie }) {
   } = movie;
 
   return (
-      <div
-      style={{ backgroundImage: `url(${image})` }}
-      className="bg-cover bg-center  backdrop-blur-sm   bg-hidden lg:block lg:mx-auto"
-    >  <div className="bg-gradient-to-t from-black  flex flex-col  to-[#0b090a]/20 lg:to-[#0b090a]/20  lg: w-100">
-      
-      <div className="px-4  mt-[10rem]  lg:py-12 pt-3 md:py-16">
-      <h1 className="text-2xl flex md:text-3xl lg:text-4xl  text-white mb-4">
+    <div
+    style={{ backgroundImage: `url(${image})` }}
+    className="bg-cover bg-center  backdrop-blur-sm   bg-hidden lg:block lg:mx-auto"
+  >  <div className="bg-gradient-to-t from-black   to-black/20 lg:to-black/70  lg: w-100">
+  <div className="w-11/12 justify-around pt-[15rem] lg:pt-24 lg:w-10/12 mx-auto items-center flex flex-col lg:flex-row">
+
+  <div className="hidden  lg:block ">
+          <img src={image} className="w-[200px] rounded-xl " />
+        </div>
+    <div className="px-4 z-30  w-full  lg:py-12 pt-3 md:py-16">
+      <h1 className="text-3xl flex md:text-4xl lg:text-4xl  text-white mb-2">
           {title}
         </h1>
         <div className="flex items-center mb-4">
@@ -42,7 +46,7 @@ function MovieDetails({ movie }) {
           </div>
         )}
         {description && (
-          <div className="mb-4 text-sm line-clamp-4">{description}</div>
+          <div className="mb-2 text-xs line-clamp-4">{description}</div>
         )}
         <div className="flex flex-wrap gap-2 mb-3 mt-4">
           {duration && (
@@ -62,7 +66,7 @@ function MovieDetails({ movie }) {
           )}
         </div>
       </div>
-    </div>
+    </div></div>
     </div>
   );
 }
