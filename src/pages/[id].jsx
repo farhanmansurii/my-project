@@ -103,7 +103,7 @@ function MyPage({ id, deets }) {
             <div
               onClick={() => handleEpisodeClick(e.episode)}
               key={e.tvid}
-              className="cursor-pointer rounded-full bg-white/10 border border-white/5 mx-auto"
+              className="cursor-pointer rounded-full my-[4rem] bg-white/10 border border-white/5 mx-auto"
             >
               <div className="flex max-w-full w-fit flex-row items-center bg-black rounded-full pt-2 pb-3 px-5 ">
                 <div className="text-white text-center line-clamp-1 whitespace-nowrap lg:text-left mr-2">
@@ -143,7 +143,7 @@ function MyPage({ id, deets }) {
           {deets.seasons.map((season) => (
             <div key={season.season} className="">
               <h2
-                className="text-white p-3 text-xl cursor-pointer flex items-center border-b    justify-between hover:bg-neutral-700 duration-200 "
+                className="text-white p-3 text-xl cursor-pointer flex items-center   rounded m-2  justify-between hover:bg-neutral-700 duration-200 "
                 onClick={() => toggleSeason(season)}
               >
                 <span>Season {season.season}</span>
@@ -173,14 +173,14 @@ function MyPage({ id, deets }) {
                           <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card border-2 border-spacing-1 flex-none relative w-60 h-32 mb-2 mx-2 rounded-lg max-w-xs">
                             <div className="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
                             <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
-                              <img className="w-full h-full object-cover" src={episode.img?.hd} alt={`Episode ${episode.number}`} />
+                              <img className="w-full h-full object-cover" src={episode.img?.hd || deets.image} alt={`Episode ${episode.episode}`} />
                             </div>
 
 
 
 
                             <div className="episode-info absolute bottom-2 w-full px-4 text-white">
-                              <h3 className="text-xs  line-clamp-1">{episode.releaseDate || ''}</h3>
+                              <h3 className="text-xs text-white/60  line-clamp-1">{episode.releaseDate || ''}</h3>
                               <h3 className=" text-sm lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
                             </div>
                           </div>
@@ -190,14 +190,14 @@ function MyPage({ id, deets }) {
                           <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card flex-none relative w-60 h-32 mb-2 mx-2 rounded-lg max-w-xs">
                             <div className="overlay absolute inset-0 bg-black opacity-70 rounded-lg"></div>
                             <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
-                              <img className="w-full h-full object-cover" src={episode.img?.hd} alt={`Episode ${episode.number}`} />
+                              <img className="w-full h-full object-cover" src={episode.img?.hd || deets.image} alt={`Episode ${episode.episode}`} />
                             </div>
 
 
 
 
                             <div className="episode-info absolute bottom-2 w-full px-4 text-white">
-                              <h3 className="text-xs  line-clamp-1">{episode.releaseDate || ''}</h3>
+                              <h3 className="text-xs text-white/60 line-clamp-1">{episode.releaseDate || ''}</h3>
                               <h3 className=" text-sm lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
                             </div>
                           </div>
