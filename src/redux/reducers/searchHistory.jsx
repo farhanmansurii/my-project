@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const STORAGE_KEY = 'searchHistory';
 
-
+const MAX_SEARCH_HISTORY_LENGTH = 5;
 const initialState = {
   searchHistory: [],
 };
@@ -16,6 +16,10 @@ const searchHistorySlice = createSlice({
       if (!state.searchHistory.includes(searchTerm))
       {
         state.searchHistory.unshift(searchTerm);
+        if (state.searchHistory.length > MAX_SEARCH_HISTORY_LENGTH)
+        {
+          state.searchHistory.pop();
+        }
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state.searchHistory));
       }
     },

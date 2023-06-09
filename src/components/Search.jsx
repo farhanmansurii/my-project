@@ -10,8 +10,7 @@ import {
 } from "@/redux/reducers/searchHistory";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { BiSearchAlt, BiSearchAlt2 } from "react-icons/bi";
-import { MdClear } from "react-icons/md";
+
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "react-spinner-material";
 
@@ -25,9 +24,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-      if (debouncedSearch.split("").length > 3) {
-        dispatch(addSearchHistory(debouncedSearch));
-      }
+
       setIsLoading(true);
       const data = await fetch(
         `https://spicyapi.vercel.app/meta/tmdb/${debouncedSearch}?page=1`
@@ -72,13 +69,13 @@ const SearchPage = () => {
           </div>
         </div>
         {searchHistory.length > 0 && (
-          <div className="flex gap-2 flex-wrap mt-2 w-11/12 mx-auto">
-            <div className="bg-gray-600/20 rounded-full px-4 py-2 text-sm mr-2 mb-2">
+          <div className="flex gap-1 flex-wrap mt-2 w-11/12 mx-auto">
+            <div className="bg-gray-600/20 rounded-full px-4 py-2 text-sm  mb-2">
               <span
                 className="cursor-pointer"
-                onClick={() => setVal(searchHistory[searchHistory.length - 1])}
+
               >
-                Recently Searched
+                Clear All
               </span>
               <button
                 className="ml-2 text-gray-500"
@@ -104,7 +101,7 @@ const SearchPage = () => {
               </button>
             </div>
             {searchHistory.map((term, index) => (
-              <div key={index} className="bg-gray-600/20 rounded-full px-4 py-2 text-sm mr-2 mb-2">
+              <div key={index} className="bg-gray-600/20 rounded-full px-4 py-2 text-sm  mb-2">
                 <span className="cursor-pointer" onClick={() => setVal(term)}>
                   {term}
                 </span>
@@ -142,7 +139,7 @@ const SearchPage = () => {
   .map((e) =>
     e.type === "Movie"
       ? e.releaseDate > 1970 && (
-          <Link key={e.id} href={`/movie/${e.id}`}>
+        <Link onClick={() => dispatch(addSearchHistory(e.title))} key={e.id} href={`/movie/${e.id}`}>
             <div className="flex-none w-32 lg:w-40">
               <div className="relative">
                 <img
@@ -151,9 +148,8 @@ const SearchPage = () => {
                   alt={e.title}
                 />
                 <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
-                  <p className="text-xs text-white/40">
-                    {e.releaseDate}
-                  </p>
+                <p className="text-xs text-white/40">{new Date(e.releaseDate).getFullYear()}</p>
+
                   <p className="text-xs text-white/40">
                     <span className="text-red-500">
                       {" "}
@@ -170,7 +166,7 @@ const SearchPage = () => {
           </Link>
         )
       : e.releaseDate > 1970 && (
-          <Link key={e.id} href={`/${e.id}`}>
+        <Link onClick={() => dispatch(addSearchHistory(e.title))} key={e.id} href={`/${e.id}`}>
             <div className="flex-none w-32 lg:w-40">
               <div className="relative">
                 <img
@@ -179,9 +175,8 @@ const SearchPage = () => {
                   alt={e.title}
                 />
                 <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
-                  <p className="text-xs text-white/40">
-                    {e.releaseDate}
-                  </p>
+                <p className="text-xs text-white/40">{new Date(e.releaseDate).getFullYear()}</p>
+
                   <p className="text-xs text-white/40">
                     <span className="text-blue-500">
                       {" "}

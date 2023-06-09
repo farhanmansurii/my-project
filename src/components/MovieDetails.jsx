@@ -8,7 +8,7 @@ function MovieDetails({ movie }) {
     genres,
     duration,
     directors,
-    writers,
+    writers, actors, logos
   } = movie;
 
   return (
@@ -24,7 +24,8 @@ function MovieDetails({ movie }) {
     <div className="px-4 z-30  w-full  lg:py-12 pt-3 md:py-16">
       <h1 className="text-3xl flex md:text-4xl lg:text-4xl  text-white mb-2">
           {title}
-        </h1>
+            </h1>
+
         <div className="flex items-center mb-4">
           {rating && (
             <div className="flex items-center mr-4">
@@ -59,12 +60,22 @@ function MovieDetails({ movie }) {
               Directed by: {directors.join(", ")}
             </div>
           )}
-          {writers && (
-            <div className="bg-gray-600/20 rounded-full px-3 py-1 text-sm mr-2 mb-2">
-              Written by: {writers.join(", ")}
+
+
+
             </div>
-          )}
-        </div>
+            {actors && (
+              <div className="flex flex-wrap items-center my-1">
+                <span className="bg-gray-600/20 border-gray-900 whitespace-nowrap rounded-full px-3 py-1 text-sm mr-2 mb-2">
+                  Cast
+                </span>
+                {actors.slice(0, 3).map((actors) => (
+                  <span key={actors} className="bg-gray-600/20 whitespace-nowrap rounded-full px-3 py-1 text-sm mr-2 mb-2">
+                    {actors}
+                  </span>
+                ))}
+              </div>
+            )}
       </div>
     </div></div>
     </div>

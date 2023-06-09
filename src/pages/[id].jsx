@@ -5,6 +5,7 @@ import Player from "@/components/Player";
 import TvShowDetails from "@/components/TVShowDetails";
 import { addEpisode } from "@/redux/reducers/recentlyWatchedReducers";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
@@ -99,26 +100,17 @@ function MyPage({ id, deets }) {
       {recentlyWatched?.map(
         (e) =>
           e.tvid === id && (
-            <div onClick={() => handleEpisodeClick(e.episode)} key={e.tvid} className="cursor-pointer mx-auto ">
-              <div className="flex  max-w-full w-fit  flex-row items-center bg-white/5 rounded-full py-4 px-6 my-4">
-                <div className="text-white text-center  line-clamp-1 whitespace-nowrap lg:text-left mr-2">
-                  <span className="text-sm lg:text-lg  mr-2"> Play S{e.episode.season} E{e.episode.episode}</span> 
-                  <span className="text-xs  ">{e.episode.title}</span>
-                </div>
-                <div className="flex justify-center items-center text-white w-5 h-5 shadow-lg">
-                <svg
-      viewBox="0 0 512 512"
-      fill="currentColor"
-     
-    >
-      <path
-        fill="none"
-        stroke="currentColor"
-        strokeMiterlimit={10}
-        strokeWidth={32}
-        d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z"
-      />
-    </svg>
+            <div
+              onClick={() => handleEpisodeClick(e.episode)}
+              key={e.tvid}
+              className="cursor-pointer rounded-full bg-white/10 border border-white/5 mx-auto"
+            >
+              <div className="flex max-w-full w-fit flex-row items-center bg-black rounded-full pt-2 pb-3 px-5 ">
+                <div className="text-white text-center line-clamp-1 whitespace-nowrap lg:text-left mr-2">
+                  <span className="text-xs uppercase font-semibold mr-2">
+                    Play S{e.episode.season} E{e.episode.episode}
+                  </span>
+                  <span className="text-xs">{e.episode.title}</span>
                 </div>
               </div>
             </div>
@@ -173,31 +165,43 @@ function MyPage({ id, deets }) {
                 </svg>
               </h2>
               {expandedSeason === season && (
-                <div className="flex flex-col z-10 space-x-1">
+                <div className="flex flex-row  overflow-x-scroll p-2 space-x-2 scrollbar-hide mx-auto ">
                   {season.episodes && season.episodes.filter(episode => episode.id).length > 0 ? (
                     season.episodes.map((episode) => (
                       episode.id && (
                         selectedEpisode?.id === episode.id ?
-                          <div
-                            key={episode.id}
-                            className="flex-shrink-0 bg-white/70 text-black  p-4 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
-                            onClick={() => handleEpisodeClick(episode)}
-                          >
-                            <h3 className="text-black flex gap-5 text-sm font-bold">
-                              E{episode.episode}: {episode.title}
-                            </h3>
-                            <div className="italic text-sm"><span className="font-bold ">Synopsis </span> : {episode.description || '-'}</div>
+                          <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card border-2 border-spacing-1 flex-none relative w-60 h-32 mb-2 mx-2 rounded-lg max-w-xs">
+                            <div className="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
+                            <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
+                              <img className="w-full h-full object-cover" src={episode.img?.hd} alt={`Episode ${episode.number}`} />
+                            </div>
+
+
+
+
+                            <div className="episode-info absolute bottom-2 w-full px-4 text-white">
+                              <h3 className="text-xs  line-clamp-1">{episode.releaseDate || ''}</h3>
+                              <h3 className=" text-sm lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
+                            </div>
                           </div>
+
                           :
-                        <div
-                          key={episode.id}
-                            className="flex-shrink-0 border-b border-neutral-500 p-4 flex-row items-center mx-1 w-full duration-100 cursor-pointer"
-                          onClick={() => handleEpisodeClick(episode)}
-                        >
-                          <h3 className="text-white flex gap-5 text-sm font-semibold">
-                            E{episode.episode}: {episode.title}
-                          </h3>
-                        </div>
+
+                          <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card flex-none relative w-60 h-32 mb-2 mx-2 rounded-lg max-w-xs">
+                            <div className="overlay absolute inset-0 bg-black opacity-70 rounded-lg"></div>
+                            <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
+                              <img className="w-full h-full object-cover" src={episode.img?.hd} alt={`Episode ${episode.number}`} />
+                            </div>
+
+
+
+
+                            <div className="episode-info absolute bottom-2 w-full px-4 text-white">
+                              <h3 className="text-xs  line-clamp-1">{episode.releaseDate || ''}</h3>
+                              <h3 className=" text-sm lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
+                            </div>
+                          </div>
+
                       )
                     ))
                   ) : (
@@ -207,6 +211,38 @@ function MyPage({ id, deets }) {
               )}
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="w-11/12 text-2xl pb-[10rem] mx-auto">
+        {" "}
+        Recommendations
+        <div className="flex overflow-x-scroll p-2 space-x-4 scrollbar-hide  mx-auto ">
+          {deets.similar?.filter((e) => e.rating > 4)
+            .map((e) => (
+              <Link key={e.id} href={`/${e.id}`}>
+                <div className="flex-none w-32 lg:w-40">
+                  <div className="relative">
+                    <img
+                      className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                      src={e.image}
+                      alt={e.title}
+                    />
+                    <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
+                      <p className="text-xs text-white/40">{new Date(e.releaseDate).getFullYear()}</p>
+
+                      <p className="text-xs text-white/40">
+                        <span className="text-red-500"> {e.type}</span> •{" "}
+                        {e.rating.toFixed(1)}⭐
+                      </p>
+                      <h3 className="text-white  text-sm lg:text-lg  ">
+                        {e.title}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
         </div>
       </div>
     </div>

@@ -2,14 +2,12 @@ import React, { useEffect, useRef, useState, useMemo, useCallback } from "react"
 import Player from "@oplayer/core";
 import hls from "@oplayer/hls";
 import ui from "@oplayer/ui";
-import { chromecast, vttThumbnails } from "@oplayer/plugins";
 
 const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
   const playerContainerRef = useRef();
   const playerRef = useRef();
   const [currIndex, setCurrIndex] = useState(null);
-  const [generatedUrl, setGeneratedUrl] = useState(null);
-  const subtitles = episode.subtitles
+  const subtitlesList = episode.subtitles
     .map((subtitle) => ({
       src: subtitle.url,
       default: subtitle.lang.toLowerCase().includes("eng"),
@@ -31,9 +29,8 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
           fontSize: 10,
           fontFamily: '',
           background: true,
-          source: subtitles
+          source: subtitlesList
         },
-        topSetting: true,
         menu: [
           {
             name: "Next",
@@ -74,18 +71,11 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
         ],
       }),
       hls({ forceHLS: true }),
-      chromecast,
-      vttThumbnails,
     ];
-  }, [episode.sources, deets.type, getNextEpisode, handleQualityChange, selectedEpisode]);
+  }, [episode.sources, deets.type, getNextEpisode, handleQualityChange, selectedEpisode, subtitlesList]);
 
   useEffect(() => {
     if (!episode) return;
-
-    if (deets.type === "Movie" || playerRef.current)
-    {
-      playerRef.current?.destroy();
-    }
 
     playerRef.current = Player.make(playerContainerRef.current).use(playerOptions).create();
 
@@ -98,11 +88,15 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
       poster,
     });
 
+    playerRef.current.context.ui.subtitle.updateSource(subtitlesList);
 
-    playerRef.current.context.ui.subtitle.updateSource(subtitles);
-
-
-  }, [episode, deets.type, selectedEpisode, playerOptions]);
+    return () => {
+      if (playerRef?.current && playerRef?.current?.destroy)
+      {
+        playerRef?.current?.destroy();
+      }
+    };
+  }, [episode, deets.type, selectedEpisode, playerOptions, subtitlesList]);
 
   useEffect(() => {
     if (currIndex !== null && episode?.sources[currIndex])
@@ -115,15 +109,7 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
         title,
         poster,
       });
-
-      const subtitles = episode.subtitles
-        .filter((subtitle) => subtitle.lang.toLowerCase().includes("eng"))
-        .map((subtitle, index) => ({
-          src: subtitle.url,
-          default: index === 0,
-          name: subtitle.lang,
-        }));
-      playerRef.current.context.ui.subtitle.updateSource(subtitles);
+      playerRef.current.context.ui.subtitle.updateSource(subtitlesList);
     }
   }, [currIndex, episode, deets.type, selectedEpisode]);
 

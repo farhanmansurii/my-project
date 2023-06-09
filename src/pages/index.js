@@ -46,11 +46,11 @@ function Movies() {
       <SearchPage />
 
       {recentlyWatched && recentlyWatched.length > 0 && (
-        <div className="overflow-x-auto mx-auto w-11/12">
+        <div className="flex flex-col w-11/12 overflow-x-scroll p-2 space-x-2 scrollbar-hide mx-auto ">
           <div className="text-2xl text-white mt-6 mb-2">Recently Watched TV Shows</div>
           <div className="flex flex-nowrap text-white">
             {recentlyWatched.map((e) => (
-              <div key={e.tvid} className="episode-card relative w-64 h-36 mb-2 mx-2 rounded-lg max-w-xs">
+              <div key={e.tvid} className="episode-card flex-none relative w-64 h-36 mb-2 mx-2 rounded-lg max-w-xs">
                 <div className="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
                 <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
                   <img className="w-full h-full object-cover" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
@@ -85,7 +85,8 @@ function Movies() {
           </div>
         </div>
 
-)}
+      )}
+
 
 
       {
