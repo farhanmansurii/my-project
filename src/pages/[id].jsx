@@ -142,8 +142,9 @@ function MyPage({ id, deets }) {
         <div className="container mx-auto px-4">
           {deets.seasons.map((season) => (
             <div key={season.season} className="">
-              <h2
-                className="text-white p-3 text-xl cursor-pointer flex items-center   rounded m-2  justify-between hover:bg-neutral-700 duration-200 "
+              <h2 
+                className={`text-white p-3 text-xl cursor-pointer flex items-center rounded m-2 justify-between hover:bg-neutral-700 duration-200 ${expandedSeason === season ? 'border' : ''}`}
+
                 onClick={() => toggleSeason(season)}
               >
                 <span>Season {season.season}</span>
