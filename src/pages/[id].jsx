@@ -103,7 +103,7 @@ function MyPage({ id, deets }) {
             <div
               onClick={() => handleEpisodeClick(e.episode)}
               key={e.tvid}
-              className="cursor-pointer rounded-full my-[4rem] bg-white/10 border border-white/5 mx-auto"
+              className="cursor-pointer rounded-full mt-[4rem] mb-3 bg-white/10 border border-white/5 mx-auto"
             >
               <div className="flex max-w-full w-fit flex-row items-center bg-black rounded-full pt-2 pb-3 px-5 ">
                 <div className="text-white text-center line-clamp-1 whitespace-nowrap lg:text-left mr-2">
@@ -143,7 +143,7 @@ function MyPage({ id, deets }) {
           {deets.seasons.map((season) => (
             <div key={season.season} className="">
               <h2 
-                className={`text-white p-3 text-xl cursor-pointer flex items-center rounded m-2 justify-between hover:bg-neutral-700 duration-200 ${expandedSeason === season ? 'border' : ''}`}
+                className={`text-white p-3 text-xl cursor-pointer bg-gray-700/10 flex items-center rounded m-2 justify-between hover:bg-neutral-700 duration-200 ${expandedSeason === season ? 'border' : ''}`}
 
                 onClick={() => toggleSeason(season)}
               >

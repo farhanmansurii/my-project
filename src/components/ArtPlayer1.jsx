@@ -42,7 +42,6 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
         topSetting: true,
         subtitle: {
           fontSize: 10,
-          fontFamily: "",
           background: true,
           source: subtitlesList,
         },
