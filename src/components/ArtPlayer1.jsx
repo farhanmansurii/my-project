@@ -25,6 +25,7 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
         theme: { primaryColor: "#808080" },
         slideToSeek: "always",
         controlBar: { back: "always" },
+        topSetting: true, screenshot: true,
         subtitle: {
           fontSize: 10,
           fontFamily: '',
