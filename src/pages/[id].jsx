@@ -33,6 +33,11 @@ function MyPage({ id, deets }) {
   const [loader, setLoader] = useState();
   const [expandedSeason, setExpandedSeason] = useState(null);
   const [episode, setEpisode] = useState();
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+  }
   const toggleSeason = (season) => {
     if (expandedSeason === season) {
       setExpandedSeason(null);
@@ -181,7 +186,9 @@ function MyPage({ id, deets }) {
 
 
                             <div className="episode-info absolute bottom-2 w-full px-4 text-white">
-                              <h3 className="text-xs text-white/60  line-clamp-1">{episode.releaseDate || ''}</h3>
+                              <h3 className="text-xs text-white/60 line-clamp-1">
+                                {episode.releaseDate ? formatDate(episode.releaseDate) : ''}
+                              </h3>
                               <h3 className=" text-sm lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
                             </div>
                           </div>
@@ -198,7 +205,9 @@ function MyPage({ id, deets }) {
 
 
                             <div className="episode-info absolute bottom-2 w-full px-4 text-white">
-                              <h3 className="text-xs text-white/60 line-clamp-1">{episode.releaseDate || ''}</h3>
+                              <h3 className="text-xs text-white/60 line-clamp-1">
+                                {episode.releaseDate ? formatDate(episode.releaseDate) : ''}
+                              </h3>
                               <h3 className=" text-sm lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
                             </div>
                           </div>

@@ -11,7 +11,11 @@ function TvShowDetails({ show }) {
     totalSeasons,
     nextAiringEpisode,
   } = show;
-
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+  }
   return (
     <div
       style={{ backgroundImage: `url(${image})` }}
@@ -35,7 +39,7 @@ function TvShowDetails({ show }) {
               </div>
             )}
             {releaseDate && (
-              <div className="text-sm opacity-60">{releaseDate}</div>
+                <div className="text-sm opacity-60">{formatDate(releaseDate)}</div>
             )}
           </div>
           <div className="flex items-center">
