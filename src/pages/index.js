@@ -20,14 +20,17 @@ function Movies() {
     const storedTVState = localStorage.getItem("recentlyWatchedTvShow");
     const storedMovieState = localStorage.getItem("favoriteMovies");
 
-    const parsedTVState = JSON.parse(storedTVState)
-    const parsedMovieState = JSON.parse(storedMovieState)
+    if (storedTVState && storedMovieState)
+    {
+      const parsedTVState = JSON.parse(storedTVState);
+      const parsedMovieState = JSON.parse(storedMovieState);
 
-    dispatch(updateRecentlyWatched(parsedTVState))
-    dispatch(updateFavoriteMovies(parsedMovieState))
-    console.log(recentlyWatched, movies)
+      dispatch(updateRecentlyWatched(parsedTVState));
+      dispatch(updateFavoriteMovies(parsedMovieState));
+    }
 
   }, [dispatch]);
+
 
   return (
     <div>
@@ -43,46 +46,45 @@ function Movies() {
       <SearchPage />
 
       {recentlyWatched && recentlyWatched.length > 0 && (
-  <div className="overflow-x-auto mx-auto w-11/12">
-    <div className="text-2xl text-white mt-6 mb-2 ">
-      Recently Watched TV Shows
-    </div>
-    <div className="flex overflow-x-scroll text-white scrollbar-hide">
-      {recentlyWatched.map((e) => (
-        <div key={e.tvid} className="episode-card relative w-64 h-36 mb-2 mx-2 rounded-lg max-w-xs">
-          <div className="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
-          <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
-            <img className="w-full h-full object-cover" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
-          </div>
+        <div className="overflow-x-auto mx-auto w-11/12">
+          <div className="text-2xl text-white mt-6 mb-2">Recently Watched TV Shows</div>
+          <div className="flex flex-nowrap text-white">
+            {recentlyWatched.map((e) => (
+              <div key={e.tvid} className="episode-card relative w-64 h-36 mb-2 mx-2 rounded-lg max-w-xs">
+                <div className="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
+                <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
+                  <img className="w-full h-full object-cover" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
+                </div>
 
-          <div className="delete-btn absolute top-2 right-2">
-            <button className="bg-black rounded-full border-white border p-2 hover:scale-110 duration-150" onClick={() => dispatch(deleteEpisode(e.tvid))}>
-              <svg viewBox="0 0 512 512" fill="currentColor" height="1em" width="1em">
-                <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" d="M400 256H112"></path>
-              </svg>
-            </button>
-          </div>
+                <div className="delete-btn absolute top-2 right-2">
+                  <button className="bg-black rounded-full border-white border p-2 hover:scale-110 duration-150" onClick={() => dispatch(deleteEpisode(e.tvid))}>
+                    <svg viewBox="0 0 512 512" fill="currentColor" height="1em" width="1em">
+                      <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" d="M400 256H112"></path>
+                    </svg>
+                  </button>
+                </div>
 
-          <div className="play-btn absolute top-2 left-2">
-            <Link key={e.tvid} href={`/${e.tvid}`}>
-              <button className="bg-white text-black border-black border-2 rounded-full hover:scale-110 duration-150 p-2">
-                <svg fill="currentColor" viewBox="0 0 16 16" height="1em" width="1em">
-                  <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"></path>
-                </svg>
-              </button>
-            </Link>
-          </div>
+                <div className="play-btn absolute top-2 left-2">
+                  <Link key={e.tvid} href={`/${e.tvid}`}>
+                    <button className="bg-white text-black border-black border-2 rounded-full hover:scale-110 duration-150 p-2">
+                      <svg fill="currentColor" viewBox="0 0 16 16" height="1em" width="1em">
+                        <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"></path>
+                      </svg>
+                    </button>
+                  </Link>
+                </div>
 
-          <Link key={e.tvid} href={`/${e.tvid}`}>
-            <div className="episode-info absolute bottom-2 w-full px-4 text-white">
-              <h3 className="text-lg font-semibold line-clamp-1">{e.episode.title}</h3>
-              <p className="text-sm text-gray-400">S{e.episode.season} E{e.episode.episode}</p>
-            </div>
-          </Link>
+                <Link key={e.tvid} href={`/${e.tvid}`}>
+                  <div className="episode-info absolute bottom-2 w-full px-4 text-white">
+                    <h3 className="text-lg font-semibold line-clamp-1">{e.episode.title}</h3>
+                    <p className="text-sm text-gray-400">S{e.episode.season} E{e.episode.episode}</p>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
+
 )}
 
 
