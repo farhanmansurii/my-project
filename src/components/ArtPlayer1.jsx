@@ -78,6 +78,11 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
   useEffect(() => {
     if (!episode) return;
 
+    if (deets.type === "Movie" || playerRef?.current)
+    {
+      playerRef.current?.destroy();
+    }
+
     playerRef.current = Player.make(playerContainerRef.current).use(playerOptions).create();
 
     const initialSource = episode.sources.find((source) => source.quality === "auto");
