@@ -33,11 +33,6 @@ function MyPage({ id, deets }) {
   const [loader, setLoader] = useState();
   const [expandedSeason, setExpandedSeason] = useState(null);
   const [episode, setEpisode] = useState();
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const options = { month: 'long', day: 'numeric', year: 'numeric' };
-    return date.toLocaleDateString(undefined, options);
-  }
   const toggleSeason = (season) => {
     if (expandedSeason === season) {
       setExpandedSeason(null);
@@ -45,7 +40,11 @@ function MyPage({ id, deets }) {
       setExpandedSeason(season);
     }
   };
-
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+  }
   function getNextEpisode(selectedEpisode, deets) {
     const seasonIndex = deets.seasons.findIndex(
       (season) => season.season === selectedEpisode.season
@@ -148,7 +147,7 @@ function MyPage({ id, deets }) {
           {deets.seasons.map((season) => (
             <div key={season.season} className="">
               <h2 
-                className={`text-white p-3 text-xl cursor-pointer bg-gray-700/10 flex items-center rounded m-2 justify-between hover:bg-neutral-700 duration-200 ${expandedSeason === season ? 'border' : ''}`}
+                className={`text-white p-3 text-xl cursor-pointer bg-gray-700/20 flex items-center rounded m-2 justify-between hover:bg-neutral-700 duration-200 ${expandedSeason === season ? 'border' : ''}`}
 
                 onClick={() => toggleSeason(season)}
               >
@@ -171,46 +170,63 @@ function MyPage({ id, deets }) {
                 </svg>
               </h2>
               {expandedSeason === season && (
-                <div className="flex flex-row  overflow-x-scroll p-2 space-x-2 scrollbar-hide mx-auto ">
+                <div className="flex flex-col gap-2 w-11/12 scrollbar-hide mx-auto ">
                   {season.episodes && season.episodes.filter(episode => episode.id).length > 0 ? (
                     season.episodes.map((episode) => (
                       episode.id && (
                         selectedEpisode?.id === episode.id ?
-                          <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card border-2 border-spacing-1 flex-none relative w-60 h-32 mb-2 mx-2 rounded-lg max-w-xs">
-                            <div className="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
-                            <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
-                              <img className="w-full h-full object-cover" src={episode.img?.hd || deets.image} alt={`Episode ${episode.episode}`} />
-                            </div>
+                          <><div onClick={() => handleEpisodeClick(episode)} key={episode.id} className=" border-2 hidden md:flex flex-row w-full  h-44 rounded-lg ">
+                            <img src={episode.img.hd} className=" w-1/3 aspect-video" />
+                            <div className="flex justify-center flex-col gap-2 text-left p-2">
 
-
-
-
-                            <div className="episode-info absolute bottom-2 w-full px-4 text-white">
-                              <h3 className="text-xs text-white/60 line-clamp-1">
-                                {episode.releaseDate ? formatDate(episode.releaseDate) : ''}
-                              </h3>
-                              <h3 className=" text-sm lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
+                              <div className=" text-xs lg:text-lg">Episode {episode.episode} : {episode.title}</div>
+                              <div className="text-xs lg:text-sm opacity-50">{formatDate(episode.releaseDate) || ''}</div>
+                              <div className="text-xs lg:text-sm line-clamp-3">{episode.description}</div>
                             </div>
                           </div>
+                            <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card md:hidden border-2 flex-none relative w-full h-44 rounded-lg   ">
+                              <div className="overlay absolute rounded-lg inset-0 bg-black opacity-50 "></div>
+                              <div className="episode-img-container rounded-lg w-full h-full overflow-hidden">
+                                <img className="w-full h-full object-cover rounded-lg" src={episode.img?.hd || deets.image} alt={`Episode ${episode.episode}`} />
+                              </div>
+
+
+
+
+                              <div className="episode-info absolute bottom-2 w-full px-4 text-white">
+                                <h3 className="text-xs text-white/40 line-clamp-1">{formatDate(episode.releaseDate) || ''}</h3>
+                                <h3 className=" text-md lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
+                                <h3 className=" text-xs lg:text-lg text-white/60 line-clamp-2">{episode.description}</h3>
+                              </div>
+                            </div>
+                          </>
 
                           :
+                          <><div onClick={() => handleEpisodeClick(episode)} key={episode.id} className=" hidden md:flex flex-row w-full  h-44 rounded-lg ">
+                            <img src={episode.img.hd} className=" w-1/3 aspect-video" />
+                            <div className="flex justify-center flex-col gap-2 text-left p-2">
 
-                          <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card flex-none relative w-60 h-32 mb-2 mx-2 rounded-lg max-w-xs">
-                            <div className="overlay absolute inset-0 bg-black opacity-70 rounded-lg"></div>
-                            <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
-                              <img className="w-full h-full object-cover" src={episode.img?.hd || deets.image} alt={`Episode ${episode.episode}`} />
+                              <div className=" text-xs lg:text-lg">Episode {episode.episode} : {episode.title}</div>
+                              <div className="text-xs lg:text-sm opacity-50">{formatDate(episode.releaseDate) || ''}</div>
+                              <div className="text-xs lg:text-sm line-clamp-3">{episode.description}</div>
+                            </div>
+                          </div>
+                            <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card md:hidden flex-none relative w-full h-44 rounded-lg   ">
+                              <div className="overlay absolute rounded-lg inset-0 bg-black opacity-70 "></div>
+                              <div className="episode-img-container rounded-lg w-full h-full overflow-hidden">
+                                <img className="w-full h-full object-cover rounded-lg" src={episode.img?.hd || deets.image} alt={`Episode ${episode.episode}`} />
                             </div>
 
 
 
 
                             <div className="episode-info absolute bottom-2 w-full px-4 text-white">
-                              <h3 className="text-xs text-white/60 line-clamp-1">
-                                {episode.releaseDate ? formatDate(episode.releaseDate) : ''}
-                              </h3>
-                              <h3 className=" text-sm lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
+                                <h3 className="text-xs text-white/40 line-clamp-1">{formatDate(episode.releaseDate) || ''}</h3>
+                                <h3 className=" text-md lg:text-lg  line-clamp-1">E{episode.episode} : {episode.title}</h3>
+                                <h3 className=" text-xs lg:text-lg text-white/60 line-clamp-2">{episode.description}</h3>
                             </div>
                           </div>
+                          </>
 
                       )
                     ))

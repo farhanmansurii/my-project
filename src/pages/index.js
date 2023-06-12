@@ -46,8 +46,9 @@ function Movies() {
       <SearchPage />
 
       {recentlyWatched && recentlyWatched.length > 0 && (
-        <div className="flex flex-col w-11/12 overflow-x-scroll p-2 space-x-2 scrollbar-hide mx-auto ">
-          <div className="text-2xl text-white mt-6 mb-2">Recently Watched TV Shows</div>
+        <>
+          <div className="text-2xl text-white w-11/12 mx-auto mt-6 mb-2">Recently Watched TV Shows</div>
+          <div className="flex flex-col w-11/12 overflow-x-scroll p-2 space-x-2 scrollbar-hide mx-auto ">
           <div className="flex flex-nowrap text-white">
             {recentlyWatched.map((e) => (
               <div key={e.tvid} className="episode-card flex-none relative w-64 h-36 mb-2 mx-2 rounded-lg max-w-xs">
@@ -84,6 +85,7 @@ function Movies() {
             ))}
           </div>
         </div>
+        </>
 
       )}
 
