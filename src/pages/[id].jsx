@@ -175,7 +175,7 @@ function MyPage({ id, deets }) {
                     season.episodes.map((episode) => (
                       episode.id && (
                         selectedEpisode?.id === episode.id ?
-                          <><div onClick={() => handleEpisodeClick(episode)} key={episode.id} className=" border-2 hidden md:flex flex-row w-full  h-44 rounded-lg ">
+                          <><div onClick={() => handleEpisodeClick(episode)} key={episode.id} className=" bg-white/5 hidden md:flex flex-row w-full  h-44 rounded-lg ">
                             <img src={episode.img.hd} className=" w-1/3 aspect-video" />
                             <div className="flex justify-center flex-col gap-2 text-left p-2">
 
@@ -184,7 +184,7 @@ function MyPage({ id, deets }) {
                               <div className="text-xs lg:text-sm line-clamp-3">{episode.description}</div>
                             </div>
                           </div>
-                            <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card md:hidden border-2 flex-none relative w-full h-44 rounded-lg   ">
+                            <div onClick={() => handleEpisodeClick(episode)} key={episode.id} className="episode-card md:hidden border-2 border-white/20 flex-none relative w-full h-44 rounded-lg   ">
                               <div className="overlay absolute rounded-lg inset-0 bg-black opacity-50 "></div>
                               <div className="episode-img-container rounded-lg w-full h-full overflow-hidden">
                                 <img className="w-full h-full object-cover rounded-lg" src={episode.img?.hd || deets.image} alt={`Episode ${episode.episode}`} />
