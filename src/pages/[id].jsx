@@ -11,19 +11,35 @@ import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "react-spinner-material";
+
 export async function getServerSideProps(context) {
   const tvid = context.query.id;
-  const detailsResponse = await fetch(
-    `https://spicyapi.vercel.app/meta/tmdb/info/${tvid}?type=TV%20Series`
-  );
-  const details = await detailsResponse.json();
-  return {
-    props: {
-      deets: details,
-      id: tvid,
-    },
-  };
+
+  try
+  {
+    const response = await axios.get(`https://spicyapi.vercel.app/meta/tmdb/info/${tvid}?type=TV%20Series`);
+    const details = response.data;
+
+
+    return {
+      props: {
+        deets: details,
+        id: tvid,
+      },
+    };
+  } catch (error)
+  {
+    console.error(error);
+
+    return {
+      props: {
+        deets: null,
+        id: tvid,
+      },
+    };
+  }
 }
+
 
 function MyPage({ id, deets }) {
 
@@ -97,8 +113,9 @@ function MyPage({ id, deets }) {
   return (
     <div className="">
       <Navbar />
-      <TvShowDetails show={deets} />
-      <div className="w-full flex justify-center">
+      {deets &&
+        <TvShowDetails show={deets} />
+      }<div className="w-full flex justify-center">
 
      
       {recentlyWatched?.map(
