@@ -138,3 +138,57 @@ const EnimePlayer = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
 };
 
 export default EnimePlayer;
+// const plugins = [
+//   OUI(uiOptions),
+
+//   OHls(),
+// ]
+// useEffect(() => {
+//   if (!episode) return;
+//   if (!playerRef) return;
+//   if (deets.type === "Movie" || playerRef.current)
+//   {
+//     playerRef.current.destroy()
+//   }
+
+//   playerRef.current = Player.make(playerContainerRef.current).use(
+//     plugins).create();
+
+//   const initialSource = episode.sources.find((source) => source.quality === "auto");
+//   const title = deets?.type === "Movie" ? deets.title : `S${selectedEpisode?.season}E${selectedEpisode?.episode}  ${selectedEpisode?.title}`;
+//   const poster = selectedEpisode?.img?.hd || selectedEpisode?.img?.mobile || deets.image;
+//   playerRef.current.changeSource({
+//     src: initialSource?.url,
+//     title,
+//     poster,
+//   });
+
+//   playerRef.current.context.ui.subtitle.updateSource(subtitlesList);
+
+//   return () => {
+//     if (playerRef && playerRef?.current.destroy)
+//     {
+//       playerRef.current?.destroy()
+//       playerRef.current = null;
+//     }
+//   };
+
+// }, [playerRef, episode, deets.type, selectedEpisode, subtitlesList, handleQualityChange, getNextEpisode]);
+
+
+
+
+// useEffect(() => {
+//   if (currIndex !== null && episode?.sources[currIndex])
+//   {
+//     const source = episode.sources[currIndex];
+//     const title = deets?.type === "Movie" ? deets.title : `S${selectedEpisode?.season}E${selectedEpisode?.episode}  ${selectedEpisode?.title}`;
+//     const poster = selectedEpisode?.img?.hd || selectedEpisode?.img?.mobile || deets.image;
+//     playerRef.current.changeSource({
+//       src: source.url,
+//       title,
+//       poster,
+//     });
+//     playerRef.current.context.ui.subtitle.updateSource(subtitlesList);
+//   }
+// }, [currIndex, episode, deets.type, selectedEpisode, subtitlesList]);
