@@ -1,72 +1,67 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useMemo, useCallback } from "react";
 import Player from "@oplayer/core";
 import hls from "@oplayer/hls";
 import ui from "@oplayer/ui";
-import { useMemo } from "react";
 
 const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
-  const playerContainerRef = useRef();
-  const playerRef = useRef();
-  const [currIndex, setCurrIndex] = useState(null);
+  const sources = episode.sources;
+  const playerRef = useRef(null);
+  function getNextEp(selectedEpisode, deets) {
+    const seasonIndex = deets.seasons.findIndex(
+      (season) => season.season === selectedEpisode.season
+    );
+    const episodeIndex = deets.seasons[seasonIndex].episodes.findIndex(
+      (episode) => episode.id === selectedEpisode.id
+    );
+    if (episodeIndex === deets.seasons[seasonIndex].episodes.length - 1)
+    {
+      if (seasonIndex === deets.seasons.length - 1)
+      {
+        return "";
+      } else
+      {
+        console.log(deets.seasons[seasonIndex + 1].episodes[0])
+        return "Start Season" + " " + deets.seasons[seasonIndex + 1].episodes[0].season
+      }
+    } else
+    {
+      return "Play Episode" + " " + deets.seasons[seasonIndex].episodes[episodeIndex + 1].episode;
+    }
+
+  }
+  // Memoize the subtitles list to prevent unnecessary re-rendering
   const subtitlesList = useMemo(
     () =>
-      episode.subtitles.map((subtitle) => ({
+      episode.subtitles.filter((source) => source.lang.toLowerCase().includes('eng')).map((subtitle, index) => ({
         src: subtitle.url,
-        default: subtitle.lang.toLowerCase().includes("eng"),
+        default: index === 0,
         name: subtitle.lang,
       })),
     [episode.subtitles]
   );
-
-  const handleQualityChange = useCallback(
-    ({ value }) => {
-      const selectedIndex = episode.sources.findIndex((e) => e.url === value);
-      setCurrIndex(selectedIndex);
-    },
-    [episode.sources]
-  );
+  const title = deets?.type.toLowerCase() === "movie" ? deets.title : `S${selectedEpisode?.season}E${selectedEpisode?.episode}  ${selectedEpisode?.title}`;
+  const poster = selectedEpisode?.img?.hd || selectedEpisode?.img?.mobile || deets.image;
 
   useEffect(() => {
-    if (!episode) return;
-
-    if (deets.type === "Movie" || playerRef.current)
+    // Create the player only once using the initial values
+    if (!playerRef.current)
     {
-      playerRef.current?.destroy();
-    }
-
-    playerRef.current = Player.make(playerContainerRef.current).use([
-      ui({
-        theme: { primaryColor: "#808080" },
-        slideToSeek: "always",
-        controlBar: { back: "always" },
-        topSetting: true,
-        subtitle: {
-          fontSize: 10,
-          background: true,
-          source: subtitlesList,
+      playerRef.current = Player.make('#oplayer', { poster, title }).use([ui({
+        theme: {
+          primaryColor: "red"
         },
-        menu: [
+        subtitle: {
+          fontSize: 14,
+          background: true,
+          source: subtitlesList
+        },
+
+        settings: ['loop',
           {
-            name: "Next",
-            icon: `<svg fill="white" className="w-6 h-6 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
-                    <path d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M280.875,269.313l-96,64
-                      C182.199,335.094,179.102,336,176,336c-2.59,0-5.184-0.625-7.551-1.891C163.246,331.32,160,325.898,160,320V192
-                      c0-5.898,3.246-11.32,8.449-14.109c5.203-2.773,11.516-2.484,16.426,0.797l96,64C285.328,245.656,288,250.648,288,256
-                      S285.328,266.344,280.875,269.313z M368,320c0,8.836-7.164,16-16,16h-16c-8.836,0-16-7.164-16-16V192c0-8.836,7.164-16,16-16h16
-                      c8.836,0,16,7.164,16,16V320z"/>
-                  </svg>`,
-            onClick: () => {
-              if (deets?.type === "TV Series")
-              {
-                getNextEpisode(selectedEpisode, deets);
-              } else
-              {
-                console.log("Not a TV series");
-              }
-            },
-          },
-          {
-            name: "Quality",
+            name: 'Quality',
+            key: 'KEY',
+            type: 'selector', // or 'switcher'
+
             icon: ` <svg
             viewBox="0 0 24 24"
             fill="currentColor"
@@ -79,61 +74,59 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
               value: source.url,
               default: source.quality === "auto",
             })),
-            onChange: handleQualityChange,
-          },
-        ],
-      }),
-      hls({ forceHLS: true }),
-    ]).create();
+            onChange({ value }) {
+              playerRef.current.changeQuality({ src: value, poster, title })
+            }
+          }]
+        , topSetting: true,
+        controlBar: true
+        , menu: [
+          deets?.type === "TV Series" ?
+            {
+              name: getNextEp(selectedEpisode, deets),
+              position: 'top',
 
-    const initialSource = episode.sources.find((source) => source.quality === "auto");
-    const title = deets?.type === "Movie" ? deets.title : `S${selectedEpisode?.season}E${selectedEpisode?.episode}  ${selectedEpisode?.title}`;
-    const poster = selectedEpisode?.img?.hd || selectedEpisode?.img?.mobile || deets.image;
-    playerRef.current.changeSource({
-      src: initialSource?.url,
-      title,
-      poster,
-    });
+              onClick: () => {
+                if (deets?.type === "TV Series")
+                {
+                  getNextEpisode(selectedEpisode, deets);
+                } else
+                {
+                  console.log("Not a TV series");
+                }
+              },
+            } : {
+              name: '',
+              position: 'top',
 
-    playerRef.current.context.ui.subtitle.updateSource(subtitlesList);
+            },
+        ], icons: {
+          fullscreen: [`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize-2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>`, `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minimize-2"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" x2="21" y1="10" y2="3"/><line x1="3" x2="10" y1="21" y2="14"/></svg>`]
+        }
+      }), hls({ forceHLS: true }),]).create();
 
-    return () => {
-      if (playerRef.current && playerRef.current.destroy)
-      {
-        playerRef.current.destroy();
-        playerRef.current = null;
-      }
-    };
-  }, [episode, deets.type, selectedEpisode, subtitlesList, handleQualityChange, getNextEpisode]);
+    }
+
+
+
+  }, []); // Empty dependency array ensures this effect runs only once on initial render
 
   useEffect(() => {
-    if (currIndex !== null && episode?.sources[currIndex])
-    {
-      const source = episode.sources[currIndex];
-      const title = deets?.type === "Movie" ? deets.title : `S${selectedEpisode?.season}E${selectedEpisode?.episode}  ${selectedEpisode?.title}`;
-      const poster = selectedEpisode?.img?.hd || selectedEpisode?.img?.mobile || deets.image;
-      playerRef.current.changeSource({
-        src: source.url,
-        title,
-        poster,
-      });
-      playerRef.current.context.ui.subtitle.updateSource(subtitlesList);
-    }
-  }, [currIndex, episode, deets.type, selectedEpisode, subtitlesList]);
+    // Update the player source and subtitles when sources change
+    if (!playerRef.current) return;
 
-  return (
-    <div>
-      {episode ? (
-        <div className="justify-center flex" key={episode.id}>
-          <div className="w-full h-full lg:w-[720px] aspect-video border-white/30">
-            <div className="w-11/12 mx-auto aspect-video p-0 m-0" ref={playerContainerRef} />
-          </div>
-        </div>
-      ) : (
-        <div>Loading</div>
-      )}
-    </div>
-  );
+
+
+    const updatedTitle = deets?.type === "Movie" ? deets.title : `S${selectedEpisode?.season}E${selectedEpisode?.episode}  ${selectedEpisode?.title}`;
+
+    playerRef.current.changeSource({ src: sources[sources.length - 1].url, poster, title });
+
+    playerRef.current.context.ui.subtitle.updateSource(subtitlesList);
+  }, [sources, selectedEpisode, subtitlesList]);
+
+  return (<div
+    className="w-full h-full lg:w-[720px] aspect-video border-white/30"
+    id="oplayer" />);
 };
 
 export default Enime1Player;
