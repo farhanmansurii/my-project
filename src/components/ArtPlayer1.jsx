@@ -21,11 +21,11 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
       } else
       {
         console.log(deets.seasons[seasonIndex + 1].episodes[0])
-        return "Start Season" + " " + deets.seasons[seasonIndex + 1].episodes[0].season
+        return "Start S" + deets.seasons[seasonIndex + 1].episodes[0].season
       }
     } else
     {
-      return "Play Episode" + " " + deets.seasons[seasonIndex].episodes[episodeIndex + 1].episode;
+      return "Play E" + deets.seasons[seasonIndex].episodes[episodeIndex + 1].episode;
     }
 
   }
