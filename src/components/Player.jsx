@@ -120,7 +120,7 @@ const M3U8Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
 
 
 
-    playerRef.current.changeSource({ src: sources[sources.length - 1].url, poster, title });
+    playerRef.current.changeSource({ src: sources[sources.length - 1]?.url, poster, title });
     playerRef.current.once('loadedmetadata', updateSubtitle)
 
   }, [sources, selectedEpisode]);

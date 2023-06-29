@@ -50,7 +50,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className="form-control place-content-center">
+      <div className="form-control mt-10 place-content-center">
         <div className="flex place-self-center mt-3 items-center w-11/12 mx-auto">
           <Input
               type="text"
@@ -60,7 +60,7 @@ const SearchPage = () => {
             onChange={(e) => setVal(e.target.value)}
             />
             {val.length > 0 && (
-            <Button className='h-10 rounded-xl ml-3'
+            <Button className='h-14 rounded-xl ml-3'
               onClick={() => setVal("")}
             >
                 CLEAR
@@ -195,7 +195,7 @@ const SearchPage = () => {
 </div>
         ) : (
               <div className="flex justify-center items-center h-48 lg:h-56 w-11/12 mx-auto">
-            <Spinner size={40} spinnerColor={"#333"} spinnerWidth={2} visible={true} />
+                <Spinner size={40} spinnerColor={"white"} spinnerWidth={2} visible={true} />
           </div>
         )}
       </div>
