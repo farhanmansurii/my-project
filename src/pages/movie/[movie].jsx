@@ -1,6 +1,8 @@
+import { Button } from "@/components/Button";
 import MovieDetails from "@/components/MovieDetails";
 import Navbar from "@/components/Navbar";
 import Player from "@/components/Player";
+import { Toggle } from "@/components/ui/toggle";
 import { addFavoriteMovie, deleteFavoriteMovie, updateFavoriteMovies } from "@/redux/reducers/recentlyWatchedReducers";
 import axios from "axios";
 import Link from "next/link";
@@ -75,12 +77,8 @@ function MyPage({ id, deets }) {
 
      
 
-      <button
-        className={
-          !ifExists
-              ? "flex text-sm  max-w-full w-fit  flex-row items-center bg-white/5 gap-3 rounded-full py-2 border-4 border-white/20 px-6 my-4"
-              : "flex text-sm  max-w-full w-fit  flex-row items-center bg-white gap-3 text-black rounded-full py-2 border-4 border-black/50 px-6 my-4"
-        }
+        <Toggle
+          className="rounded"
         onClick={
           !ifExists
             ? () => dispatch(addFavoriteMovie({ movieid: id, deets }))
@@ -88,29 +86,8 @@ function MyPage({ id, deets }) {
         }
       >
         {ifExists ? "Remove from Library" : "Add to Library"}
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          {!ifExists ? (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          ) : (
-            <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-          )}
-        </svg>
-      </button>
+
+        </Toggle>
       </div>
 
       {episode ? (
@@ -131,12 +108,12 @@ function MyPage({ id, deets }) {
               <div className="flex-none w-32 lg:w-40">
                 <div className="relative">
                   <img
-                    className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                    className="object-cover w-full h-48 lg:h-56 rounded shadow-md transform transition-all duration-500"
                     src={e.image}
                     alt={e.title}
                   />
                   <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
-                    <p className="text-xs text-white/40">{e.releaseDate}</p>
+                    <p className="text-xs text-white/40">{new Date(e.releaseDate).getFullYear()}</p>
                     <p className="text-xs text-white/40">
                       <span className="text-red-500"> {e.type}</span> •{" "}
                       {e.rating.toFixed(1)}⭐
@@ -161,7 +138,7 @@ function MyPage({ id, deets }) {
               <div className="flex-none w-32 lg:w-40">
                 <div className="relative">
                   <img
-                    className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                      className="object-cover w-full h-48 lg:h-56 rounded shadow-md transform transition-all duration-500"
                     src={e.image}
                     alt={e.title}
                   />

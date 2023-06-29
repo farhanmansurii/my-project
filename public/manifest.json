@@ -4,8 +4,8 @@
     "display": "fullscreen",
     "scope": "/",
     "start_url": "/",
-    "name": "spicy tv & movies",
-    "short_name": "spicy tv & movies",
+    "name": "spicy-tv",
+    "short_name": "spicy-tv",
     "icons": [
         {
             "src": "/icon-192x192.png",

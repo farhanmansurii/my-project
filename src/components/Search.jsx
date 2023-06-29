@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "react-spinner-material";
+import { Input } from "./ui/input";
+import { Button } from "./Button";
 
 const SearchPage = () => {
   const dispatch = useDispatch();
@@ -50,27 +52,25 @@ const SearchPage = () => {
     <>
       <div className="form-control place-content-center">
         <div className="flex place-self-center mt-3 items-center w-11/12 mx-auto">
-          <div className="relative flex items-center w-full gap-1 pr-5 mt-4 border rounded-full group focus-within:border-neutral-400/20 bg-neutral-800/20 focus-within:outline-4 focus-within:outline-neutral-200 border-neutral-600/50">
-            <input
+          <Input
               type="text"
               placeholder="Search for a movie or TV show"
-              value={val}
-              onChange={(e) => setVal(e.target.value)}
-              className="w-full px-4 py-3 bg-transparent rounded-md text-white group focus:outline-none"
+            value={val}
+
+            className='rounded p-3'
+            onChange={(e) => setVal(e.target.value)}
             />
             {val.length > 0 && (
-              <button
-                onClick={() => setVal("")}
-                className="inline-block px-2 py-1 text-xs rounded-md bg-neutral-700/20 text-white"
-              >
+            <Button className='h-12 ml-3'
+              onClick={() => setVal("")}
+            >
                 CLEAR
-              </button>
-            )}
-          </div>
+            </Button>
+          )}
         </div>
         {searchHistory.length > 0 && (
           <div className="flex gap-1 flex-wrap mt-2 w-11/12 mx-auto">
-            <div className="bg-gray-600/20 rounded-full px-4 py-2 text-sm  mb-2">
+            <Button variant='chip'  >
               <span
                 className="cursor-pointer"
 
@@ -78,7 +78,7 @@ const SearchPage = () => {
                 Clear All
               </span>
               <button
-                className="ml-2 text-gray-500"
+                className="ml-2"
                 onClick={() => dispatch(clearSearchHistory())}
               >
                 <svg
@@ -99,9 +99,9 @@ const SearchPage = () => {
                   />
                 </svg>
               </button>
-            </div>
+            </Button>
             {searchHistory.map((term, index) => (
-              <div key={index} className="bg-gray-600/20 rounded-full px-4 py-2 text-sm  mb-2">
+              <Button variant='chip' key={index} >
                 <span className="cursor-pointer" onClick={() => setVal(term)}>
                   {term}
                 </span>
@@ -124,7 +124,7 @@ const SearchPage = () => {
                     />
                   </svg>
                 </button>
-              </div>
+              </Button>
             ))}
           </div>
         )}
@@ -143,7 +143,7 @@ const SearchPage = () => {
             <div className="flex-none w-32 lg:w-40">
               <div className="relative">
                 <img
-                  className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                className="object-cover w-full h-48 lg:h-56 rounded shadow-md transform transition-all duration-500"
                   src={e.image}
                   alt={e.title}
                 />
@@ -170,7 +170,7 @@ const SearchPage = () => {
             <div className="flex-none w-32 lg:w-40">
               <div className="relative">
                 <img
-                  className="object-cover w-full h-48 lg:h-56 rounded-lg shadow-md transform transition-all duration-500"
+                className="object-cover w-full h-48 lg:h-56 rounded shadow-md transform transition-all duration-500"
                   src={e.image}
                   alt={e.title}
                 />
@@ -195,7 +195,7 @@ const SearchPage = () => {
   )}
 </div>
         ) : (
-          <div className="flex justify-center items-center w-11/12 mx-auto">
+              <div className="flex justify-center items-center h-48 lg:h-56 w-11/12 mx-auto">
             <Spinner size={40} spinnerColor={"#333"} spinnerWidth={2} visible={true} />
           </div>
         )}

@@ -1,9 +1,11 @@
+import { Button } from "@/components/Button";
 import SearchPage from "@/components/Search";
 import { addEpisode, deleteEpisode, updateFavoriteMovies, updateRecentlyWatched } from "@/redux/reducers/recentlyWatchedReducers";
 
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { SWRConfig } from "swr";
 
@@ -51,9 +53,9 @@ function Movies() {
           <div className="flex flex-col w-11/12 overflow-x-scroll p-2 space-x-2 scrollbar-hide mx-auto ">
           <div className="flex flex-nowrap text-white">
             {recentlyWatched.map((e) => (
-              <div key={e.tvid} className="episode-card flex-none relative w-64 h-36 mb-2 mx-2 rounded-lg max-w-xs">
-                <div className="overlay absolute inset-0 bg-black opacity-50 rounded-lg"></div>
-                <div className="episode-img-container w-full h-full rounded-lg overflow-hidden">
+              <div key={e.tvid} className="episode-card flex-none relative w-64 h-36 mb-2 mx-2 rounded max-w-xs">
+                <div className="overlay absolute inset-0 bg-black opacity-50 rounded"></div>
+                <div className="episode-img-container w-full h-full rounded overflow-hidden">
                   <img className="w-full h-full object-cover" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
                 </div>
 

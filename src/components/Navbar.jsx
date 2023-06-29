@@ -1,31 +1,28 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { BiArrowBack, BiHomeAlt2 } from "react-icons/bi";
+import { Button } from "./Button";
 
 const Navbar = () => {
   const router = useRouter();
 
   return (
-    <nav className="flex fixed z-30 lg:w-10/12 mx-auto  items-center pt-2">
-      <button
-        type="button"
-        onClick={() => router.back()}
-        className="p-3 rounded-full  mx-5  my-3 hover:text-black  mix-blend-difference bg-slate-50/20 hover:bg-gray-200 transition duration-150"
-      >
-        <BiArrowBack className="w-6 h-6 " /> 
-      </button>
+    <div className="flex fixed mx-auto justify-center  z-30 w-full  items-center pt-2">
+      <div>
+
+
+
 
      
 
       <Link href="/">
-        <button
-          type="button"
-          className="p-3 rounded-full  my-3 hover:text-black bg-white/20 text-white hover:bg-gray-200 transition duration-150"
+          <Button size='lg ' className=' py-3 px-4 '
         >
-          <BiHomeAlt2 className="w-6 h-6" />
-        </button>
-      </Link>
-    </nav>
+            Go to home
+          </Button>
+        </Link>
+      </div>
+    </div>
   );
 };
 

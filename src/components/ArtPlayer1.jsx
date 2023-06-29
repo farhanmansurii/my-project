@@ -48,7 +48,8 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
     {
       playerRef.current = Player.make('#oplayer', { poster, title }).use([ui({
         theme: {
-          primaryColor: "red"
+          primaryColor: "gray",
+          secondaryColor: 'red'
         }, preload: 'auto',
         subtitle: {
           fontSize: 14,
@@ -84,7 +85,6 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
           deets?.type === "TV Series" ?
             {
               name: getNextEp(selectedEpisode, deets),
-
 
               onClick: () => {
                 if (deets?.type === "TV Series")
@@ -122,9 +122,15 @@ const Enime1Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
     playerRef.current.context.ui.subtitle.updateSource(subtitlesList);
   }, [sources, selectedEpisode, subtitlesList]);
 
-  return (<div
+  return (
+    <>
+      <div
     className="w-full h-full lg:w-[720px] aspect-video border-white/30"
-    id="oplayer" />);
+        id="oplayer" />
+
+
+    </>
+  );
 };
 
 export default Enime1Player;

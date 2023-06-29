@@ -14,10 +14,13 @@ const Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
               selectedEpisode={selectedEpisode}
             />
           </div>
+
         </div>
       ) : (
         <div>Loading</div>
       )}
+
+
     </div>
   );
 };
