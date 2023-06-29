@@ -1,16 +1,12 @@
-import ArtPlayer from "@/components/Artplayer";
+
 import { Button } from "@/components/Button";
 import Navbar from "@/components/Navbar";
-import EnimePlayer from "@/components/Player";
-import Player from "@/components/Player";
+import M3U8Player from "@/components/Player";
 import TvShowDetails from "@/components/TVShowDetails";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { addEpisode } from "@/redux/reducers/recentlyWatchedReducers";
 import axios from "axios";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Nav } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "react-spinner-material";
 
@@ -100,7 +96,6 @@ function MyPage({ id, deets }) {
           `https://spicyapi.vercel.app/meta/tmdb/watch/${selectedEpisode.id}?id=${deets.id}`
         );
         setEpisode(response.data);
-        console.log(response.data);
       } catch (error) {
         setEpisode("");
         setLoader(error.message);
@@ -130,13 +125,13 @@ function MyPage({ id, deets }) {
     
       {episode ? (
         <div className="flex  flex-col w-full mx-auto lg:w-10/12">
-          <Player episode={episode} getNextEpisode={getNextEpisode} deets={deets} selectedEpisode={selectedEpisode} />
+          <M3U8Player episode={episode} getNextEpisode={getNextEpisode} deets={deets} selectedEpisode={selectedEpisode} />
 
 
         </div>
       ) : (
         loader && (
-          <div className="flex w-full justify-center text-center text-2xl my-10 text-white">
+            <div className="w-full h-full lg:w-[720px] aspect-video  flex items-center justify-center  mx-auto">
             {loader}
           </div>
         )

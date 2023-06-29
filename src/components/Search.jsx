@@ -56,12 +56,11 @@ const SearchPage = () => {
               type="text"
               placeholder="Search for a movie or TV show"
             value={val}
-
-            className='rounded p-3'
+            className='rounded-xl '
             onChange={(e) => setVal(e.target.value)}
             />
             {val.length > 0 && (
-            <Button className='h-12 ml-3'
+            <Button className='h-10 rounded-xl ml-3'
               onClick={() => setVal("")}
             >
                 CLEAR
@@ -69,7 +68,7 @@ const SearchPage = () => {
           )}
         </div>
         {searchHistory.length > 0 && (
-          <div className="flex gap-1 flex-wrap mt-2 w-11/12 mx-auto">
+          <div className="flex gap-2 flex-wrap mt-2 w-11/12 mx-auto">
             <Button variant='chip'  >
               <span
                 className="cursor-pointer"

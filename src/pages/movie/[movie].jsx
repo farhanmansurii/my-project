@@ -96,7 +96,9 @@ function MyPage({ id, deets }) {
          
         </div>
       ) : (
-        <div className="flex w-full justify-center text-center text-2xl my-10 text-white">
+
+          <div className="w-full h-full lg:w-[720px] aspect-video  flex items-center justify-center  mx-auto">
+
           <Spinner />
         </div>
       )}
