@@ -34,6 +34,8 @@
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "hls.js": "^1.4.6",
+    "immer": "^10.0.2",
+    "lodash": "^4.17.21",
     "m3u8-dln": "0.0.3",
     "next": "13.1.6",
     "next-pwa": "^5.6.0",

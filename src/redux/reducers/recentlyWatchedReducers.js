@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import produce from "immer";
 
 const initialState = {
   recentlyWatched: [],
@@ -12,23 +13,31 @@ const recentlyWatchedSlice = createSlice({
     addEpisode: (state, action) => {
       const episode = action.payload;
       const existingShowIndex = state.recentlyWatched.findIndex((item) => item.tvid === episode.tvid);
+
       if (existingShowIndex === -1)
       {
-        state.recentlyWatched.unshift({ tvid: episode.tvid, episode });
+        state.recentlyWatched.unshift({ tvid: episode.tvid, episode, watchTime: 0 });
       } else
       {
         if (state.recentlyWatched[existingShowIndex].episode.id !== episode.id)
         {
           state.recentlyWatched.splice(existingShowIndex, 1);
-          state.recentlyWatched.unshift({ tvid: episode.tvid, episode });
+          state.recentlyWatched.unshift({ tvid: episode.tvid, episode, watchTime: 0 });
+        } else
+        {
+          state.recentlyWatched[existingShowIndex].watchTime = 0; // Update watch time for existing episode
         }
       }
+
       if (state.recentlyWatched.length > 10)
       {
         state.recentlyWatched.pop();
       }
+
       localStorage.setItem("recentlyWatchedTvShow", JSON.stringify(state.recentlyWatched));
     },
+
+
     deleteEpisode: (state, action) => {
       const tvid = action.payload;
       state.recentlyWatched = state.recentlyWatched.filter((item) => item.tvid !== tvid);
@@ -64,6 +73,27 @@ const recentlyWatchedSlice = createSlice({
       }
       return state;
     }
+    ,
+    updateWatchTime: (state, action) => {
+      const { tvid, watchTime } = action.payload;
+
+      const updatedRecentlyWatched = state.recentlyWatched.map((item) => {
+
+
+        return {
+          ...item,
+          watchTime: watchTime,
+        };
+
+      });
+
+      state.recentlyWatched = updatedRecentlyWatched; // Update state with the updated recently watched array
+
+      localStorage.setItem("recentlyWatchedTvShow", JSON.stringify(state.recentlyWatched));
+    },
+
+
+
   },
 });
 
@@ -74,6 +104,7 @@ export const {
   deleteFavoriteMovie,
   updateRecentlyWatched,
   updateFavoriteMovies,
+  updateWatchTime
 } = recentlyWatchedSlice.actions;
 
 export default recentlyWatchedSlice.reducer;

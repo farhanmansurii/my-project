@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useMemo, useCallback, useState } from "react"
 import Player from "@oplayer/core";
 import hls from "@oplayer/hls";
 import ui from "@oplayer/ui";
-
+import { updateWatchTime } from "@/redux/reducers/recentlyWatchedReducers";
+import { useDispatch } from "react-redux";
+import { debounce } from "lodash";
 const M3U8Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
   const sources = episode.sources;
   const playerRef = useRef(null);
@@ -30,6 +32,13 @@ const M3U8Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
 
   }
 
+  const dispatch = useDispatch();
+  const debouncedUpdateWatchTime = useRef(debounce((tvid, watchTime) => {
+    dispatch(updateWatchTime({ tvid, watchTime }));
+  }, 1000)).current;
+  const handleWatchTimeUpdate = (tvid, watchTime) => {
+    debouncedUpdateWatchTime(tvid, watchTime);
+  };
 
   // Memoize the subtitles list to prevent unnecessary re-rendering
   const subtitlesList = useMemo(
@@ -123,7 +132,36 @@ const M3U8Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
     playerRef.current.changeSource({ src: sources[sources.length - 1]?.url, poster, title });
     playerRef.current.once('loadedmetadata', updateSubtitle)
 
-  }, [sources, selectedEpisode]);
+
+    // Clean up the event listener on unmount
+
+  }, [sources, selectedEpisode
+  ]);
+  const watchTimeTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const handleTimeUpdate = () => {
+      clearTimeout(watchTimeTimeoutRef.current); // Clear previous timeout (if any)
+
+      watchTimeTimeoutRef.current = setTimeout(() => {
+        const currentTime = playerRef.current.currentTime;
+        const totalTime = playerRef.current.duration;
+        const watchTimePercent = Math.floor((currentTime / totalTime) * 100);
+
+        // Dispatch the updateWatchTime action with the calculated watch time percentage
+        dispatch(updateWatchTime({ tvid: deets.id, watchTime: watchTimePercent }));
+      }, 500); // Delay execution for 3 seconds
+    };
+
+    if (deets.type !== 'Movie')
+      playerRef.current.on("timeupdate", handleTimeUpdate);
+
+    // Clean up the event listener and timeout on component unmount
+    return () => {
+      playerRef.current.off("timeupdate", handleTimeUpdate);
+      clearTimeout(watchTimeTimeoutRef.current);
+    };
+  }, [playerRef, deets.id, dispatch]);
 
   return (
     <>

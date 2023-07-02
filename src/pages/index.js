@@ -52,12 +52,15 @@ function Movies() {
           <div className="text-2xl text-white w-11/12 mx-auto mt-6 mb-2">Recently Watched TV Shows</div>
           <div className="flex flex-col w-11/12 overflow-x-scroll p-2 space-x-2 scrollbar-hide mx-auto ">
           <div className="flex flex-nowrap text-white">
-            {recentlyWatched.map((e) => (
+              {recentlyWatched.map((e) => (
+                <div className="flex flex-col" key={e.tvid}>
               <div key={e.tvid} className="episode-card flex-none relative w-64 h-36 mb-2 mx-2 rounded max-w-xs">
-                <div className="overlay absolute inset-0 bg-black opacity-50 rounded"></div>
+
+                    <div className="overlay absolute inset-0 bg-black opacity-50 rounded"></div>
                 <div className="episode-img-container w-full h-full rounded overflow-hidden">
                   <img className="w-full h-full object-cover" src={e.episode.img?.hd} alt={`Episode ${e.episode.number}`} />
-                </div>
+                    </div>
+                    <div style={{ borderBottomLeftRadius: '3rem', border: '2px solid white', width: `${Math.round(e.watchTime)}%` }}></div>
 
                 <div className="delete-btn absolute top-2 right-2">
                   <button className="bg-black rounded-full border-white border p-2 hover:scale-110 duration-150" onClick={() => dispatch(deleteEpisode(e.tvid))}>
@@ -80,10 +83,15 @@ function Movies() {
                 <Link key={e.tvid} href={`/${e.tvid}`}>
                   <div className="episode-info absolute bottom-2 w-full px-4 text-white">
                     <h3 className="text-lg font-semibold line-clamp-1">{e.episode.title}</h3>
-                    <p className="text-sm text-gray-400">S{e.episode.season} E{e.episode.episode}</p>
+                        <p className="text-sm text-gray-400">
+
+                          S{e.episode.season} E{e.episode.episode}</p>
                   </div>
                 </Link>
-              </div>
+                  </div>
+                  <div ></div>
+
+                </div>
             ))}
           </div>
         </div>
