@@ -6,7 +6,10 @@ import { updateWatchTime } from "@/redux/reducers/recentlyWatchedReducers";
 import { useDispatch } from "react-redux";
 import { debounce } from "lodash";
 const M3U8Player = ({ episode, getNextEpisode, deets, selectedEpisode }) => {
+  
+  
   const sources = episode.sources;
+  console.log(sources);
   const playerRef = useRef(null);
   function getNextEp(selectedEpisode, deets) {
     const seasonIndex = deets.seasons.findIndex(
