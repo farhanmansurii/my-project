@@ -8,7 +8,6 @@ import {
 import { ScrollArea } from "./ui/scroll-area";
 
 function MovieDetails({ movie }) {
-  console.log(movie);
   function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { month: "long", day: "numeric", year: "numeric" };
@@ -29,7 +28,7 @@ function MovieDetails({ movie }) {
   return (
     <div
       style={{
-        backgroundImage: `url(${`https://image.tmdb.org/t/p/w300${backdrop_path}`})`,
+        backgroundImage: `url(${`https://image.tmdb.org/t/p/w300${poster_path}`})`,
       }}
       className="bg-cover bg-center  backdrop-blur-sm   bg-hidden lg:block lg:mx-auto"
     >
