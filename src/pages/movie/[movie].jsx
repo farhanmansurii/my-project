@@ -3,7 +3,11 @@ import MovieDetails from "@/components/MovieDetails";
 import Navbar from "@/components/Navbar";
 import Player from "@/components/Player";
 import { Toggle } from "@/components/ui/toggle";
-import { addFavoriteMovie, deleteFavoriteMovie, updateFavoriteMovies } from "@/redux/reducers/recentlyWatchedReducers";
+import {
+  addFavoriteMovie,
+  deleteFavoriteMovie,
+  updateFavoriteMovies,
+} from "@/redux/reducers/recentlyWatchedReducers";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -12,6 +16,10 @@ import Spinner from "react-spinner-material";
 
 export async function getServerSideProps(context) {
   const tvid = context.query.movie;
+  const flixDetails = await fetch(
+    `https://api.themoviedb.org/3/movie/${tvid}?language=en-US&api_key=${process.env.TMDB_API_KEY}`
+  );
+  const tmdbdata = await flixDetails.json();
   const detailsResponse = await fetch(
     `https://spicyapi.vercel.app/meta/tmdb/info/${tvid}?type=MOVIE`
   );
@@ -19,32 +27,30 @@ export async function getServerSideProps(context) {
   return {
     props: {
       deets: details,
+      flixDetails: tmdbdata,
       id: tvid,
     },
   };
 }
 
-function MyPage({ id, deets }) {
+function MyPage({ id, deets, flixDetails }) {
   const [episode, setEpisode] = useState();
   console.log(deets);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const movies = useSelector((state) => state.recentlyWatched.favoriteMovies);
 
   useEffect(() => {
     const storedState = localStorage.getItem("favoriteMovies");
 
-    if (storedState)
-    {
+    if (storedState) {
       const parsedState = JSON.parse(storedState);
 
       dispatch(updateFavoriteMovies(parsedState.movies));
     }
   }, []);
   function checkIfExists(movies, id) {
-    for (let i = 0; i < movies?.length; i++)
-    {
-      if (movies[i].movieid === id)
-      {
+    for (let i = 0; i < movies?.length; i++) {
+      if (movies[i].movieid === id) {
         return true;
       }
     }
@@ -54,10 +60,10 @@ function MyPage({ id, deets }) {
   const ifExists = checkIfExists(movies, id);
   useEffect(() => {
     const fetchEpisode = async () => {
+      const url = `https://nonsum.vercel.app/movies/flixhq/watch?episodeId=${deets.episodeId}&mediaId=${deets.id}`;
+
       try {
-        const response = await axios.get(
-          `https://spicyapi.vercel.app/meta/tmdb/watch/${deets.episodeId}?id=${deets.id}`
-        );
+        const response = await axios.get(url);
         setEpisode(response.data);
         console.log(response.data);
       } catch (error) {
@@ -70,35 +76,27 @@ function MyPage({ id, deets }) {
   }, [deets]);
   return (
     <div className="min-h-screen ">
-
-      <Navbar/>
-      <MovieDetails movie={deets} />
+      <Navbar />
+      <MovieDetails movie={flixDetails} />
       <div className="w-full flex justify-center">
-
-     
-
         <Toggle
           className="rounded"
-        onClick={
-          !ifExists
-            ? () => dispatch(addFavoriteMovie({ movieid: id, deets }))
-            : () => dispatch(deleteFavoriteMovie(id))
-        }
-      >
-        {ifExists ? "Remove from Library" : "Add to Library"}
-
+          onClick={
+            !ifExists
+              ? () => dispatch(addFavoriteMovie({ movieid: id, deets }))
+              : () => dispatch(deleteFavoriteMovie(id))
+          }
+        >
+          {ifExists ? "Remove from Library" : "Add to Library"}
         </Toggle>
       </div>
 
       {episode ? (
         <div className="pb-[3rem]">
-        <Player episode={episode}  deets={deets} />
-         
+          <Player episode={episode} deets={deets} />
         </div>
       ) : (
-
-          <div className="w-full h-full lg:w-[720px] aspect-video  flex items-center justify-center  mx-auto">
-
+        <div className="w-full h-full lg:w-[720px] aspect-video  flex items-center justify-center  mx-auto">
           <Spinner />
         </div>
       )}
@@ -115,7 +113,9 @@ function MyPage({ id, deets }) {
                     alt={e.title}
                   />
                   <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
-                    <p className="text-xs text-white/40">{new Date(e.releaseDate).getFullYear()}</p>
+                    <p className="text-xs text-white/40">
+                      {new Date(e.releaseDate).getFullYear()}
+                    </p>
                     <p className="text-xs text-white/40">
                       <span className="text-red-500"> {e.type}</span> •{" "}
                       {e.rating.toFixed(1)}⭐
@@ -134,31 +134,34 @@ function MyPage({ id, deets }) {
         {" "}
         <p className="p-3">Similar to {deets.title}</p>
         <div className="flex overflow-x-scroll p-2 space-x-4 scrollbar-hide  mx-auto ">
-          {deets.similar?.filter((e) => e.rating > 4)
+          {deets.similar
+            ?.filter((e) => e.rating > 4)
             .map((e) => (
-            <Link key={e.id} href={`/movie/${e.id}`}>
-              <div className="flex-none w-32 lg:w-40">
-                <div className="relative">
-                  <img
+              <Link key={e.id} href={`/movie/${e.id}`}>
+                <div className="flex-none w-32 lg:w-40">
+                  <div className="relative">
+                    <img
                       className="object-cover w-full h-48 lg:h-56 rounded shadow-md transform transition-all duration-500"
-                    src={e.image}
-                    alt={e.title}
-                  />
-                  <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
-                      <p className="text-xs text-white/40">{new Date(e.releaseDate).getFullYear()}</p>
+                      src={e.image}
+                      alt={e.title}
+                    />
+                    <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
+                      <p className="text-xs text-white/40">
+                        {new Date(e.releaseDate).getFullYear()}
+                      </p>
 
-                    <p className="text-xs text-white/40">
-                      <span className="text-red-500"> {e.type}</span> •{" "}
-                      {e.rating.toFixed(1)}⭐
-                    </p>
-                    <h3 className="text-white  text-sm lg:text-lg  ">
-                      {e.title}
-                    </h3>
+                      <p className="text-xs text-white/40">
+                        <span className="text-red-500"> {e.type}</span> •{" "}
+                        {e.rating.toFixed(1)}⭐
+                      </p>
+                      <h3 className="text-white  text-sm lg:text-lg  ">
+                        {e.title}
+                      </h3>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
         </div>
       </div>
     </div>

@@ -2,14 +2,12 @@ import { addSearchHistory } from "@/redux/reducers/searchHistory";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 
-function MovieCard(props) {
+function TVCard(props) {
   const { data } = props;
-  const dispatch = useDispatch();
   return (
     <Link
-      onClick={() => dispatch(addSearchHistory(data.title))}
       key={data.id}
-      href={`/movie/${data.id}`}
+      href={`/${data.id}`}
     >
       <div className="flex-none w-32 lg:w-40">
         <div className="relative">
@@ -20,14 +18,14 @@ function MovieCard(props) {
           />
           <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
             <p className="text-xs text-white/40">
-              {new Date(data.release_date).getFullYear()}
+              {new Date(data.first_air_date).getFullYear() || "Upcoming"}
             </p>
 
             <p className="text-xs text-white/40">
-              <span className="text-red-500"> {props.type}</span> •{" "}
+              <span className="text-blue-500"> {props.type}</span> •{" "}
               {data.vote_average}⭐
             </p>
-            <h3 className="text-white  text-sm lg:text-lg  ">{data.title}</h3>
+            <h3 className="text-white  text-sm lg:text-lg ">{data.name}</h3>
           </div>
         </div>
       </div>
@@ -35,4 +33,4 @@ function MovieCard(props) {
   );
 }
 
-export default MovieCard;
+export default TVCard;

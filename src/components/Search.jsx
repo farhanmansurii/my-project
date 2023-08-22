@@ -1,12 +1,9 @@
-
-
-
 import useDebounce from "@/hooks/useDebounce";
 import {
   addSearchHistory,
   clearSearchHistory,
   deleteSearchHistory,
-  updateSearchHistory
+  updateSearchHistory,
 } from "@/redux/reducers/searchHistory";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -15,10 +12,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "react-spinner-material";
 import { Input } from "./ui/input";
 import { Button } from "./Button";
+import MovieCard from "./Card";
+import TVCard from "./TVCard";
+import axios from "axios";
 
 const SearchPage = () => {
   const dispatch = useDispatch();
-  const searchHistory = useSelector((state) => state.searchHistory.searchHistory);
+  const searchHistory = useSelector(
+    (state) => state.searchHistory.searchHistory
+  );
   const [val, setVal] = useState("");
   const [searchList, setSearchList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,12 +28,15 @@ const SearchPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-
       setIsLoading(true);
-      const data = await fetch(
-        `https://spicyapi.vercel.app/meta/tmdb/${debouncedSearch}?page=1`
-      ).then((res) => res.json());
-      setSearchList(data.results);
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=6e075d0e14c850ba87d0eb8783ff1c59&query=${debouncedSearch}`;
+      console.log(url);
+      const data = await axios.get(url);
+      setSearchList(data.data.results);
+      console.log(
+        "🚀 ~ file: Search.jsx:36 ~ fetchData ~ data.data.results:",
+        data.data.results
+      );
       setIsLoading(false);
     }
 
@@ -53,29 +58,22 @@ const SearchPage = () => {
       <div className="form-control mt-10 place-content-center">
         <div className="flex place-self-center mt-3 items-center w-11/12 mx-auto">
           <Input
-              type="text"
-              placeholder="Search for a movie or TV show"
+            type="text"
+            placeholder="Search for a movie or TV show"
             value={val}
-            className='rounded-xl '
+            className="rounded-xl "
             onChange={(e) => setVal(e.target.value)}
-            />
-            {val.length > 0 && (
-            <Button className='h-14 rounded-xl ml-3'
-              onClick={() => setVal("")}
-            >
-                CLEAR
+          />
+          {val.length > 0 && (
+            <Button className="h-14 rounded-xl ml-3" onClick={() => setVal("")}>
+              CLEAR
             </Button>
           )}
         </div>
         {searchHistory.length > 0 && (
           <div className="flex gap-2 flex-wrap mt-2 w-11/12 mx-auto">
-            <Button variant='chip'  >
-              <span
-                className="cursor-pointer"
-
-              >
-                Clear All
-              </span>
+            <Button variant="chip">
+              <span className="cursor-pointer">Clear All</span>
               <button
                 className="ml-2"
                 onClick={() => dispatch(clearSearchHistory())}
@@ -100,11 +98,14 @@ const SearchPage = () => {
               </button>
             </Button>
             {searchHistory.map((term, index) => (
-              <Button variant='chip' key={index} >
+              <Button variant="chip" key={index}>
                 <span className="cursor-pointer" onClick={() => setVal(term)}>
                   {term}
                 </span>
-                <button className="ml-2 text-gray-500" onClick={() => handleRemoveChip(term)}>
+                <button
+                  className="ml-2 text-gray-500"
+                  onClick={() => handleRemoveChip(term)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-3 w-3"
@@ -133,69 +134,18 @@ const SearchPage = () => {
           ""
         ) : !isLoading ? (
           <div className="flex overflow-x-scroll p-2 space-x-4 scrollbar-hide w-11/12 mx-auto ">
-{searchList
-  .filter((e) => e.rating > 3)
-  .map((e) =>
-    e.type === "Movie"
-      ? e.releaseDate > 1970 && (
-        <Link onClick={() => dispatch(addSearchHistory(e.title))} key={e.id} href={`/movie/${e.id}`}>
-            <div className="flex-none w-32 lg:w-40">
-              <div className="relative">
-                <img
-                className="object-cover w-full h-48 lg:h-56 rounded shadow-md transform transition-all duration-500"
-                  src={e.image}
-                  alt={e.title}
-                />
-                <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
-                <p className="text-xs text-white/40">{new Date(e.releaseDate).getFullYear()}</p>
-
-                  <p className="text-xs text-white/40">
-                    <span className="text-red-500">
-                      {" "}
-                      {e.type}
-                    </span>{" "}
-                    • {e.rating.toFixed(1)}⭐
-                  </p>
-                  <h3 className="text-white  text-sm lg:text-lg  ">
-                    {e.title}
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </Link>
-        )
-      : e.releaseDate > 1970 && (
-        <Link onClick={() => dispatch(addSearchHistory(e.title))} key={e.id} href={`/${e.id}`}>
-            <div className="flex-none w-32 lg:w-40">
-              <div className="relative">
-                <img
-                className="object-cover w-full h-48 lg:h-56 rounded shadow-md transform transition-all duration-500"
-                  src={e.image}
-                  alt={e.title}
-                />
-                <div className="absolute flex flex-col-reverse inset-0 p-2 bg-gradient-to-t from-black w-full ">
-                <p className="text-xs text-white/40">{new Date(e.releaseDate).getFullYear()}</p>
-
-                  <p className="text-xs text-white/40">
-                    <span className="text-blue-500">
-                      {" "}
-                      {e.type}
-                    </span>{" "}
-                    • {e.rating.toFixed(1)}⭐
-                  </p>
-                  <h3 className="text-white  text-sm lg:text-lg  ">
-                    {e.title}
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </Link>
-        )
-  )}
-</div>
+            {searchList.map((e, i) => (
+              <MovieCard key={i} data={e} type={"Movie"} />
+            ))}
+          </div>
         ) : (
-              <div className="flex justify-center items-center h-48 lg:h-56 w-11/12 mx-auto">
-                <Spinner size={40} spinnerColor={"white"} spinnerWidth={2} visible={true} />
+          <div className="flex justify-center items-center h-48 lg:h-56 w-11/12 mx-auto">
+            <Spinner
+              size={40}
+              spinnerColor={"white"}
+              spinnerWidth={2}
+              visible={true}
+            />
           </div>
         )}
       </div>

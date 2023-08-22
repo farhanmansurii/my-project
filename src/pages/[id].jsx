@@ -1,9 +1,13 @@
-
 import { Button } from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import M3U8Player from "@/components/Player";
 import TvShowDetails from "@/components/TVShowDetails";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { addEpisode } from "@/redux/reducers/recentlyWatchedReducers";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -13,11 +17,11 @@ import Spinner from "react-spinner-material";
 export async function getServerSideProps(context) {
   const tvid = context.query.id;
 
-  try
-  {
-    const response = await axios.get(`https://spicyapi.vercel.app/meta/tmdb/info/${tvid}?type=TV%20Series`);
+  try {
+    const response = await axios.get(
+      `https://spicyapi.vercel.app/meta/tmdb/info/${tvid}?type=TV%20Series`
+    );
     const details = response.data;
-
 
     return {
       props: {
@@ -25,8 +29,7 @@ export async function getServerSideProps(context) {
         id: tvid,
       },
     };
-  } catch (error)
-  {
+  } catch (error) {
     console.error(error);
 
     return {
@@ -38,10 +41,8 @@ export async function getServerSideProps(context) {
   }
 }
 
-
 function MyPage({ id, deets }) {
-
-  console.log(deets)
+  console.log(deets);
   const dispatch = useDispatch();
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [loader, setLoader] = useState();
@@ -56,7 +57,7 @@ function MyPage({ id, deets }) {
   };
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+    const options = { month: "long", day: "numeric", year: "numeric" };
     return date.toLocaleDateString(undefined, options);
   }
   function getNextEpisode(selectedEpisode, deets) {
@@ -68,8 +69,7 @@ function MyPage({ id, deets }) {
     );
     const tvshowtitle = deets.title;
 
-    if (episodeIndex === deets.seasons[seasonIndex].episodes.length - 1)
-    {
+    if (episodeIndex === deets.seasons[seasonIndex].episodes.length - 1) {
       if (seasonIndex === deets.seasons.length - 1) {
         return null;
       } else {
@@ -91,10 +91,9 @@ function MyPage({ id, deets }) {
   };
   useEffect(() => {
     const fetchEpisode = async () => {
+      const url = `https://spicyapi.vercel.app/movies/flixhq/watch?episodeId=/${selectedEpisode.id}&mediaId=${deets.id}`;
       try {
-        const response = await axios.get(
-          `https://spicyapi.vercel.app/meta/tmdb/watch/${selectedEpisode.id}?id=${deets.id}`
-        );
+        const response = await axios.get(url);
         setEpisode(response.data);
         console.log(response.data);
       } catch (error) {
@@ -119,7 +118,8 @@ function MyPage({ id, deets }) {
               <Button
                 className="rounded-full"
                 onClick={() => handleEpisodeClick(e.episode)}
-                key={e.tvid}>
+                key={e.tvid}
+              >
                 {" "}
                 Play S{e.episode.season} E{e.episode.episode} :{" "}
                 {e.episode.title}
@@ -180,7 +180,8 @@ function MyPage({ id, deets }) {
                                         ? "bg-neutral-400/30 rounded-xl"
                                         : ""
                                     }
-                                    `}>
+                                    `}
+                                  >
                                     <img
                                       src={episode.img.hd}
                                       className={` object-contain h-44 w-fit aspect-video `}
@@ -207,7 +208,8 @@ function MyPage({ id, deets }) {
                                         ? "border-4 border-neutral-500/40 rounded-2xl"
                                         : ""
                                     }
-                                    `}>
+                                    `}
+                                  >
                                     <div className="overlay absolute rounded-xl inset-0 bg-black opacity-70 "></div>
                                     <div className="episode-img-container rounded-lg w-full h-full overflow-hidden">
                                       <img
